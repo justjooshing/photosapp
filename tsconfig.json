@@ -1,4 +1,4 @@
 {
-  "compilerOptions": { "paths": { "@/*": ["./*"] } },
+  "compilerOptions": { "jsx":"react-native", "paths": { "@/*": ["./*"] } },
   "extends": "expo/tsconfig.base"
 }
