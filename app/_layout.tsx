@@ -6,7 +6,7 @@ const Layout = () => {
   const { isLoggedIn } = useAuthContext();
 
   useEffect(() => {
-    router.replace(isLoggedIn ? "/images" : "/login");
+    router.replace(isLoggedIn ? "/" : "/login");
   }, [isLoggedIn]);
 
   return (
