@@ -28,7 +28,7 @@ const Images = () => {
 
   const rndChoice: SortOptions = Math.random() > 0.5 ? "keep" : "delete";
   return (
-    <>
+    <View style={styles.view}>
       <View>
         <Pressable onTouchEnd={() => handleClick(images[0], rndChoice)}>
           <Image style={styles.image} source={images[0]} />
@@ -41,20 +41,25 @@ const Images = () => {
           onClick={() => handleClick(images[0], "delete")}
         />
       </View>
-    </>
+    </View>
   );
 };
 
 export default Images;
 
 const styles = StyleSheet.create({
+  view: {
+    display: "flex",
+    justifyContent: "center",
+  },
   image: {
     maxWidth: "100%",
     maxHeight: "80%",
   },
   ctas: {
+    width: "100%",
     display: "flex",
     flexDirection: "row",
-    gap: 10,
+    justifyContent: "space-evenly",
   },
 });

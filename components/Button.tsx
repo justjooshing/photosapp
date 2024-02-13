@@ -1,25 +1,35 @@
 import React from "react";
-import { Pressable, Text, View, StyleSheet } from "react-native";
+import { Pressable, Text, View, StyleSheet, TextStyle } from "react-native";
 
 type Props = {
   onClick?: () => void;
   copy: string;
+  style?: TextStyle;
 };
 
-const Button = ({ copy, onClick = () => {} }: Props) => (
-  <View style={styles.button}>
+const Button = ({ copy, onClick = () => {}, style }: Props) => (
+  <View>
     <Pressable onPress={onClick}>
-      <Text>{copy}</Text>
+      {({ pressed }) => (
+        <Text style={[styles(pressed).button, style]}>{copy}</Text>
+      )}
     </Pressable>
   </View>
 );
 
 export default Button;
 
-const styles = StyleSheet.create({
-  button: {
-    borderStyle: "solid",
-    borderWidth: 10,
-    borderColor: "red",
-  },
-});
+const styles = (isPressed: boolean) =>
+  StyleSheet.create({
+    button: {
+      display: "flex",
+      textAlign: "center",
+      borderStyle: "solid",
+      padding: 10,
+      margin: 10,
+      borderWidth: 2,
+      borderRadius: 5,
+      fontWeight: "700",
+      backgroundColor: isPressed ? "grey" : "white",
+    },
+  });
