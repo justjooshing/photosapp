@@ -1,7 +1,7 @@
 import { AuthProvider, useAuthContext } from "@/context/Auth";
 import { Slot, router } from "expo-router";
 import { useEffect } from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 const Layout = () => {
   const { isLoggedIn } = useAuthContext();
 
@@ -11,11 +11,20 @@ const Layout = () => {
 
   return (
     <AuthProvider>
-      <View className="flex-1 items-center justify-center">
+      <View style={styles.view}>
         <Slot />
       </View>
     </AuthProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  view: {
+    display: "flex",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
 
 export default Layout;

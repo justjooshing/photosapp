@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { Image, Pressable, View } from "react-native";
+import { Image, Pressable, View, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import image from "@/assets/images/image.jpg";
 import image2 from "@/assets/images/image2.jpg";
@@ -31,17 +31,10 @@ const Images = () => {
     <>
       <View>
         <Pressable onTouchEnd={() => handleClick(images[0], rndChoice)}>
-          <Image className="w-screen h-4/5" source={images[0]} />
+          <Image style={styles.image} source={images[0]} />
         </Pressable>
       </View>
-      <View
-        // className="flex"
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          gap: 10,
-        }}
-      >
+      <View style={styles.ctas}>
         <Button copy="keep" onClick={() => handleClick(images[0], "keep")} />
         <Button
           copy="delete"
@@ -53,3 +46,15 @@ const Images = () => {
 };
 
 export default Images;
+
+const styles = StyleSheet.create({
+  image: {
+    maxWidth: "100%",
+    maxHeight: "80%",
+  },
+  ctas: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 10,
+  },
+});

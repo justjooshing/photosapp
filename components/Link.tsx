@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable, Text, StyleSheet } from "react-native";
 import { Link as ExpoLink } from "expo-router";
 
 type Props = {
@@ -10,9 +10,16 @@ type Props = {
 const Link = ({ href, copy }: Props) => (
   <ExpoLink href={href} asChild>
     <Pressable>
-      <Text className="border-4 p-4">{copy}</Text>
+      <Text style={styles.link}>{copy}</Text>
     </Pressable>
   </ExpoLink>
 );
 
 export default Link;
+
+const styles = StyleSheet.create({
+  link: {
+    borderWidth: 4,
+    padding: 4,
+  },
+});

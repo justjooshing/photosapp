@@ -1,7 +1,7 @@
 import { useAuthContext } from "@/context/Auth";
 import { Link, router } from "expo-router";
 import { useEffect } from "react";
-import { Text, Pressable } from "react-native";
+import { Text, Pressable, StyleSheet } from "react-native";
 
 const Login = () => {
   const { isLoggedIn, setIsLoggedIn } = useAuthContext();
@@ -20,8 +20,8 @@ const Login = () => {
     <>
       <Text>Login</Text>
       <Link href="/" asChild>
-        <Pressable onTouchEnd={handleClick} className="p-10">
-          <Text className="bg-gray-200 border-4">Login with Google</Text>
+        <Pressable onTouchEnd={handleClick}>
+          <Text style={styles.button}>Login with Google</Text>
         </Pressable>
       </Link>
     </>
@@ -29,3 +29,11 @@ const Login = () => {
 };
 
 export default Login;
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: "grey",
+    borderWidth: 4,
+    padding: 10,
+  },
+});
