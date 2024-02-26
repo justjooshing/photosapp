@@ -1,3 +1,4 @@
+import { useGetLoginLink } from "@/api/query";
 import { useAuthContext } from "@/context/Auth";
 import { Link, router } from "expo-router";
 import { useEffect } from "react";
@@ -5,6 +6,7 @@ import { Text, Pressable, StyleSheet } from "react-native";
 
 const Login = () => {
   const { isLoggedIn, setIsLoggedIn } = useAuthContext();
+  const loginLink = useGetLoginLink();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -13,6 +15,7 @@ const Login = () => {
   }, [isLoggedIn]);
 
   const handleClick = () => {
+    router.push(loginLink.data);
     setIsLoggedIn(true);
   };
 
