@@ -31,5 +31,6 @@ const styles = (isPressed: boolean) =>
       borderRadius: 5,
       fontWeight: "700",
       backgroundColor: isPressed ? "grey" : "white",
+      transform: [{ scale: isPressed ? 1.2 : 1 }],
     },
   });

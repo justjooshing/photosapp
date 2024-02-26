@@ -1,11 +1,5 @@
-import React, { StyleHTMLAttributes } from "react";
-import {
-  Pressable,
-  Text,
-  StyleSheet,
-  TextStyle,
-  TouchableHighlight,
-} from "react-native";
+import React from "react";
+import { Pressable, Text, StyleSheet, TextStyle } from "react-native";
 import { Link as ExpoLink } from "expo-router";
 
 type Props = {
@@ -38,5 +32,6 @@ const styles = (isPressed: boolean) =>
       borderRadius: 5,
       fontWeight: "700",
       backgroundColor: isPressed ? "grey" : "white",
+      transform: [{ scale: isPressed ? 1.2 : 1 }],
     },
   });

@@ -1,7 +1,9 @@
 import { AuthProvider, useAuthContext } from "@/context/Auth";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Slot, router } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 const Layout = () => {
   const { isLoggedIn } = useAuthContext();
 
@@ -9,12 +11,18 @@ const Layout = () => {
     router.replace(isLoggedIn ? "/" : "/login");
   }, [isLoggedIn]);
 
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
-    <AuthProvider>
-      <View style={styles.view}>
-        <Slot />
-      </View>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <GestureHandlerRootView style={styles.view}>
+          <View style={styles.view}>
+            <Slot />
+          </View>
+        </GestureHandlerRootView>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 };
 
