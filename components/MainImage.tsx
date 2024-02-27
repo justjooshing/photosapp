@@ -14,8 +14,8 @@ type Props = {
 
 const MainImage = ({ source, style }: Props) => {
   return (
-    <Animated.View style={style}>
-      <NativeImage style={styles.image} source={source} />
+    <Animated.View style={[styles.view, style]}>
+      <NativeImage style={styles.image} resizeMode="contain" source={source} />
     </Animated.View>
   );
 };
@@ -23,9 +23,12 @@ const MainImage = ({ source, style }: Props) => {
 export default MainImage;
 
 const styles = StyleSheet.create({
+  view: {
+    maxHeight: "80%",
+    zIndex: 2,
+  },
   image: {
     maxWidth: "100%",
     maxHeight: "80%",
-    zIndex: 2,
   },
 });
