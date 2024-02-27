@@ -1,5 +1,5 @@
 import { useGetLoginLink } from "@/api/query";
-import { useAuthContext } from "@/context/Auth";
+import { useAuthContext } from "@/context/Auth/Auth";
 import { Link, router } from "expo-router";
 import { useEffect } from "react";
 import { Text, Pressable, StyleSheet } from "react-native";

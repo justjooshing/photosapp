@@ -8,58 +8,41 @@ import image3 from "@/assets/images/image3.jpg";
 import Button from "@/components/Button";
 import { useState, useEffect } from "react";
 import { SortOptions, setImagesCount } from "@/helpers/Images";
-import { IImage } from "./types";
-import UpcomingImage from "@/components/UpcomingImages";
+import { IImage } from "../context/Images/types";
 import MainImageHandler from "@/components/MainImageHandler";
 import { useGetImages } from "@/api/query";
+import { useImagesContext } from "@/context/Images/Images";
 
 const Images = () => {
+  const { setSortedImages } = useImagesContext();
+
+  // Needs to be moved to BE/load from image URLs from GooglePhotos
   const [images, setImages] = useState<IImage[]>([
     { source: image, id: 1 },
     { source: image2, id: 2 },
     { source: image3, id: 3 },
   ]);
-  const [main, ...rest] = images;
 
-  // This cant stay here because we lose it once the component dismounts
-  const [sortedImages, setSortedImages] = useState<{
-    keep: IImage[];
-    delete: IImage[];
-  }>({ keep: [], delete: [] });
+  const [main, ...rest] = images;
 
   const imageUrls = useGetImages();
 
   useEffect(() => {
-    console.log(imageUrls.data);
+    if (imageUrls.data) console.log(imageUrls.data);
   }, [imageUrls]);
 
-  const handleClick = (image: IImage) => async (choice: SortOptions) => {
+  const handleClick = async (choice: SortOptions) => {
+    // Also send BE req to put image url into album
     await setImagesCount(choice);
     setSortedImages((prev) => ({
       ...prev,
-      [choice]: [...prev[choice], image],
+      [choice]: [...prev[choice], main],
     }));
     setImages(rest);
   };
 
-  const clickImage = handleClick(main);
-  const deleteImage = async () => clickImage("delete");
-  const keepImage = async () => clickImage("keep");
-
-  {
-    /* 
-      Gesture handler
-       Main image
-      /gesture handler
-  
-      AnimatedView style={shift across when main image is being swiped}
-      images
-       1
-       2
-       3
-      /AnimatedView
-       */
-  }
+  const deleteImage = () => handleClick("delete");
+  const keepImage = () => handleClick("keep");
 
   if (!images.length) {
     router.push("/end");
@@ -67,24 +50,13 @@ const Images = () => {
 
   return (
     <SafeAreaView style={styles.view}>
-      {/* <View>
-        <MainImageHandler
-          mainImage={main}
-          swipe={{ up: keepImage, down: deleteImage }}
-        />
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            maxHeight: "30%",
-            maxWidth: "100%",
-          }}
-        >
-          {rest.map((image) => (
-            <UpcomingImage key={image.id} source={image.source} />
-          ))}
-        </View>
-      </View> */}
+      <MainImageHandler
+        mainImage={main}
+        swipe={{
+          up: keepImage,
+          down: deleteImage,
+        }}
+      />
       <View style={styles.ctas}>
         <Button copy="keep" onClick={keepImage} />
         <Button copy="delete" onClick={deleteImage} />

@@ -1,4 +1,4 @@
-import { AuthProvider, useAuthContext } from "@/context/Auth";
+import { AuthProvider, useAuthContext } from "@/context/Auth/Auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Slot, router } from "expo-router";
 import { useEffect, useState } from "react";

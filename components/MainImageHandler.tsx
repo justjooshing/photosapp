@@ -10,7 +10,7 @@ import {
   PanGestureHandlerEventPayload,
 } from "react-native-gesture-handler";
 import MainImage from "./MainImage";
-import { IImage } from "@/app/types";
+import { IImage } from "@/context/Images/types";
 
 interface Props {
   mainImage: IImage;

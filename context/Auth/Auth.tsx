@@ -6,7 +6,8 @@ interface InitialState {
   setIsLoggedIn: (val: boolean) => void;
 }
 const initialState: InitialState = {
-  isLoggedIn: isAuth(),
+  // false to mock loggedOut state
+  isLoggedIn: Promise.resolve(false),
   setIsLoggedIn: (val: boolean) => {},
 };
 
