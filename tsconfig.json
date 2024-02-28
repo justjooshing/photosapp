@@ -1,4 +1,5 @@
 {
-  "compilerOptions": { "jsx":"react-native", "paths": { "@/*": ["./*"] } },
+  "compilerOptions": { "module": "ESNext", "jsx":"react-native", "paths": { "@/*": ["./*"] } },
   "extends": "expo/tsconfig.base",
+  
 }

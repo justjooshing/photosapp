@@ -1,6 +1,4 @@
-import { ImageSourcePropType } from "react-native";
-
 export interface IImage {
-  source: ImageSourcePropType;
+  source: string;
   id: number;
 }

@@ -1,4 +1,5 @@
 import { AuthProvider, useAuthContext } from "@/context/Auth/Auth";
+import { ImagesProvider } from "@/context/Images/Images";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Slot, router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -16,11 +17,13 @@ const Layout = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <GestureHandlerRootView style={styles.view}>
-          <View style={styles.view}>
-            <Slot />
-          </View>
-        </GestureHandlerRootView>
+        <ImagesProvider>
+          <GestureHandlerRootView style={styles.view}>
+            <View style={styles.view}>
+              <Slot />
+            </View>
+          </GestureHandlerRootView>
+        </ImagesProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

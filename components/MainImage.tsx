@@ -1,21 +1,29 @@
 import React from "react";
 import {
-  Image as NativeImage,
+  Image,
   StyleSheet,
   ImageSourcePropType,
   ImageStyle,
 } from "react-native";
 import Animated from "react-native-reanimated";
+import LocalImage from "@/assets/images/image.jpg";
 
 type Props = {
-  source: ImageSourcePropType;
+  source: string;
   style: ImageStyle;
 };
 
 const MainImage = ({ source, style }: Props) => {
+  // For some reason these don't work on Android but LocalImage does
+  const sourceImage: ImageSourcePropType = {
+    uri: source,
+    width: 1000,
+    height: 1000,
+  };
+
   return (
     <Animated.View style={[styles.view, style]}>
-      <NativeImage style={styles.image} resizeMode="contain" source={source} />
+      <Image style={styles.image} resizeMode="contain" source={sourceImage} />
     </Animated.View>
   );
 };

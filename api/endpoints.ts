@@ -1,13 +1,22 @@
-const baseURL = "http://localhost:8080";
+import { Platform } from "react-native";
+
+const emulatorURL = `192.168.1.117`;
+const webURL = "localhost";
+
+const baseURL = `http://${
+  Platform.OS === "android" ? emulatorURL : webURL
+}:8080`;
 
 const ENDPOINT_STUBS = {
   images: "/api/images",
   login: "/api/login-link",
 } as const;
 
-export const ENDPOINTS = new Map<keyof typeof ENDPOINT_STUBS, string>();
+type STUB_KEYS = keyof typeof ENDPOINT_STUBS;
 
-Object.keys(ENDPOINT_STUBS).forEach((key: keyof typeof ENDPOINT_STUBS) => {
+export const ENDPOINTS = new Map<STUB_KEYS, string>();
+
+Object.keys(ENDPOINT_STUBS).forEach((key: STUB_KEYS) => {
   ENDPOINTS.set(key, "");
 });
 
