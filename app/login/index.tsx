@@ -2,7 +2,7 @@ import { useGetLoginLink } from "@/api/query";
 import { useAuthContext } from "@/context/Auth/Auth";
 import { Link, router } from "expo-router";
 import { useEffect } from "react";
-import { Text, Pressable, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 
 const Login = () => {
   const { isLoggedIn, setIsLoggedIn } = useAuthContext();
@@ -14,18 +14,14 @@ const Login = () => {
     }
   }, [isLoggedIn]);
 
-  const handleClick = () => {
-    router.push(loginLink.data);
-    setIsLoggedIn(true);
-  };
+  if (loginLink.isLoading) return <Text>Loading...</Text>;
+  if (loginLink.isError) return <Text>{loginLink.error.message}</Text>;
 
   return (
     <>
       <Text>Login</Text>
-      <Link href="/" asChild>
-        <Pressable onTouchEnd={handleClick}>
-          <Text style={styles.button}>Login with Google</Text>
-        </Pressable>
+      <Link href={loginLink.data} asChild>
+        <Text style={styles.button}>Login with Google</Text>
       </Link>
     </>
   );

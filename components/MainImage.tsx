@@ -6,7 +6,6 @@ import {
   ImageStyle,
 } from "react-native";
 import Animated from "react-native-reanimated";
-import LocalImage from "@/assets/images/image.jpg";
 
 type Props = {
   source: string;
