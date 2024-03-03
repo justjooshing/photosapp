@@ -3,6 +3,7 @@ import axios from "axios";
 import { ENDPOINTS } from "./endpoints";
 import { IImage } from "@/context/Images/types";
 import { SortOptions } from "@/helpers/Images";
+import { client } from "./axios";
 
 enum Keys {
   loginLink = "login-link",
@@ -12,7 +13,7 @@ enum Keys {
 
 const getData = async (url: string) => {
   try {
-    const { data } = await axios.get(url);
+    const { data } = await client.get(url);
     return data;
   } catch (e) {
     throw new Error(`failed when fetching ${url}`);
@@ -39,7 +40,7 @@ export const useGetImages = () =>
   });
 
 const postImage = async (data: { image: IImage; choice: SortOptions }) =>
-  axios.post(ENDPOINTS.get("images"), data);
+  client.post(ENDPOINTS.get("images"), data);
 
 export const useMutateImages = () => {
   const queryClient = useQueryClient();

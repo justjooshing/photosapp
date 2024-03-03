@@ -5,14 +5,14 @@ import { useEffect } from "react";
 import { Text, StyleSheet } from "react-native";
 
 const Login = () => {
-  const { isLoggedIn, setIsLoggedIn } = useAuthContext();
+  const { authToken } = useAuthContext();
   const loginLink = useGetLoginLink();
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (authToken) {
       router.replace("/");
     }
-  }, [isLoggedIn]);
+  }, [authToken]);
 
   if (loginLink.isLoading) return <Text>Loading...</Text>;
   if (loginLink.isError) return <Text>{loginLink.error.message}</Text>;
