@@ -26,10 +26,9 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const jwt = Cookies.get("jwt");
-    if (!!jwt) {
-      setAuthToken(jwt);
-    } else router.push("/login");
-  });
+    if (!jwt) router.replace("/login");
+    if (authToken !== jwt) setAuthToken(jwt);
+  }, [authToken]);
 
   return (
     <AuthContext.Provider
