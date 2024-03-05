@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { ENDPOINTS } from "./endpoints";
 import { IImage } from "@/context/Images/types";
 import { SortOptions } from "@/helpers/Images";
 import { client } from "./axios";
+import Cookies from "js-cookie";
+
+const token = Cookies.get("jwt");
 
 enum Keys {
   loginLink = "login-link",
@@ -34,6 +36,7 @@ const getImages = async (): Promise<{ imageUrls: IImage[] }> =>
 
 export const useGetImages = () =>
   useQuery({
+    enabled: !!token,
     queryKey: [Keys.images],
     queryFn: getImages,
     select: ({ imageUrls }) => imageUrls,
