@@ -1,3 +1,4 @@
+import { IImage } from "@/context/Images/types";
 import React from "react";
 import {
   Image,
@@ -8,16 +9,16 @@ import {
 import Animated from "react-native-reanimated";
 
 type Props = {
-  source: string;
+  image: IImage;
   style: ImageStyle;
 };
 
-const MainImage = ({ source, style }: Props) => {
+const MainImage = ({ image: { source, width, height }, style }: Props) => {
   // For some reason these don't work on Android but LocalImage does
   const sourceImage: ImageSourcePropType = {
     uri: source,
-    width: 1000,
-    height: 1000,
+    width,
+    height,
   };
 
   return (

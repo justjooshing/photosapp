@@ -58,7 +58,7 @@ const MainImageHandler = ({
 
   return (
     <GestureDetector gesture={pan}>
-      <MainImage source={mainImage.source} style={animatedStyles} />
+      <MainImage image={mainImage} style={animatedStyles} />
     </GestureDetector>
   );
 };
