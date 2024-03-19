@@ -17,8 +17,8 @@ const MainImage = ({ image: { source, width, height }, style }: Props) => {
   // For some reason these don't work on Android but LocalImage does
   const sourceImage: ImageSourcePropType = {
     uri: source,
-    width,
-    height,
+    width: 500,
+    height: 500,
   };
 
   return (

@@ -1,5 +1,5 @@
 // request.js
-import axios, { AxiosInstance } from "axios";
+import axios from "axios";
 import Cookies from "js-cookie";
 import { baseURL } from "./endpoints";
 

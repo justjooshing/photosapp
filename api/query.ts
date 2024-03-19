@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  QueryFunctionContext,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { ENDPOINTS } from "./endpoints";
 import { IImage } from "@/context/Images/types";
 import { SortOptions } from "@/helpers/Images";
@@ -7,22 +12,16 @@ import Cookies from "js-cookie";
 
 const token = Cookies.get("jwt");
 
-enum Keys {
-  loginLink = "login-link",
-  images = "images",
-  sortImage = "sort-image",
-}
-
-const getData = async (url: string) => {
-  try {
-    const { data } = await client.get(url);
-    return data;
-  } catch (e) {
-    throw new Error(`failed when fetching ${url}`);
-  }
+const Keys = {
+  loginLink: "login-link" as const,
+  images: (type: "today" | "similar") => ["images", type] as const,
+  sortImage: "sort-image" as const,
 };
 
-const getLoginLink = async () => getData(ENDPOINTS.get("login"));
+const getLoginLink = async () => {
+  const { data } = await client.get(ENDPOINTS.get("login"));
+  return data;
+};
 
 export const useGetLoginLink = () =>
   useQuery({
@@ -31,13 +30,21 @@ export const useGetLoginLink = () =>
     select: ({ loginLink }) => loginLink,
   });
 
-const getImages = async (): Promise<{ imageUrls: IImage[] }> =>
-  getData(ENDPOINTS.get("images"));
+const getImages = async ({
+  queryKey: [, type],
+}: QueryFunctionContext<ReturnType<(typeof Keys)["images"]>>): Promise<{
+  imageUrls: IImage[];
+}> => {
+  const params = new URLSearchParams();
+  params.append("type", type);
+  const { data } = await client.get(ENDPOINTS.get("images"), { params });
+  return data;
+};
 
-export const useGetImages = () =>
+export const useGetImages = (type: "today" | "similar") =>
   useQuery({
     enabled: !!token,
-    queryKey: [Keys.images],
+    queryKey: Keys.images(type),
     queryFn: getImages,
     select: ({ imageUrls }) => imageUrls,
   });

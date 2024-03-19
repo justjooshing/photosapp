@@ -12,7 +12,7 @@ const Images = () => {
 
   // Needs to be moved to BE/load from image URLs from GooglePhotos
 
-  const imageUrls = useGetImages();
+  const imageUrls = useGetImages("today");
   const { mutate: sortImage } = useMutateImages();
 
   if (imageUrls.isLoading) return <Text>loading...</Text>;
@@ -36,7 +36,7 @@ const Images = () => {
 
   const deleteImage = () => handleClick("delete");
   const keepImage = () => handleClick("keep");
-
+  // https://github.com/mrzachnugent/react-native-reusables
   return (
     <SafeAreaView style={styles.view}>
       <MainImageHandler
