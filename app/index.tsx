@@ -6,14 +6,16 @@ import { SortOptions, setImagesCount } from "@/helpers/Images";
 import MainImageHandler from "@/components/MainImageHandler";
 import { useGetImages, useMutateImages } from "@/api/query";
 import { useImagesContext } from "@/context/Images/Images";
+import { ImagesType } from "@/api/types";
 
 const Images = () => {
   const { setSortedImages } = useImagesContext();
 
   // Needs to be moved to BE/load from image URLs from GooglePhotos
 
-  const imageUrls = useGetImages("today");
-  const { mutate: sortImage } = useMutateImages();
+  const imagesType: ImagesType = "similar";
+  const imageUrls = useGetImages(imagesType);
+  const { mutate: sortImage } = useMutateImages(imagesType);
 
   if (imageUrls.isLoading) return <Text>loading...</Text>;
   if (imageUrls.isError) return <Text>{imageUrls.error.message}</Text>;
