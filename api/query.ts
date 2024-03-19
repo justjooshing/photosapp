@@ -5,7 +5,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { ENDPOINTS } from "./endpoints";
-import { IImage } from "@/context/Images/types";
+import { IImage, IImageUrls } from "@/context/Images/types";
 import { SortOptions } from "@/helpers/Images";
 import { client } from "./axios";
 import Cookies from "js-cookie";
@@ -28,9 +28,9 @@ export const useGetLoginLink = () =>
 
 const getImages = async ({
   queryKey: [, type],
-}: QueryFunctionContext<ReturnType<(typeof Keys)["images"]>>): Promise<{
-  imageUrls: IImage[];
-}> => {
+}: QueryFunctionContext<
+  ReturnType<(typeof Keys)["images"]>
+>): Promise<IImageUrls> => {
   const params = new URLSearchParams();
   params.append("type", type);
   const { data } = await client.get(ENDPOINTS.get("images"), { params });
@@ -43,6 +43,7 @@ export const useGetImages = (type: ImagesType) =>
     queryKey: Keys.images(type),
     queryFn: getImages,
     select: ({ imageUrls }) => imageUrls,
+    staleTime: 1000 * 60 * 60,
   });
 
 const postImage = async (data: { image: IImage; choice: SortOptions }) =>
@@ -56,20 +57,21 @@ export const useMutateImages = (type: ImagesType) => {
     mutationKey: Keys.sortImage,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: dataKey });
-      const prevImages = queryClient.getQueryData(dataKey);
-      queryClient.setQueryData(
-        dataKey,
-        ({ imageUrls }: { imageUrls: IImage[] }) => ({
-          imageUrls: imageUrls.filter((old) => old.id !== data.image.id),
-        })
-      );
+      const prevImages: IImageUrls = queryClient.getQueryData(dataKey);
+      queryClient.setQueryData(dataKey, ({ imageUrls }: IImageUrls) => ({
+        imageUrls: imageUrls.filter((old) => old.id !== data.image.id),
+      }));
       return { prevImages };
     },
     onError: (err, _, context) => {
+      console.error(err);
       queryClient.setQueryData(dataKey, context.prevImages);
     },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: dataKey });
+    onSettled: (d, err, v, context) => {
+      // Allow refetch if last image has been sorted successfully
+      if (context.prevImages.imageUrls.length === 1 && !err) {
+        queryClient.invalidateQueries({ queryKey: dataKey });
+      }
     },
   });
 };

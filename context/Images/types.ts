@@ -4,3 +4,7 @@ export interface IImage {
   width: number;
   height: number;
 }
+
+export interface IImageUrls {
+  imageUrls: IImage[];
+}
