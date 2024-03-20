@@ -20,6 +20,7 @@ const initialState: InitialState = {
 const ImagesContext = createContext<InitialState>(initialState);
 
 export const ImagesProvider = ({ children }) => {
+  // Create BE req returning deleted_at/sorted_at count for /end page, then can delete this
   const [sortedImages, setSortedImages] = useState(initialState.sortedImages);
   return (
     <ImagesContext.Provider value={{ sortedImages, setSortedImages }}>

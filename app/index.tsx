@@ -11,13 +11,12 @@ import { ImagesType } from "@/api/types";
 const Images = () => {
   const { setSortedImages } = useImagesContext();
 
-  // Needs to be moved to BE/load from image URLs from GooglePhotos
-
   const imagesType: ImagesType = "similar";
   const imageUrls = useGetImages(imagesType);
   const { mutate: sortImage } = useMutateImages(imagesType);
 
-  if (imageUrls.isLoading) return <Text>loading...</Text>;
+  if (imageUrls.isLoading || imageUrls.isFetching)
+    return <Text>loading...</Text>;
   if (imageUrls.isError) return <Text>{imageUrls.error.message}</Text>;
   if (!imageUrls?.data?.length) return <Text>No data</Text>;
 

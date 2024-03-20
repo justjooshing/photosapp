@@ -1,18 +1,9 @@
 import { useGetLoginLink } from "@/api/query";
-import { useAuthContext } from "@/context/Auth/Auth";
-import { Link, router } from "expo-router";
-import { useEffect } from "react";
+import { Link } from "expo-router";
 import { Text, StyleSheet } from "react-native";
 
 const Login = () => {
-  const { authToken } = useAuthContext();
   const loginLink = useGetLoginLink();
-
-  useEffect(() => {
-    if (authToken) {
-      router.replace("/");
-    }
-  }, [authToken]);
 
   if (loginLink.isLoading) return <Text>Loading...</Text>;
   if (loginLink.isError) return <Text>{loginLink.error.message}</Text>;
