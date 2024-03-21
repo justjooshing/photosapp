@@ -1,5 +1,6 @@
 export interface IImage {
-  source: string;
+  baseUrl: string;
+  photoUrl: string;
   id: number;
   width: number;
   height: number;

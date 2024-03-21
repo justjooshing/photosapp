@@ -13,10 +13,10 @@ type Props = {
   style: ImageStyle;
 };
 
-const MainImage = ({ image: { source, width, height }, style }: Props) => {
+const MainImage = ({ image: { baseUrl, width, height }, style }: Props) => {
   // For some reason these don't work on Android but LocalImage does
   const sourceImage: ImageSourcePropType = {
-    uri: source,
+    uri: baseUrl,
     width: 500,
     height: 500,
   };
