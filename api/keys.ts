@@ -1,6 +1,9 @@
 export const Keys = {
   loginLink: ["login-link"] as const,
   baseImages: ["images"] as const,
-  images: (type: "today" | "similar") => [Keys.baseImages, type] as const,
-  sortImage: ["sort-image"] as const,
+  baseAlbums: ["albums"],
+  // Need to add userId to these
+  images: (type: "today" | "similar") => [...Keys.baseImages, type] as const,
+  albums: () => [...Keys.baseAlbums] as const,
+  count: () => ["count"] as const,
 };

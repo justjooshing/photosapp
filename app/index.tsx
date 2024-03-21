@@ -2,11 +2,11 @@ import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 import { router } from "expo-router";
 
 import Button from "@/components/Button";
-import { SortOptions, setImagesCount } from "@/helpers/Images";
 import MainImageHandler from "@/components/MainImageHandler";
 import { useGetImages, useMutateImages } from "@/api/query";
 import { useImagesContext } from "@/context/Images/Images";
 import { ImagesType } from "@/api/types";
+import { SortOptions } from "@/context/Images/types";
 
 const Images = () => {
   const { setSortedImages } = useImagesContext();
@@ -23,8 +23,6 @@ const Images = () => {
   const [main, ...rest] = imageUrls.data;
 
   const handleClick = async (choice: SortOptions) => {
-    // Also send BE req to put image url into album
-    await setImagesCount(choice);
     sortImage({ image: main, choice });
     setSortedImages((prev) => ({
       ...prev,

@@ -1,36 +1,26 @@
-import { getImagesCount } from "@/helpers/Images";
 import Link from "@/components/Link";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Button from "@/components/Button";
+import { useGetAlbums, useGetCount } from "@/api/query";
 
 const End = () => {
-  const [count, setCount] = useState<{
-    keepCount: number;
-    deleteCount: number;
-  }>({ keepCount: 0, deleteCount: 0 });
+  const albums = useGetAlbums();
+  const count = useGetCount();
 
-  useEffect(() => {
-    (async () => {
-      const currentKeptCount = await getImagesCount("keep");
-      const currentDeletedCount = await getImagesCount("delete");
-      setCount({
-        keepCount: currentKeptCount,
-        deleteCount: currentDeletedCount,
-      });
-    })();
-  }, []);
+  if (count.isLoading || count.isFetching) return <Text>loading...</Text>;
+  if (count.isError) return <Text>{count.error.message}</Text>;
 
   return (
     <View style={styles.container}>
       <View style={styles.stats}>
         <View style={styles.singleStats}>
           <Text>Photos kept:</Text>
-          <Text>{count.keepCount}</Text>
+          <Text>{count.data.sortedCount}</Text>
         </View>
         <View style={styles.singleStats}>
           <Text>Photos deleted:</Text>
-          <Text>{count.deleteCount}</Text>
+          <Text>{count.data.deletedCount}</Text>
         </View>
       </View>
       <View>
