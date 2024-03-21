@@ -16,7 +16,7 @@ const config: QueryClientConfig = {
     queries: {
       retry: (failureCount, err) => {
         if (err instanceof AxiosError) {
-          if (err.response.status === 401) {
+          if (err.response?.status === 401) {
             return false;
           }
 
@@ -29,9 +29,14 @@ const config: QueryClientConfig = {
         }
       },
       throwOnError: (err: AxiosError) => {
-        if (err.response.status === 401) {
-          Cookies.remove("jwt");
-          router.push("/login");
+        if (err instanceof AxiosError) {
+          if (err.response?.status === 401) {
+            // Logout after half a second
+            setTimeout(() => {
+              Cookies.remove("jwt");
+              router.push("/login");
+            }, 500);
+          }
         }
         return false;
       },
@@ -50,7 +55,6 @@ const Layout = () => {
     if (!!jwt && pathname === "/login") router.replace("/");
   }, [pathname, jwt]);
 
-  console.log(queryClient);
   return (
     <QueryClientProvider client={queryClient}>
       <ImagesProvider>
