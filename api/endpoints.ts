@@ -10,8 +10,8 @@ export const baseURL = `http://${
 const ENDPOINT_STUBS = {
   images: "/api/images",
   login: "/api/login-link",
-  albums: "/api/images/albums",
-  count: "/api/images/count",
+  albums: "/api/albums",
+  count: "/api/count",
 } as const;
 
 type STUB_KEYS = keyof typeof ENDPOINT_STUBS;
