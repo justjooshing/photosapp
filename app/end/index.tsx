@@ -1,6 +1,14 @@
 import Link from "@/components/Link";
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Link as ExpoLink } from "expo-router";
+import React from "react";
+import {
+  Image,
+  ImageSourcePropType,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Button from "@/components/Button";
 import { useGetAlbums, useGetCount } from "@/api/query";
 
@@ -22,6 +30,27 @@ const End = () => {
           <Text>Photos deleted:</Text>
           <Text>{count.data.deletedCount}</Text>
         </View>
+      </View>
+      <View>
+        {albums.data?.albums.map((album) => {
+          const { baseUrl } = album.firstImage;
+          const imageSource: ImageSourcePropType = {
+            uri: baseUrl,
+            height: 200,
+            width: 200,
+          };
+
+          return (
+            <View key={album.id}>
+              <ExpoLink href={`/albums/${album.id}`} asChild>
+                <Pressable>
+                  <Image source={imageSource} />
+                  <Text>{album.title}</Text>
+                </Pressable>
+              </ExpoLink>
+            </View>
+          );
+        })}
       </View>
       <View>
         <Link href="/" copy="Another round?" />

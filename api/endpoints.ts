@@ -12,6 +12,7 @@ const ENDPOINT_STUBS = {
   login: "/api/login-link",
   albums: "/api/albums",
   count: "/api/count",
+  user: "/api/user",
 } as const;
 
 type STUB_KEYS = keyof typeof ENDPOINT_STUBS;

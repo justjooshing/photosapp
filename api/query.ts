@@ -5,21 +5,24 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { ENDPOINTS } from "./endpoints";
-import {
-  Albums,
-  IImage,
-  IImageUrls,
-  SortOptions,
-} from "@/context/Images/types";
+import { IImage, SortOptions } from "@/context/Images/types";
 import { client } from "./axios";
 import Cookies from "js-cookie";
 import { Keys } from "./keys";
-import { ImagesType } from "./types";
+import {
+  ApiAlbums,
+  ApiCount,
+  ApiImageUrls,
+  ApiLoginLink,
+  ApiSingleAlbum,
+  ApiUser,
+  ImagesType,
+} from "./types";
 
 const token = Cookies.get("jwt");
 
 const getLoginLink = async () => {
-  const { data } = await client.get(ENDPOINTS.get("login"));
+  const { data } = await client.get<ApiLoginLink>(ENDPOINTS.get("login"));
   return data;
 };
 
@@ -32,12 +35,12 @@ export const useGetLoginLink = () =>
 
 const getImages = async ({
   queryKey: [, type],
-}: QueryFunctionContext<
-  ReturnType<(typeof Keys)["images"]>
->): Promise<IImageUrls> => {
+}: QueryFunctionContext<ReturnType<(typeof Keys)["images"]>>) => {
   const params = new URLSearchParams();
   params.append("type", type);
-  const { data } = await client.get(ENDPOINTS.get("images"), { params });
+  const { data } = await client.get<ApiImageUrls>(ENDPOINTS.get("images"), {
+    params,
+  });
   return data;
 };
 
@@ -60,8 +63,8 @@ export const useMutateImages = (type: ImagesType) => {
     mutationFn: postImage,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: dataKey });
-      const prevImages: IImageUrls = queryClient.getQueryData(dataKey);
-      queryClient.setQueryData(dataKey, ({ imageUrls }: IImageUrls) => ({
+      const prevImages: ApiImageUrls = queryClient.getQueryData(dataKey);
+      queryClient.setQueryData(dataKey, ({ imageUrls }: ApiImageUrls) => ({
         imageUrls: imageUrls.filter((old) => old.id !== data.image.id),
       }));
       return { prevImages };
@@ -80,8 +83,8 @@ export const useMutateImages = (type: ImagesType) => {
   });
 };
 
-const getAlbums = async (): Promise<Albums> => {
-  const { data } = await client.get(ENDPOINTS.get("albums"));
+const getAlbums = async () => {
+  const { data } = await client.get<ApiAlbums>(ENDPOINTS.get("albums"));
   return data;
 };
 
@@ -93,11 +96,8 @@ export const useGetAlbums = () =>
     staleTime: 1000 * 60 * 60,
   });
 
-const getCount = async (): Promise<{
-  sortedCount: number;
-  deletedCount: number;
-}> => {
-  const { data } = await client.get(ENDPOINTS.get("count"));
+const getCount = async () => {
+  const { data } = await client.get<ApiCount>(ENDPOINTS.get("count"));
   return data;
 };
 
@@ -106,5 +106,34 @@ export const useGetCount = () =>
     enabled: !!token,
     queryKey: Keys.count(),
     queryFn: getCount,
+    staleTime: 1000 * 60 * 60,
+  });
+
+const getUser = async () => {
+  const { data } = await client.get<ApiUser>(ENDPOINTS.get("user"));
+  return data;
+};
+export const useGetUser = () =>
+  useQuery({
+    enabled: !!token,
+    queryKey: Keys.user,
+    queryFn: getUser,
+    staleTime: 1000 * 60 * 60,
+  });
+
+const getSingleAlbum = async ({
+  queryKey: [, albumId],
+}: QueryFunctionContext<ReturnType<(typeof Keys)["albumImages"]>>) => {
+  const { data } = await client.get<ApiSingleAlbum>(
+    `${ENDPOINTS.get("albums")}/${albumId}`
+  );
+  return data;
+};
+
+export const useGetSingleAlbum = (albumId: string) =>
+  useQuery({
+    enabled: !!token,
+    queryKey: Keys.albumImages(albumId),
+    queryFn: getSingleAlbum,
     staleTime: 1000 * 60 * 60,
   });
