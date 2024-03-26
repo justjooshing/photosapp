@@ -1,7 +1,8 @@
-import { IImage } from "@/context/Images/types";
+import { Link as ExpoLink } from "expo-router";
 import React from "react";
 import { ImageSourcePropType, Pressable, Image } from "react-native";
-import { Link as ExpoLink } from "expo-router";
+
+import { IImage } from "@/context/Images/types";
 
 type Props = {
   image: IImage;

@@ -1,4 +1,3 @@
-import { IImage } from "@/context/Images/types";
 import React from "react";
 import {
   Image,
@@ -7,6 +6,8 @@ import {
   ImageStyle,
 } from "react-native";
 import Animated from "react-native-reanimated";
+
+import { IImage } from "@/context/Images/types";
 
 type Props = {
   image: IImage;

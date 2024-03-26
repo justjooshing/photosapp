@@ -5,6 +5,7 @@ import React, {
   useContext,
   useState,
 } from "react";
+
 import { IImage } from "./types";
 
 interface InitialState {

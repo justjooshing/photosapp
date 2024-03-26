@@ -1,6 +1,7 @@
-import { useGetLoginLink } from "@/api/query";
 import { Link } from "expo-router";
 import { Text, StyleSheet } from "react-native";
+
+import { useGetLoginLink } from "@/api/query";
 
 const Login = () => {
   const loginLink = useGetLoginLink();

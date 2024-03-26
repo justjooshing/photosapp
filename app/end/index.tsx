@@ -1,4 +1,3 @@
-import Link from "@/components/Link";
 import { Link as ExpoLink } from "expo-router";
 import React from "react";
 import {
@@ -9,8 +8,10 @@ import {
   Text,
   View,
 } from "react-native";
-import Button from "@/components/Button";
+
 import { useGetAlbums, useGetCount } from "@/api/query";
+import Button from "@/components/Button";
+import Link from "@/components/Link";
 
 const End = () => {
   const albums = useGetAlbums();

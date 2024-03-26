@@ -1,6 +1,6 @@
+import { Link as ExpoLink } from "expo-router";
 import React from "react";
 import { Pressable, Text, StyleSheet, TextStyle } from "react-native";
-import { Link as ExpoLink } from "expo-router";
 
 type Props = {
   href: string;

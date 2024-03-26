@@ -1,15 +1,17 @@
 import {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
-import {
   Gesture,
   GestureDetector,
   GestureStateChangeEvent,
   PanGestureHandlerEventPayload,
 } from "react-native-gesture-handler";
+import {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
+
 import MainImage from "./MainImage";
+
 import { IImage } from "@/context/Images/types";
 
 interface Props {

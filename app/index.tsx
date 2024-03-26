@@ -1,11 +1,11 @@
-import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 import { router } from "expo-router";
+import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 
+import { useGetImages, useMutateImages } from "@/api/query";
+import { ImagesType } from "@/api/types";
 import Button from "@/components/Button";
 import MainImageHandler from "@/components/MainImageHandler";
-import { useGetImages, useMutateImages } from "@/api/query";
 import { useImagesContext } from "@/context/Images/Images";
-import { ImagesType } from "@/api/types";
 import { SortOptions } from "@/context/Images/types";
 
 const Images = () => {

@@ -4,10 +4,10 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { ENDPOINTS } from "./endpoints";
-import { IImage, SortOptions } from "@/context/Images/types";
-import { client } from "./axios";
 import Cookies from "js-cookie";
+
+import { client } from "./axios";
+import { ENDPOINTS } from "./endpoints";
 import { Keys } from "./keys";
 import {
   ApiAlbums,
@@ -18,6 +18,8 @@ import {
   ApiUser,
   ImagesType,
 } from "./types";
+
+import { IImage, SortOptions } from "@/context/Images/types";
 
 const token = Cookies.get("jwt");
 
@@ -125,15 +127,18 @@ const getSingleAlbum = async ({
   queryKey: [, albumId],
 }: QueryFunctionContext<ReturnType<(typeof Keys)["albumImages"]>>) => {
   const { data } = await client.get<ApiSingleAlbum>(
-    `${ENDPOINTS.get("albums")}/${albumId}`
+    `${ENDPOINTS.get("albums")}/${albumId}`,
   );
   return data;
 };
 
-export const useGetSingleAlbum = (albumId: string) =>
-  useQuery({
-    enabled: !!token,
+export const useGetSingleAlbum = (albumId: string) => {
+  const isNumberAsString = !isNaN(+albumId) && !Array.isArray(albumId);
+
+  return useQuery({
+    enabled: !!token && isNumberAsString,
     queryKey: Keys.albumImages(albumId),
     queryFn: getSingleAlbum,
     staleTime: 1000 * 60 * 60,
   });
+};
