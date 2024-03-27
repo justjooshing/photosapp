@@ -7,10 +7,8 @@ import { AxiosError } from "axios";
 import { Slot, router, usePathname } from "expo-router";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
-import { ImagesProvider } from "@/context/Images/Images";
 
 const config: QueryClientConfig = {
   defaultOptions: {
@@ -58,13 +56,11 @@ const Layout = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ImagesProvider>
+      <ScrollView>
         <GestureHandlerRootView style={styles.view}>
-          <View style={styles.view}>
-            <Slot />
-          </View>
+          <Slot />
         </GestureHandlerRootView>
-      </ImagesProvider>
+      </ScrollView>
     </QueryClientProvider>
   );
 };
@@ -75,7 +71,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    overflow: "scroll",
     width: "100%",
   },
 });
