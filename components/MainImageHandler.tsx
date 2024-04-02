@@ -1,3 +1,4 @@
+import { StyleSheet, View } from "react-native";
 import {
   Gesture,
   GestureDetector,
@@ -11,6 +12,7 @@ import {
 } from "react-native-reanimated";
 
 import MainImage from "./MainImage";
+import SwipeConfirmation from "./SwipeConfirmation";
 
 import { IImage } from "@/context/Images/types";
 
@@ -24,18 +26,30 @@ const MainImageHandler = ({
   swipe: { up: swipeUp, down: swipeDown },
 }: Props) => {
   const offset = useSharedValue(0);
-
   const animatedStyles = useAnimatedStyle(() => ({
-    transform: [{ translateY: offset.value }],
+    transform: [{ translateX: offset.value }],
   }));
 
+  const threshold = 100;
+
+  // Condense down into customHook
+  const delBarStyles = useAnimatedStyle(() => {
+    return {
+      opacity: offset.value < -threshold ? 1 : 0,
+    };
+  });
+  const keepBarStyles = useAnimatedStyle(() => {
+    return {
+      opacity: offset.value > threshold ? 1 : 0,
+    };
+  });
+
   const handleSwipe = async ({
-    translationY,
+    translationX,
   }: GestureStateChangeEvent<PanGestureHandlerEventPayload>) => {
-    const threshold = 300;
-    if (translationY < -Number(threshold)) {
+    if (translationX < -Number(threshold)) {
       swipeUp();
-    } else if (translationY > threshold) {
+    } else if (translationX > threshold) {
       swipeDown();
     } else {
       offset.value = withSpring(0);
@@ -45,7 +59,7 @@ const MainImageHandler = ({
   const pan = Gesture.Pan()
     .runOnJS(true)
     .onChange((e) => {
-      offset.value = e.translationY;
+      offset.value = e.translationX;
     })
     .onFinalize(async (e) => {
       try {
@@ -59,10 +73,25 @@ const MainImageHandler = ({
     });
 
   return (
-    <GestureDetector gesture={pan}>
-      <MainImage image={mainImage} style={animatedStyles} />
-    </GestureDetector>
+    <View style={styles.container}>
+      <SwipeConfirmation type="delete" style={delBarStyles} />
+      <GestureDetector gesture={pan}>
+        <MainImage image={mainImage} animatedStyles={animatedStyles} />
+      </GestureDetector>
+      <SwipeConfirmation type="keep" style={keepBarStyles} />
+    </View>
   );
 };
 
 export default MainImageHandler;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexGrow: 1,
+    flexDirection: "row",
+    maxWidth: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
