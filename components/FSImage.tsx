@@ -1,40 +1,35 @@
 import React from "react";
 import {
-  Image,
-  StyleSheet,
-  ImageSourcePropType,
   Dimensions,
-  ImageStyle,
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
 } from "react-native";
-import Animated from "react-native-reanimated";
 
 import { IImage } from "@/context/Images/types";
 
 type Props = {
   image: IImage;
-  animatedStyles: ImageStyle;
 };
 
 const { width, height } = Dimensions.get("window");
-const MainImage = ({ image, animatedStyles }: Props) => {
+
+const FSImage = ({ image }: Props) => {
   // For some reason these don't work on Android but LocalImage does
   const sourceImage: ImageSourcePropType = {
     uri: image.baseUrl,
     width: width - 10,
     height,
   };
-
   return (
-    <Animated.View style={animatedStyles}>
-      <Image style={styles.image} resizeMode="contain" source={sourceImage} />
-    </Animated.View>
+    <Image resizeMode="contain" source={sourceImage} style={styles.image} />
   );
 };
 
-export default MainImage;
+export default FSImage;
 
 const styles = StyleSheet.create({
   image: {
-    backgroundColor: "transparent",
+    alignSelf: "center",
   },
 });

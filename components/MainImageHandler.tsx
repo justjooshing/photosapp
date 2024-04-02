@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import {
   Gesture,
@@ -5,27 +6,29 @@ import {
   GestureStateChangeEvent,
   PanGestureHandlerEventPayload,
 } from "react-native-gesture-handler";
-import {
+import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
 
-import MainImage from "./MainImage";
+import FSImage from "./FSImage";
 import SwipeConfirmation from "./SwipeConfirmation";
 
-import { IImage } from "@/context/Images/types";
+import { useMutateImages } from "@/api/query";
+import { ImagesType } from "@/api/types";
+import { IImage, SortOptions } from "@/context/Images/types";
 
 interface Props {
   mainImage: IImage;
-  swipe: { up: () => void; down: () => void };
+  isLastImage: boolean;
+  imagesType: ImagesType;
 }
 
-const MainImageHandler = ({
-  mainImage,
-  swipe: { up: swipeUp, down: swipeDown },
-}: Props) => {
+const MainImageHandler = ({ mainImage, isLastImage, imagesType }: Props) => {
   const offset = useSharedValue(0);
+  const { mutate: sortImage } = useMutateImages(imagesType);
+
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [{ translateX: offset.value }],
   }));
@@ -44,13 +47,21 @@ const MainImageHandler = ({
     };
   });
 
+  const handleClick = async (choice: SortOptions) => {
+    sortImage({ image: mainImage, choice });
+
+    if (isLastImage) {
+      router.push("/end");
+    }
+  };
+
   const handleSwipe = async ({
     translationX,
   }: GestureStateChangeEvent<PanGestureHandlerEventPayload>) => {
     if (translationX < -Number(threshold)) {
-      swipeUp();
+      handleClick("delete");
     } else if (translationX > threshold) {
-      swipeDown();
+      handleClick("keep");
     } else {
       offset.value = withSpring(0);
     }
@@ -76,7 +87,9 @@ const MainImageHandler = ({
     <View style={styles.container}>
       <SwipeConfirmation type="delete" style={delBarStyles} />
       <GestureDetector gesture={pan}>
-        <MainImage image={mainImage} animatedStyles={animatedStyles} />
+        <Animated.View style={animatedStyles}>
+          <FSImage image={mainImage} />
+        </Animated.View>
       </GestureDetector>
       <SwipeConfirmation type="keep" style={keepBarStyles} />
     </View>
