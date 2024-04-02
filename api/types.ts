@@ -8,8 +8,10 @@ export interface ApiUser {
 }
 
 export interface ApiCount {
-  sortedCount: number;
-  deletedCount: number;
+  counts: {
+    sortedCount: number;
+    deletedCount: number;
+  };
 }
 
 export interface ApiAlbums {

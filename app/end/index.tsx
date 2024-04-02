@@ -25,11 +25,11 @@ const End = () => {
       <View style={styles.stats}>
         <View style={styles.singleStats}>
           <Text>Photos kept:</Text>
-          <Text>{count.data.sortedCount}</Text>
+          <Text>{count.data.counts.sortedCount}</Text>
         </View>
         <View style={styles.singleStats}>
           <Text>Photos deleted:</Text>
-          <Text>{count.data.deletedCount}</Text>
+          <Text>{count.data.counts.deletedCount}</Text>
         </View>
       </View>
       <View>
