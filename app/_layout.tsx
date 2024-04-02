@@ -1,4 +1,9 @@
 import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import {
   QueryClient,
   QueryClientConfig,
   QueryClientProvider,
@@ -7,8 +12,11 @@ import { AxiosError } from "axios";
 import { Slot, router, usePathname } from "expo-router";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { TamaguiProvider } from "tamagui";
+
+import { tamaguiConfig } from "../tamagui.config";
 
 const config: QueryClientConfig = {
   defaultOptions: {
@@ -45,7 +53,7 @@ const config: QueryClientConfig = {
 
 const Layout = () => {
   const [queryClient] = useState(() => new QueryClient(config));
-
+  const colourScheme = useColorScheme();
   const pathname = usePathname();
   const jwt = Cookies.get("jwt");
 
@@ -56,23 +64,19 @@ const Layout = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ScrollView>
-        <GestureHandlerRootView style={styles.view}>
-          <Slot />
-        </GestureHandlerRootView>
-      </ScrollView>
+      <TamaguiProvider config={tamaguiConfig}>
+        <ThemeProvider
+          value={colourScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <ScrollView contentContainerStyle={{ flex: 1 }}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <Slot />
+            </GestureHandlerRootView>
+          </ScrollView>
+        </ThemeProvider>
+      </TamaguiProvider>
     </QueryClientProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  view: {
-    display: "flex",
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-  },
-});
 
 export default Layout;
