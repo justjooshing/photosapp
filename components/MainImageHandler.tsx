@@ -23,9 +23,15 @@ interface Props {
   mainImage: IImage;
   isLastImage: boolean;
   imagesType: ImagesType;
+  updateCurrentIndex: () => void;
 }
 
-const MainImageHandler = ({ mainImage, isLastImage, imagesType }: Props) => {
+const MainImageHandler = ({
+  mainImage,
+  isLastImage,
+  imagesType,
+  updateCurrentIndex,
+}: Props) => {
   const offset = useSharedValue(0);
   const { mutate: sortImage } = useMutateImages(imagesType);
 
@@ -47,9 +53,9 @@ const MainImageHandler = ({ mainImage, isLastImage, imagesType }: Props) => {
     };
   });
 
-  const handleClick = async (choice: SortOptions) => {
+  const updateImage = async (choice: SortOptions) => {
     sortImage({ image: mainImage, choice });
-
+    updateCurrentIndex();
     if (isLastImage) {
       router.push("/end");
     }
@@ -59,9 +65,9 @@ const MainImageHandler = ({ mainImage, isLastImage, imagesType }: Props) => {
     translationX,
   }: GestureStateChangeEvent<PanGestureHandlerEventPayload>) => {
     if (translationX < -Number(threshold)) {
-      handleClick("delete");
+      updateImage("delete");
     } else if (translationX > threshold) {
-      handleClick("keep");
+      updateImage("keep");
     } else {
       offset.value = withSpring(0);
     }

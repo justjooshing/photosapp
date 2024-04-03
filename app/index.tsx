@@ -21,17 +21,29 @@ const Images = () => {
   if (images.isError) return <Text>{images.error.message}</Text>;
   if (!images.data?.length) return <Text> No data </Text>;
 
+  /**
+   * Fixes issue where after sorting final index image
+   * we were still trying to access that index
+   */
+  const decreaseCurrentIndexIfFinalIndex = () => {
+    if (images.data.length - 1 === currentImageIndex) {
+      setCurrentImageIndex((curr) => curr - 1);
+    }
+  };
+
   return (
     <View style={styles.wrapper}>
       <MainImageHandler
         mainImage={images.data[currentImageIndex]}
         isLastImage={images.data.length === 1}
         imagesType={imagesType}
+        updateCurrentIndex={decreaseCurrentIndexIfFinalIndex}
       />
       <View>
         <FlatList
           horizontal
           data={images.data}
+          keyExtractor={({ id }) => `${id}`}
           renderItem={({ item: image, index }) => {
             const imageSrc = {
               height: 100,
