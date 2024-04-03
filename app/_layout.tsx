@@ -12,7 +12,7 @@ import { AxiosError } from "axios";
 import { Slot, router, usePathname } from "expo-router";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { ScrollView, useColorScheme } from "react-native";
+import { ScrollView, StyleSheet, useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { TamaguiProvider } from "tamagui";
 
@@ -68,8 +68,8 @@ const Layout = () => {
         <ThemeProvider
           value={colourScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <ScrollView contentContainerStyle={{ flex: 1 }}>
-            <GestureHandlerRootView style={{ flex: 1 }}>
+          <ScrollView contentContainerStyle={styles.flex}>
+            <GestureHandlerRootView style={styles.flex}>
               <Slot />
             </GestureHandlerRootView>
           </ScrollView>
@@ -80,3 +80,9 @@ const Layout = () => {
 };
 
 export default Layout;
+
+const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
+});

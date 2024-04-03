@@ -1,5 +1,6 @@
 import { Link } from "expo-router";
-import { Text, StyleSheet } from "react-native";
+import { Text, View } from "react-native";
+import { Button } from "tamagui";
 
 import { useGetLoginLink } from "@/api/query";
 
@@ -10,21 +11,15 @@ const Login = () => {
   if (loginLink.isError) return <Text>{loginLink.error.message}</Text>;
 
   return (
-    <>
+    <View>
       <Text>Login</Text>
       <Link href={loginLink.data} asChild>
-        <Text style={styles.button}>Login with Google</Text>
+        <Button size="$4">
+          <Button.Text>Login with Google</Button.Text>
+        </Button>
       </Link>
-    </>
+    </View>
   );
 };
 
 export default Login;
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: "grey",
-    borderWidth: 4,
-    padding: 10,
-  },
-});
