@@ -1,6 +1,4 @@
-import { Link as ExpoLink } from "expo-router";
-import React from "react";
-import { ImageSourcePropType, Pressable, Image, View } from "react-native";
+import { ImageSourcePropType, Image, StyleSheet } from "react-native";
 
 import { IImage } from "@/context/Images/types";
 
@@ -8,22 +6,21 @@ type Props = {
   image: IImage;
 };
 
-function ImageTile({ image: { id, baseUrl } }: Props) {
+function ImageTile({ image }: Props) {
   const imageSource: ImageSourcePropType = {
-    uri: baseUrl,
-    height: 200,
-    width: 200,
+    uri: image.baseUrl,
   };
 
-  return (
-    <View>
-      <ExpoLink key={id} href={baseUrl} asChild>
-        <Pressable>
-          <Image source={imageSource} />
-        </Pressable>
-      </ExpoLink>
-    </View>
-  );
+  return <Image source={imageSource} resizeMode="cover" style={styles.image} />;
 }
 
 export default ImageTile;
+
+const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    width: "80%",
+    alignSelf: "center",
+    aspectRatio: 1,
+  },
+});
