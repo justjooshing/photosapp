@@ -16,24 +16,21 @@ import FSImage from "./FSImage";
 import SwipeConfirmation from "./SwipeConfirmation";
 
 import { useMutateImages } from "@/api/query";
-import { ImagesType } from "@/api/types";
-import { IImage, SortOptions } from "@/context/Images/types";
+import { ApiImage, SortOptions } from "@/api/types";
 
 interface Props {
-  mainImage: IImage;
+  mainImage: ApiImage;
   isLastImage: boolean;
-  imagesType: ImagesType;
   updateCurrentIndex: () => void;
 }
 
 const MainImageHandler = ({
   mainImage,
   isLastImage,
-  imagesType,
   updateCurrentIndex,
 }: Props) => {
   const offset = useSharedValue(0);
-  const { mutate: sortImage } = useMutateImages(imagesType);
+  const { mutate: sortImage } = useMutateImages();
 
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [{ translateX: offset.value }],
@@ -93,7 +90,7 @@ const MainImageHandler = ({
     <View style={styles.container}>
       <SwipeConfirmation type="delete" style={delBarStyles} />
       <GestureDetector gesture={pan}>
-        <Animated.View style={animatedStyles}>
+        <Animated.View style={[animatedStyles, styles.animated_container]}>
           <FSImage image={mainImage} />
         </Animated.View>
       </GestureDetector>
@@ -107,10 +104,13 @@ export default MainImageHandler;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexGrow: 1,
     flexDirection: "row",
     maxWidth: "100%",
     alignItems: "center",
     justifyContent: "center",
+  },
+  animated_container: {
+    width: "100%",
+    height: "100%",
   },
 });

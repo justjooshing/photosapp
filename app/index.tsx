@@ -9,12 +9,10 @@ import {
 } from "react-native";
 
 import { useGetImages } from "@/api/query";
-import { ImagesType } from "@/api/types";
 import MainImageHandler from "@/components/MainImageHandler";
 
 const Images = () => {
-  const imagesType: ImagesType = "similar";
-  const images = useGetImages(imagesType);
+  const images = useGetImages();
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
   if (images.isLoading) return <Text>Loading...</Text>;
@@ -36,7 +34,6 @@ const Images = () => {
       <MainImageHandler
         mainImage={images.data[currentImageIndex]}
         isLastImage={images.data.length === 1}
-        imagesType={imagesType}
         updateCurrentIndex={decreaseCurrentIndexIfFinalIndex}
       />
       <View>
@@ -71,10 +68,5 @@ export default Images;
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-  },
-  gallery: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
   },
 });

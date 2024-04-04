@@ -12,14 +12,15 @@ import { Keys } from "./keys";
 import {
   ApiAlbums,
   ApiCount,
+  ApiImage,
   ApiImageUrls,
   ApiLoginLink,
   ApiSingleAlbum,
+  ApiSortImage,
   ApiUser,
-  ImagesType,
+  SortOptions,
+  imagesType,
 } from "./types";
-
-import { IImage, SortOptions } from "@/context/Images/types";
 
 const token = Cookies.get("jwt");
 
@@ -46,21 +47,21 @@ const getImages = async ({
   return data;
 };
 
-export const useGetImages = (type: ImagesType) =>
+export const useGetImages = () =>
   useQuery({
     enabled: !!token,
-    queryKey: Keys.images(type),
+    queryKey: Keys.images(imagesType),
     queryFn: getImages,
     select: ({ imageUrls }) => imageUrls,
     staleTime: 1000 * 60 * 60,
   });
 
-const postImage = async (data: { image: IImage; choice: SortOptions }) =>
-  await client.post(ENDPOINTS.get("images"), data);
+const postImage = async (data: { image: ApiImage; choice: SortOptions }) =>
+  await client.post<ApiSortImage>(ENDPOINTS.get("images"), data);
 
-export const useMutateImages = (type: ImagesType) => {
+export const useMutateImages = () => {
   const queryClient = useQueryClient();
-  const dataKey = Keys.images(type);
+  const dataKey = Keys.images(imagesType);
   return useMutation({
     mutationFn: postImage,
     onMutate: async (data) => {
@@ -81,6 +82,48 @@ export const useMutateImages = (type: ImagesType) => {
       if (context.prevImages.imageUrls.length === 1 && !err) {
         queryClient.invalidateQueries({ queryKey: dataKey });
       }
+    },
+  });
+};
+
+export const useUpdateSingleImage = (albumId: string) => {
+  const queryClient = useQueryClient();
+  const dataKey = Keys.albumImages(albumId);
+  return useMutation({
+    mutationFn: postImage,
+    onMutate: async ({ choice, image }) => {
+      await queryClient.cancelQueries({ queryKey: dataKey });
+      const prevSingleAlbum: ApiSingleAlbum = queryClient.getQueryData(dataKey);
+      queryClient.setQueryData(dataKey, (response: ApiSingleAlbum) => {
+        // From here we want to identify the album that we've updated
+        // Update it with the new choice, and return the object
+        const updatedImages = response.images.map((oldImage) => {
+          if (oldImage.id === image.id) {
+            oldImage.sorted_status = choice;
+          }
+          return oldImage;
+        });
+        response.images = updatedImages;
+        return response;
+      });
+
+      return { prevSingleAlbum };
+    },
+    onError: (err, _, context) => {
+      console.error(err);
+      queryClient.setQueryData(dataKey, context.prevSingleAlbum);
+    },
+    onSuccess: (response, v, ctx) => {
+      const returnedImage = response.data.image[0];
+      const updatedImages = ctx.prevSingleAlbum.images.map((oldImage) =>
+        oldImage.id === returnedImage.id ? returnedImage : oldImage,
+      );
+
+      ctx.prevSingleAlbum.images = updatedImages;
+      queryClient.setQueryData(dataKey, ctx.prevSingleAlbum);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: Keys.count() });
     },
   });
 };

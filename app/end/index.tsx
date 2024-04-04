@@ -48,7 +48,7 @@ const End = () => {
       </View>
       <View style={styles.button_container}>
         {buttons.map(({ href, copy }) => (
-          <Button href={href} copy={copy} />
+          <Button href={href} copy={copy} key={href} />
         ))}
       </View>
       <View>

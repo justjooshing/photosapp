@@ -1,6 +1,7 @@
-import { IImage } from "@/context/Images/types";
-
 export type ImagesType = "today" | "similar";
+export const imagesType: ImagesType = "similar";
+
+export type SortOptions = "keep" | "delete";
 
 export interface ApiUser {
   profilePicture: string;
@@ -20,13 +21,13 @@ export interface ApiAlbums {
     userId: number;
     created_at: Date | null;
     title: string;
-    firstImage: IImage | null;
+    firstImage: ApiImage | null;
   }[];
 }
 
 export interface ApiSingleAlbum {
   title: string;
-  images: IImage[];
+  images: ApiImage[];
 }
 
 export interface ApiLoginLink {
@@ -34,5 +35,18 @@ export interface ApiLoginLink {
 }
 
 export interface ApiImageUrls {
-  imageUrls: IImage[];
+  imageUrls: ApiImage[];
+}
+
+export interface ApiImage {
+  baseUrl: string;
+  productUrl: string;
+  id: number;
+  sorted_album_id?: number;
+  sorted_status: SortOptions;
+  updated_at: Date;
+}
+
+export interface ApiSortImage {
+  image: ApiImage[];
 }

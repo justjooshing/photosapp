@@ -5,10 +5,10 @@ import {
   useWindowDimensions,
 } from "react-native";
 
-import { IImage } from "@/context/Images/types";
+import { ApiImage } from "@/context/Images/types";
 
 type Props = {
-  image: IImage;
+  image: ApiImage;
 };
 
 const FSImage = ({ image }: Props) => {
@@ -29,5 +29,7 @@ export default FSImage;
 const styles = StyleSheet.create({
   image: {
     alignSelf: "center",
+    width: "100%",
+    height: "100%",
   },
 });

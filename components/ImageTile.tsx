@@ -1,9 +1,9 @@
 import { ImageSourcePropType, Image, StyleSheet } from "react-native";
 
-import { IImage } from "@/context/Images/types";
+import { ApiImage } from "@/context/Images/types";
 
 type Props = {
-  image: IImage;
+  image: ApiImage;
 };
 
 function ImageTile({ image }: Props) {
