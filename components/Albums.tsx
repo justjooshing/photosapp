@@ -19,8 +19,12 @@ const Albums = ({ limit }: { limit?: number }) => {
           if (!limit || index < limit) {
             return (
               <Link key={album.id} href={`/albums/${album.id}`} asChild>
-                <Pressable>
-                  <ImageTile image={album.firstImage} />
+                <Pressable style={{ justifyContent: "flex-end" }}>
+                  {album.firstImage?.baseUrl ? (
+                    <ImageTile image={album.firstImage} />
+                  ) : (
+                    <Text>Where's the image?</Text>
+                  )}
                   <Text>{album.title}</Text>
                 </Pressable>
               </Link>

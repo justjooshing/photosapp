@@ -1,7 +1,6 @@
 import { ImageSourcePropType, Image, StyleSheet } from "react-native";
 
-import { ApiImage } from "@/context/Images/types";
-
+import { ApiImage } from "@/api/types";
 type Props = {
   image: ApiImage;
 };
@@ -11,7 +10,9 @@ function ImageTile({ image }: Props) {
     uri: image.baseUrl,
   };
 
-  return <Image source={imageSource} resizeMode="cover" style={styles.image} />;
+  return (
+    <Image source={imageSource} resizeMode="contain" style={styles.image} />
+  );
 }
 
 export default ImageTile;

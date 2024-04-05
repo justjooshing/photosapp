@@ -1,15 +1,17 @@
-import { Link, router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
+import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { H2 } from "tamagui";
 
-import { useGetSingleAlbum, useUpdateSingleImage } from "@/api/query";
-import { ApiImage, SortOptions } from "@/api/types";
-import ImageTile from "@/components/ImageTile";
+import { useGetSingleAlbum } from "@/api/query";
+import Button from "@/pages/Albums/components.tsx/Button";
+import { FilterOptions } from "@/pages/Albums/types";
+import Image from "@/pages/SingleAlbum/components/Image";
 
 const SingleAlbum = () => {
   const { albumId } = useLocalSearchParams();
-  const { mutate: updateImage } = useUpdateSingleImage(`${albumId}`);
+  const [filter, setFilter] = useState<FilterOptions>("all");
 
   const singleAlbum = useGetSingleAlbum(
     typeof albumId === "string" ? albumId : albumId[0],
@@ -21,48 +23,15 @@ const SingleAlbum = () => {
     return;
   }
 
-  if (singleAlbum.isLoading || singleAlbum.isFetching)
-    return <Text>loading...</Text>;
+  if (singleAlbum.isLoading) return <Text>loading...</Text>;
   if (singleAlbum.isError) return <Text>{singleAlbum.error.message}</Text>;
 
-  const handleClick = (image: ApiImage, choice: SortOptions) => {
-    updateImage({ image, choice });
-  };
-
-  const Image = ({ image }: { image: ApiImage }) => (
-    <View style={styles.album_item}>
-      <Pressable>
-        <ImageTile image={image} />
-      </Pressable>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-evenly",
-          width: "100%",
-        }}
-      >
-        <Pressable
-          onPress={() => {
-            handleClick(image, "keep");
-          }}
-        >
-          <Text>Tick</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            handleClick(image, "delete");
-          }}
-        >
-          <Text>Cross</Text>
-        </Pressable>
-        <Link href={image.productUrl} asChild>
-          <Pressable>
-            <Text>Google</Text>
-          </Pressable>
-        </Link>
-      </View>
-    </View>
-  );
+  const images =
+    filter === "all"
+      ? singleAlbum.data.images
+      : singleAlbum.data.images.filter(
+          (image) => image.sorted_status === filter,
+        );
 
   return (
     <View style={styles.container}>
@@ -70,14 +39,27 @@ const SingleAlbum = () => {
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          alignItems: "center",
         }}
       >
         <H2 fontSize="$6">{singleAlbum.data.title}</H2>
-        <Text>(Tick | Cross | All)</Text>
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 10,
+          }}
+        >
+          <Button choice="keep" filter={filter} setFilter={setFilter} />
+          <Button choice="delete" filter={filter} setFilter={setFilter} />
+          <Pressable onPress={() => setFilter("all")}>
+            <Text style={{ opacity: filter === "all" ? 0.5 : 1 }}>All</Text>
+          </Pressable>
+        </View>
       </View>
       <FlatList
-        data={singleAlbum.data.images}
+        data={images}
         keyExtractor={({ id }) => `${id}`}
         numColumns={2}
         contentContainerStyle={styles.album_container}
@@ -92,7 +74,4 @@ export default SingleAlbum;
 const styles = StyleSheet.create({
   container: { width: "100%" },
   album_container: { gap: 20 },
-  album_item: {
-    minWidth: "50%",
-  },
 });

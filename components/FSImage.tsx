@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 
-import { ApiImage } from "@/context/Images/types";
+import { ApiImage } from "@/api/types";
 
 type Props = {
   image: ApiImage;

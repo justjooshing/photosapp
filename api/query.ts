@@ -98,13 +98,19 @@ export const useUpdateSingleImage = (albumId: string) => {
         // From here we want to identify the album that we've updated
         // Update it with the new choice, and return the object
         const updatedImages = response.images.map((oldImage) => {
-          if (oldImage.id === image.id) {
-            oldImage.sorted_status = choice;
-          }
-          return oldImage;
+          return oldImage.id === image.id
+            ? {
+                ...oldImage,
+                sorted_status: choice,
+              }
+            : oldImage;
         });
-        response.images = updatedImages;
-        return response;
+
+        const updatedResponse = {
+          ...response,
+          images: updatedImages,
+        };
+        return updatedResponse;
       });
 
       return { prevSingleAlbum };
@@ -118,9 +124,12 @@ export const useUpdateSingleImage = (albumId: string) => {
       const updatedImages = ctx.prevSingleAlbum.images.map((oldImage) =>
         oldImage.id === returnedImage.id ? returnedImage : oldImage,
       );
+      const updatedSingleAlbum = {
+        ...ctx.prevSingleAlbum,
+        images: updatedImages,
+      };
 
-      ctx.prevSingleAlbum.images = updatedImages;
-      queryClient.setQueryData(dataKey, ctx.prevSingleAlbum);
+      queryClient.setQueryData(dataKey, updatedSingleAlbum);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: Keys.count() });
