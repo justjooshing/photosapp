@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { H3 } from "tamagui";
 
 import { useGetCount } from "@/api/query";
-import Albums from "@/components/Albums";
+import AlbumsList from "@/components/AlbumsList";
 
 const End = () => {
   const count = useGetCount();
@@ -51,13 +51,13 @@ const End = () => {
           <Button href={href} copy={copy} key={href} />
         ))}
       </View>
-      <View>
+      <View style={{ width: "100%" }}>
         <Link href="/albums" asChild style={styles.albums_title}>
           <Pressable>
             <H3>{`Albums >`}</H3>
           </Pressable>
         </Link>
-        <Albums limit={6} />
+        <AlbumsList limit={6} />
       </View>
     </>
   );
@@ -68,11 +68,11 @@ export default End;
 const styles = StyleSheet.create({
   stats: {
     width: "100%",
+    gap: 20,
   },
   singleStats: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 20,
   },
   button_container: {
     display: "flex",
