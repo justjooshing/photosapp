@@ -105,12 +105,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
-    maxWidth: "100%",
+    width: "100%",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
   animated_container: {
-    width: "100%",
+    minWidth: "90%",
     height: "100%",
   },
 });

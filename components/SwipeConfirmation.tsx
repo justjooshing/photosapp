@@ -19,7 +19,7 @@ export default SwipeConfirmation;
 
 const styles = StyleSheet.create({
   bar: {
-    width: "100%",
+    width: 10,
     height: "100%",
     zIndex: 2,
   },
