@@ -1,12 +1,10 @@
 import { View } from "react-native";
-import { H3 } from "tamagui";
 
-import AlbumsList from "@/components/Albums";
+import AlbumsList from "@/components/AlbumsList";
 
 const Albums = () => {
   return (
-    <View>
-      <H3>All Albums</H3>
+    <View style={{ width: "100%" }}>
       <AlbumsList />
     </View>
   );

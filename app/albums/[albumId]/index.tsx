@@ -2,7 +2,6 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { H2 } from "tamagui";
 
 import { useGetSingleAlbum } from "@/api/query";
 import Button from "@/pages/Albums/components.tsx/Button";
@@ -38,11 +37,10 @@ const SingleAlbum = () => {
       <View
         style={{
           flexDirection: "row",
-          justifyContent: "space-between",
+          justifyContent: "flex-end",
+          paddingBottom: 10,
         }}
       >
-        <H2 fontSize="$6">{singleAlbum.data.title}</H2>
-
         <View
           style={{
             flexDirection: "row",

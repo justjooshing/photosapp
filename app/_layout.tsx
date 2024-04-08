@@ -18,6 +18,9 @@ import { TamaguiProvider } from "tamagui";
 
 import { tamaguiConfig } from "../tamagui.config";
 
+import Header from "@/components/Header";
+import { HeadingProvider } from "@/context/Header";
+
 const config: QueryClientConfig = {
   defaultOptions: {
     queries: {
@@ -68,11 +71,14 @@ const Layout = () => {
         <ThemeProvider
           value={colourScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <ScrollView contentContainerStyle={styles.flex}>
-            <GestureHandlerRootView style={styles.flex}>
-              <Slot />
-            </GestureHandlerRootView>
-          </ScrollView>
+          <HeadingProvider>
+            <Header />
+            <ScrollView contentContainerStyle={[styles.flex, styles.container]}>
+              <GestureHandlerRootView style={styles.flex}>
+                <Slot />
+              </GestureHandlerRootView>
+            </ScrollView>
+          </HeadingProvider>
         </ThemeProvider>
       </TamaguiProvider>
     </QueryClientProvider>
@@ -84,5 +90,8 @@ export default Layout;
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
+  },
+  container: {
+    paddingTop: 10,
   },
 });
