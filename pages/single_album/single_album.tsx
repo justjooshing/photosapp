@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
-import FilterButton from "./components/FilterButton";
-import Image from "./components/Image";
+import FilterButton from "./components/filter_button";
+import Image from "./components/image";
 
 import { useGetSingleAlbum } from "@/api/query";
 import { FilterOptions } from "@/pages/single_album/types";

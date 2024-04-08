@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { H3 } from "tamagui";
 
 import { useGetCount } from "@/api/query";
-import AlbumsList from "@/components/AlbumsList";
+import AlbumsList from "@/components/albums_list";
 
 const End = () => {
   const count = useGetCount();

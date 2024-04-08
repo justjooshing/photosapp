@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import { FlatList, Pressable, Text, StyleSheet } from "react-native";
 
-import ImageTile from "./ImageTile";
+import ImageTile from "./image_tile";
 
 import { useGetAlbums } from "@/api/query";
 

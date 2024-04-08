@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import { useGetImages } from "@/api/query";
-import MainImageHandler from "@/components/MainImageHandler";
+import MainImageHandler from "@/components/main_image_handler";
 
 const Images = () => {
   const images = useGetImages();

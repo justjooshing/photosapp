@@ -18,7 +18,7 @@ import { TamaguiProvider } from "tamagui";
 
 import { tamaguiConfig } from "../tamagui.config";
 
-import Header from "@/components/Header";
+import Header from "@/components/header";
 import { HeadingProvider } from "@/context/Header";
 
 const config: QueryClientConfig = {

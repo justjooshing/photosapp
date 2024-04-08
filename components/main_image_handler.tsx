@@ -12,8 +12,8 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
-import FSImage from "./FSImage";
-import SwipeConfirmation from "./SwipeConfirmation";
+import FSImage from "./fs_image";
+import SwipeConfirmation from "./swipe_confirmation";
 
 import { useMutateImages } from "@/api/query";
 import { ApiImage, SortOptions } from "@/api/types";

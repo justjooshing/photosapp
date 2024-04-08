@@ -3,10 +3,10 @@ import { Link } from "expo-router";
 import React from "react";
 import { View, Pressable, StyleSheet } from "react-native";
 
-import Button from "./Button";
+import Button from "./button";
 
 import { ApiImage } from "@/api/types";
-import ImageTile from "@/components/ImageTile";
+import ImageTile from "@/components/image_tile";
 
 type Props = { image: ApiImage };
 
