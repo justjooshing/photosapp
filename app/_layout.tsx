@@ -9,17 +9,13 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { Slot, router, usePathname } from "expo-router";
+import { Slot, router } from "expo-router";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, useColorScheme } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import React, { useState } from "react";
+import { useColorScheme } from "react-native";
 import { TamaguiProvider } from "tamagui";
 
 import { tamaguiConfig } from "../tamagui.config";
-
-import Header from "@/components/header";
-import { HeadingProvider } from "@/context/Header";
 
 const config: QueryClientConfig = {
   defaultOptions: {
@@ -57,28 +53,13 @@ const config: QueryClientConfig = {
 const Layout = () => {
   const [queryClient] = useState(() => new QueryClient(config));
   const colourScheme = useColorScheme();
-  const pathname = usePathname();
-  const jwt = Cookies.get("jwt");
-
-  useEffect(() => {
-    if (!jwt && pathname !== "/login") router.replace("/login");
-    if (!!jwt && pathname === "/login") router.replace("/");
-  }, [pathname, jwt]);
-
   return (
     <QueryClientProvider client={queryClient}>
       <TamaguiProvider config={tamaguiConfig}>
         <ThemeProvider
           value={colourScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <HeadingProvider>
-            <Header />
-            <ScrollView contentContainerStyle={[styles.flex, styles.container]}>
-              <GestureHandlerRootView style={styles.flex}>
-                <Slot />
-              </GestureHandlerRootView>
-            </ScrollView>
-          </HeadingProvider>
+          <Slot />
         </ThemeProvider>
       </TamaguiProvider>
     </QueryClientProvider>
@@ -86,12 +67,3 @@ const Layout = () => {
 };
 
 export default Layout;
-
-const styles = StyleSheet.create({
-  flex: {
-    flex: 1,
-  },
-  container: {
-    paddingTop: 10,
-  },
-});
