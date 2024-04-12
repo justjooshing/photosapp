@@ -17,6 +17,7 @@ import SwipeConfirmation from "./swipe_confirmation";
 
 import { useMutateImages } from "@/api/query";
 import { ApiImage, SortOptions } from "@/api/types";
+import { useHeadingContext } from "@/context/Header";
 
 interface Props {
   mainImage: ApiImage;
@@ -29,8 +30,9 @@ const MainImageHandler = ({
   isLastImage,
   updateCurrentIndex,
 }: Props) => {
+  const { imageType } = useHeadingContext();
   const offset = useSharedValue(0);
-  const { mutate: sortImage } = useMutateImages();
+  const { mutate: sortImage } = useMutateImages(imageType);
 
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [{ translateX: offset.value }],

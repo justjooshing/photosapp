@@ -1,7 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, Switch, View } from "react-native";
 import { H1 } from "tamagui";
 
 import { useGetSingleAlbum } from "@/api/query";
@@ -33,7 +33,8 @@ const BackButton = () => {
 };
 
 const Header = () => {
-  const { pageTitle, setPageTitle } = useHeadingContext();
+  const { pageTitle, setPageTitle, imageType, setImageType } =
+    useHeadingContext();
   const { path, slug } = usePathname();
   const singleAlbum = useGetSingleAlbum(slug);
 
@@ -58,7 +59,15 @@ const Header = () => {
   const Mode = () => {
     // Might later be something for dark/light theme switch
     // Currently just placeholding to center 'title'
-    return <View style={{ width: 24 }} />;
+    const handleChange = () => {
+      setImageType((prev) => (prev === "similar" ? "today" : "similar"));
+    };
+    console.log({ path, imageType });
+    return path === "" ? (
+      <Switch value={imageType === "similar"} onValueChange={handleChange} />
+    ) : (
+      <View style={{ width: 24 }} />
+    );
   };
 
   return (

@@ -19,8 +19,9 @@ import {
   ApiSortImage,
   ApiUser,
   SortOptions,
-  imagesType,
 } from "./types";
+
+import { ImagesType } from "@/context/Header/types";
 
 const token = Cookies.get("jwt");
 
@@ -47,10 +48,10 @@ const getImages = async ({
   return data;
 };
 
-export const useGetImages = () =>
+export const useGetImages = (imageType: ImagesType) =>
   useQuery({
     enabled: !!token,
-    queryKey: Keys.images(imagesType),
+    queryKey: Keys.images(imageType),
     queryFn: getImages,
     select: ({ imageUrls }) => imageUrls,
     staleTime: 1000 * 60 * 60,
@@ -59,9 +60,9 @@ export const useGetImages = () =>
 const postImage = async (data: { image: ApiImage; choice: SortOptions }) =>
   await client.post<ApiSortImage>(ENDPOINTS.get("images"), data);
 
-export const useMutateImages = () => {
+export const useMutateImages = (imageType: ImagesType) => {
   const queryClient = useQueryClient();
-  const dataKey = Keys.images(imagesType);
+  const dataKey = Keys.images(imageType);
   return useMutation({
     mutationFn: postImage,
     onMutate: async (data) => {

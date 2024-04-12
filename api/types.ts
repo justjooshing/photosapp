@@ -1,6 +1,3 @@
-export type ImagesType = "today" | "similar";
-export const imagesType: ImagesType = "similar";
-
 export type SortOptions = "keep" | "delete";
 
 export interface ApiUser {
