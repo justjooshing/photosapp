@@ -56,14 +56,14 @@ export const useGetImages = (imageType: ImagesType) =>
     select: ({ imageUrls }) => imageUrls,
   });
 
-const postImage = async (data: { image: ApiImage; choice: SortOptions }) =>
+const sortImage = async (data: { image: ApiImage; choice: SortOptions }) =>
   await client.post<ApiSortImage>(ENDPOINTS.get("images"), data);
 
-export const useMutateImages = (imageType: ImagesType) => {
+export const useSortImage = (imageType: ImagesType) => {
   const queryClient = useQueryClient();
   const dataKey = Keys.images(imageType);
   return useMutation({
-    mutationFn: postImage,
+    mutationFn: sortImage,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: dataKey });
       const prevImages: ApiImageUrls = queryClient.getQueryData(dataKey);
@@ -77,7 +77,13 @@ export const useMutateImages = (imageType: ImagesType) => {
       queryClient.setQueryData(dataKey, context.prevImages);
     },
     onSettled: (d, err, v, context) => {
-      queryClient.invalidateQueries({ queryKey: Keys.count() });
+      queryClient.invalidateQueries({
+        queryKey: Keys.count(),
+      });
+      queryClient.invalidateQueries({
+        queryKey: Keys.baseAlbums,
+      });
+
       // Allow refetch if last image has been sorted successfully
       if (context.prevImages.imageUrls.length === 1 && !err) {
         queryClient.invalidateQueries({ queryKey: dataKey });
@@ -90,7 +96,7 @@ export const useUpdateSingleImage = (albumId: string) => {
   const queryClient = useQueryClient();
   const dataKey = Keys.albumImages(albumId);
   return useMutation({
-    mutationFn: postImage,
+    mutationFn: sortImage,
     onMutate: async ({ choice, image }) => {
       await queryClient.cancelQueries({ queryKey: dataKey });
       const prevSingleAlbum: ApiSingleAlbum = queryClient.getQueryData(dataKey);

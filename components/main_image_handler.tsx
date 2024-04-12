@@ -15,7 +15,7 @@ import Animated, {
 import FSImage from "./fs_image";
 import SwipeConfirmation from "./swipe_confirmation";
 
-import { useMutateImages } from "@/api/query";
+import { useSortImage } from "@/api/query";
 import { ApiImage, SortOptions } from "@/api/types";
 import { useHeadingContext } from "@/context/Header";
 
@@ -32,7 +32,7 @@ const MainImageHandler = ({
 }: Props) => {
   const { imageType } = useHeadingContext();
   const offset = useSharedValue(0);
-  const { mutate: sortImage } = useMutateImages(imageType);
+  const { mutate: sortImage } = useSortImage(imageType);
 
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [{ translateX: offset.value }],

@@ -1,4 +1,4 @@
-import { ImagesType } from "./types";
+import { ImagesType } from "@/context/Header/types";
 
 export const Keys = {
   loginLink: ["login-link"] as const,
