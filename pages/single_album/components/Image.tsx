@@ -1,5 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import { View, Pressable, StyleSheet } from "react-native";
 
@@ -26,14 +26,14 @@ const Image = ({ image }: Props) => (
     >
       <Button image={image} choice="keep" />
       <Button image={image} choice="delete" />
-      <Link href={image.productUrl} asChild>
+      <Pressable onPress={() => WebBrowser.openBrowserAsync(image.productUrl)}>
         <AntDesign
           name="google"
           size={20}
           color="black"
           style={{ userSelect: "none" }}
         />
-      </Link>
+      </Pressable>
     </View>
   </View>
 );
