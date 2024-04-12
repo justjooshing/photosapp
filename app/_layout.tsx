@@ -20,6 +20,7 @@ import { tamaguiConfig } from "../tamagui.config";
 const config: QueryClientConfig = {
   defaultOptions: {
     queries: {
+      staleTime: 1000 * 60 * 10,
       retry: (failureCount, err) => {
         if (err instanceof AxiosError) {
           if (err.response?.status === 401) {

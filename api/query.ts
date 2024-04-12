@@ -54,7 +54,6 @@ export const useGetImages = (imageType: ImagesType) =>
     queryKey: Keys.images(imageType),
     queryFn: getImages,
     select: ({ imageUrls }) => imageUrls,
-    staleTime: 1000 * 60 * 60,
   });
 
 const postImage = async (data: { image: ApiImage; choice: SortOptions }) =>
@@ -148,7 +147,6 @@ export const useGetAlbums = () =>
     enabled: !!token,
     queryKey: Keys.albums(),
     queryFn: getAlbums,
-    staleTime: 1000 * 60 * 60,
   });
 
 const getCount = async () => {
@@ -161,7 +159,6 @@ export const useGetCount = () =>
     enabled: !!token,
     queryKey: Keys.count(),
     queryFn: getCount,
-    staleTime: 1000 * 60 * 60,
   });
 
 const getUser = async () => {
@@ -173,7 +170,6 @@ export const useGetUser = () =>
     enabled: !!token,
     queryKey: Keys.user,
     queryFn: getUser,
-    staleTime: 1000 * 60 * 60,
   });
 
 const getSingleAlbum = async ({
@@ -192,6 +188,5 @@ export const useGetSingleAlbum = (albumId: string) => {
     enabled: !!token && isNumberAsString,
     queryKey: Keys.albumImages(albumId),
     queryFn: getSingleAlbum,
-    staleTime: 1000 * 60 * 60,
   });
 };
