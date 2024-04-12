@@ -13,6 +13,8 @@ const SingleAlbum = () => {
   const { albumId } = useLocalSearchParams();
   const [filter, setFilter] = useState<FilterOptions>("all");
 
+  const opacityStyle = { opacity: filter === "all" ? 0.5 : 1 };
+
   const singleAlbum = useGetSingleAlbum(
     typeof albumId === "string" ? albumId : albumId[0],
   );
@@ -35,25 +37,12 @@ const SingleAlbum = () => {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          paddingBottom: 10,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 10,
-          }}
-        >
+      <View style={styles.filter_header}>
+        <View style={styles.filter_buttons_wrapper}>
           <FilterButton choice="keep" filter={filter} setFilter={setFilter} />
           <FilterButton choice="delete" filter={filter} setFilter={setFilter} />
           <Pressable onPress={() => setFilter("all")}>
-            <Text style={{ opacity: filter === "all" ? 0.5 : 1 }}>All</Text>
+            <Text style={opacityStyle}>All</Text>
           </Pressable>
         </View>
       </View>
@@ -73,4 +62,14 @@ export default SingleAlbum;
 const styles = StyleSheet.create({
   container: { width: "100%" },
   album_container: { gap: 20 },
+  filter_header: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    paddingBottom: 10,
+  },
+  filter_buttons_wrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
 });

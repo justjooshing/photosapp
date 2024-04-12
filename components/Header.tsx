@@ -62,11 +62,11 @@ const Header = () => {
     const handleChange = () => {
       setImageType((prev) => (prev === "similar" ? "today" : "similar"));
     };
-    console.log({ path, imageType });
+
     return path === "" ? (
       <Switch value={imageType === "similar"} onValueChange={handleChange} />
     ) : (
-      <View style={{ width: 24 }} />
+      <View style={styles.mode_placeholder} />
     );
   };
 
@@ -91,5 +91,8 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "blue",
     color: "white",
+  },
+  mode_placeholder: {
+    width: 24,
   },
 });

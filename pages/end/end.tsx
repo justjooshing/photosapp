@@ -51,7 +51,7 @@ const End = () => {
           <Button href={href} copy={copy} key={href} />
         ))}
       </View>
-      <View style={{ width: "100%" }}>
+      <View style={styles.album_list}>
         <Link href="/albums" asChild style={styles.albums_title}>
           <Pressable>
             <H3>{`Albums >`}</H3>
@@ -92,6 +92,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
     fontWeight: "700",
+  },
+  album_list: {
+    width: "100%",
   },
   albums_title: { paddingBottom: 10 },
 });

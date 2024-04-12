@@ -15,15 +15,7 @@ const Image = ({ image }: Props) => (
     <Pressable>
       <ImageTile image={image} />
     </Pressable>
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        width: "100%",
-        paddingTop: 10,
-      }}
-    >
+    <View style={styles.button_wrapper}>
       <Button image={image} choice="keep" />
       <Button image={image} choice="delete" />
       <Pressable onPress={() => WebBrowser.openBrowserAsync(image.productUrl)}>
@@ -31,7 +23,7 @@ const Image = ({ image }: Props) => (
           name="google"
           size={20}
           color="black"
-          style={{ userSelect: "none" }}
+          style={styles.button_google}
         />
       </Pressable>
     </View>
@@ -44,4 +36,11 @@ const styles = StyleSheet.create({
   album_item: {
     minWidth: "50%",
   },
+  button_wrapper: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    paddingTop: 10,
+  },
+  button_google: { userSelect: "none" },
 });

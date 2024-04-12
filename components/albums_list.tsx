@@ -6,6 +6,8 @@ import ImageTile from "./image_tile";
 import { useGetAlbums } from "@/api/query";
 
 const numColumns = 2;
+const imageWidth = { minWidth: `${100 / numColumns}%` } as const;
+
 const AlbumsList = ({ limit }: { limit?: number }) => {
   const albums = useGetAlbums();
 
@@ -18,8 +20,13 @@ const AlbumsList = ({ limit }: { limit?: number }) => {
       renderItem={({ item: album, index }) => {
         if (!limit || index < limit) {
           return (
-            <Link key={album.id} href={`/albums/${album.id}`} asChild>
-              <Pressable style={{ justifyContent: "flex-end" }}>
+            <Link
+              key={album.id}
+              href={`/albums/${album.id}`}
+              asChild
+              style={imageWidth}
+            >
+              <Pressable style={styles.image}>
                 {album.firstImage?.baseUrl ? (
                   <ImageTile image={album.firstImage} />
                 ) : (
@@ -40,7 +47,7 @@ export default AlbumsList;
 
 const styles = StyleSheet.create({
   column: {
-    justifyContent: "space-around",
     paddingBottom: 10,
   },
+  image: { alignItems: "center" },
 });
