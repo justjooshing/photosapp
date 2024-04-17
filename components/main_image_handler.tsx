@@ -13,9 +13,10 @@ import Animated, {
 } from "react-native-reanimated";
 
 import FSImage from "./fs_image";
+import Skeleton from "./skeleton";
 import SwipeConfirmation from "./swipe_confirmation";
 
-import { useSortImage } from "@/api/query";
+import { useGetImages, useSortImage } from "@/api/query";
 import { ApiImage, SortOptions } from "@/api/types";
 import { useHeadingContext } from "@/context/Header";
 
@@ -31,6 +32,8 @@ const MainImageHandler = ({
   updateCurrentIndex,
 }: Props) => {
   const { imageType } = useHeadingContext();
+  const { isLoading } = useGetImages(imageType);
+
   const offset = useSharedValue(0);
   const { mutate: sortImage } = useSortImage(imageType);
 
@@ -90,13 +93,21 @@ const MainImageHandler = ({
 
   return (
     <View style={styles.container}>
-      <SwipeConfirmation type="delete" style={delBarStyles} />
-      <GestureDetector gesture={pan}>
-        <Animated.View style={[animatedStyles, styles.animated_container]}>
-          <FSImage image={mainImage} />
-        </Animated.View>
-      </GestureDetector>
-      <SwipeConfirmation type="keep" style={keepBarStyles} />
+      {isLoading ? (
+        <View style={styles.skeleton_container}>
+          <Skeleton />
+        </View>
+      ) : (
+        <>
+          <SwipeConfirmation type="delete" style={delBarStyles} />
+          <GestureDetector gesture={pan}>
+            <Animated.View style={[animatedStyles, styles.animated_container]}>
+              <FSImage image={mainImage} />
+            </Animated.View>
+          </GestureDetector>
+          <SwipeConfirmation type="keep" style={keepBarStyles} />
+        </>
+      )}
     </View>
   );
 };
@@ -114,5 +125,10 @@ const styles = StyleSheet.create({
   animated_container: {
     minWidth: "90%",
     height: "100%",
+  },
+  skeleton_container: {
+    width: "100%",
+    aspectRatio: 1,
+    padding: 20,
   },
 });

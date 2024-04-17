@@ -1,17 +1,12 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Image,
-  FlatList,
-} from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 
+import CarouselImage from "./components/carousel_image";
 import TodayNoData from "./components/today_no_data";
 
 import { useGetImages } from "@/api/query";
 import MainImageHandler from "@/components/main_image_handler";
+import Skeleton from "@/components/skeleton";
 import { useHeadingContext } from "@/context/Header";
 
 const Images = () => {
@@ -20,9 +15,8 @@ const Images = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
   // Update to skeleton
-  if (images.isLoading) return <Text>Loading...</Text>;
   if (images.isError) return <Text>{images.error.message}</Text>;
-  if (!images.data?.length && imageType === "similar")
+  if (!images.data?.length && !images.isLoading && imageType === "similar")
     return <Text> No data </Text>;
 
   /**
@@ -30,44 +24,49 @@ const Images = () => {
    * we were still trying to access that index
    */
   const decreaseCurrentIndexIfFinalIndex = () => {
-    if (images.data.length - 1 === currentImageIndex) {
+    if (images.data?.length - 1 === currentImageIndex) {
       setCurrentImageIndex((curr) => curr - 1);
     }
   };
 
   return (
     <View style={styles.wrapper}>
-      {!images.data.length && imageType === "today" ? (
+      {!images.data?.length && !images.isLoading && imageType === "today" ? (
         <TodayNoData />
       ) : (
         <>
           <MainImageHandler
-            mainImage={images.data[currentImageIndex]}
-            isLastImage={images.data.length === 1}
+            mainImage={images.data?.[currentImageIndex]}
+            isLastImage={images.data?.length === 1}
             updateCurrentIndex={decreaseCurrentIndexIfFinalIndex}
           />
           <View>
-            <FlatList
-              horizontal
-              data={images.data}
-              keyExtractor={({ id }) => `${id}`}
-              renderItem={({ item: image, index }) => {
-                const imageSrc = {
-                  height: 100,
-                  width: 100,
-                  uri: image.baseUrl,
-                };
-                const handleClick = () => {
-                  setCurrentImageIndex(index);
-                };
-
-                return (
-                  <Pressable onPress={handleClick} key={image.id}>
-                    <Image source={imageSrc} />
-                  </Pressable>
-                );
-              }}
-            />
+            {images.isLoading ? (
+              <FlatList
+                horizontal
+                data={Array(5)}
+                contentContainerStyle={{ gap: 1 }}
+                renderItem={() => (
+                  <View style={styles.skeleton_container}>
+                    <Skeleton />
+                  </View>
+                )}
+              />
+            ) : (
+              <FlatList
+                horizontal
+                data={images.data}
+                keyExtractor={({ id }) => `${id}`}
+                contentContainerStyle={{ gap: 1 }}
+                renderItem={({ item, index }) => (
+                  <CarouselImage
+                    image={item}
+                    position={index}
+                    setCurrentImageIndex={setCurrentImageIndex}
+                  />
+                )}
+              />
+            )}
           </View>
         </>
       )}
@@ -78,6 +77,7 @@ const Images = () => {
 export default Images;
 
 const styles = StyleSheet.create({
+  skeleton_container: { width: 100, aspectRatio: 1 },
   wrapper: {
     flex: 1,
   },

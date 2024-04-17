@@ -11,7 +11,7 @@ import ImageTile from "@/components/image_tile";
 type Props = { image: ApiImage };
 
 const Image = ({ image }: Props) => (
-  <View style={styles.album_item}>
+  <>
     <Pressable>
       <ImageTile image={image} />
     </Pressable>
@@ -27,15 +27,12 @@ const Image = ({ image }: Props) => (
         />
       </Pressable>
     </View>
-  </View>
+  </>
 );
 
 export default Image;
 
 const styles = StyleSheet.create({
-  album_item: {
-    minWidth: "50%",
-  },
   button_wrapper: {
     flexDirection: "row",
     justifyContent: "space-evenly",
