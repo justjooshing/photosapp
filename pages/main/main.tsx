@@ -8,7 +8,7 @@ import {
   FlatList,
 } from "react-native";
 
-import TodayNoData from "./components/TodayNoData";
+import TodayNoData from "./components/today_no_data";
 
 import { useGetImages } from "@/api/query";
 import MainImageHandler from "@/components/main_image_handler";
@@ -19,6 +19,7 @@ const Images = () => {
   const images = useGetImages(imageType);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
+  // Update to skeleton
   if (images.isLoading) return <Text>Loading...</Text>;
   if (images.isError) return <Text>{images.error.message}</Text>;
   if (!images.data?.length && imageType === "similar")
