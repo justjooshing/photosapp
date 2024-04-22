@@ -9,8 +9,9 @@ const TodayNoData = () => {
   return (
     <View style={styles.wrapper}>
       <Text>
-        No more images from this date over the years needing to be sorted
+        No more images from this date over the years needing to be sorted.
       </Text>
+      <Text>Check back again tomorrow.</Text>
       <Button onPress={() => setImageType("similar")}>
         Click here to view similar images
       </Button>

@@ -56,7 +56,7 @@ const Images = () => {
               <FlatList
                 horizontal
                 data={images.data}
-                keyExtractor={({ id }) => `${id}`}
+                keyExtractor={({ id }) => id.toString()}
                 contentContainerStyle={{ gap: 1 }}
                 renderItem={({ item, index }) => (
                   <CarouselImage
