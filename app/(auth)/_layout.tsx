@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import Header from "@/components/header";
 import { HeadingProvider } from "@/context/Header";
+import { ImageProvider } from "@/context/Image";
 
 const Layout = () => {
   const jwt = Cookies.get("jwt");
@@ -13,12 +14,14 @@ const Layout = () => {
     <Redirect href="/login" />
   ) : (
     <HeadingProvider>
-      <Header />
-      <ScrollView contentContainerStyle={[styles.flex, styles.container]}>
-        <GestureHandlerRootView style={styles.flex}>
-          <Slot />
-        </GestureHandlerRootView>
-      </ScrollView>
+      <ImageProvider>
+        <Header />
+        <ScrollView contentContainerStyle={[styles.flex, styles.container]}>
+          <GestureHandlerRootView style={styles.flex}>
+            <Slot />
+          </GestureHandlerRootView>
+        </ScrollView>
+      </ImageProvider>
     </HeadingProvider>
   );
 };

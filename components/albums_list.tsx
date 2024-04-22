@@ -12,7 +12,7 @@ const imageWidth = { minWidth: `${100 / numColumns}%` } as const;
 const AlbumsList = ({ limit }: { limit?: number }) => {
   const albums = useGetAlbums();
 
-  if (albums.isLoading)
+  if (albums.isLoading) {
     return (
       <FlatList
         data={Array(6)}
@@ -28,38 +28,37 @@ const AlbumsList = ({ limit }: { limit?: number }) => {
         )}
       />
     );
+  }
 
   return (
-    <>
-      <FlatList
-        data={albums.data?.albums}
-        numColumns={numColumns}
-        columnWrapperStyle={styles.column}
-        keyExtractor={({ id }) => `${id}`}
-        renderItem={({ item: album, index }) => {
-          if (!limit || index < limit) {
-            return (
-              <Link
-                key={album.id}
-                href={`/albums/${album.id}`}
-                asChild
-                style={imageWidth}
-              >
-                <Pressable style={styles.image}>
-                  {album.firstImage?.baseUrl ? (
-                    <ImageTile image={album.firstImage} />
-                  ) : (
-                    <Text>Where's the image?</Text>
-                  )}
-                  <Text>{album.title}</Text>
-                </Pressable>
-              </Link>
-            );
-          }
-          return null;
-        }}
-      />
-    </>
+    <FlatList
+      data={albums.data?.albums}
+      numColumns={numColumns}
+      columnWrapperStyle={styles.column}
+      keyExtractor={({ id }) => id.toString()}
+      renderItem={({ item: album, index }) => {
+        if (!limit || index < limit) {
+          return (
+            <Link
+              key={album.id}
+              href={`/albums/${album.id}`}
+              asChild
+              style={imageWidth}
+            >
+              <Pressable style={styles.image}>
+                {album.firstImage?.baseUrl ? (
+                  <ImageTile image={album.firstImage} />
+                ) : (
+                  <Text>Where's the image?</Text>
+                )}
+                <Text>{album.title}</Text>
+              </Pressable>
+            </Link>
+          );
+        }
+        return null;
+      }}
+    />
   );
 };
 

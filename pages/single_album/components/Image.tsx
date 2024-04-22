@@ -1,34 +1,43 @@
 import { AntDesign } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
-import React from "react";
 import { View, Pressable, StyleSheet } from "react-native";
 
 import Button from "./button";
 
 import { ApiImage } from "@/api/types";
 import ImageTile from "@/components/image_tile";
+import { useImageContext } from "@/context/Image";
 
 type Props = { image: ApiImage };
 
-const Image = ({ image }: Props) => (
-  <>
-    <Pressable>
-      <ImageTile image={image} />
-    </Pressable>
-    <View style={styles.button_wrapper}>
-      <Button image={image} choice="keep" />
-      <Button image={image} choice="delete" />
-      <Pressable onPress={() => WebBrowser.openBrowserAsync(image.productUrl)}>
-        <AntDesign
-          name="google"
-          size={20}
-          color="black"
-          style={styles.button_google}
-        />
+const Image = ({ image }: Props) => {
+  const { setTargetImage } = useImageContext();
+  const handleButtonClick = () => {
+    WebBrowser.openBrowserAsync(image.productUrl);
+    // Keep track of which image we've just viewed to refetch baseUrl
+    setTargetImage(image);
+  };
+
+  return (
+    <>
+      <Pressable>
+        <ImageTile image={image} />
       </Pressable>
-    </View>
-  </>
-);
+      <View style={styles.button_wrapper}>
+        <Button image={image} choice="keep" />
+        <Button image={image} choice="delete" />
+        <Pressable onPress={handleButtonClick}>
+          <AntDesign
+            name="google"
+            size={20}
+            color="black"
+            style={styles.button_google}
+          />
+        </Pressable>
+      </View>
+    </>
+  );
+};
 
 export default Image;
 

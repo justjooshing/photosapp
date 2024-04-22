@@ -18,7 +18,6 @@ import {
   ApiSingleAlbum,
   ApiSortImage,
   ApiUser,
-  SortOptions,
 } from "./types";
 
 import { ImagesType } from "@/context/Header/types";
@@ -56,14 +55,21 @@ export const useGetImages = (imageType: ImagesType) =>
     select: ({ imageUrls }) => imageUrls,
   });
 
-const sortImage = async (data: { image: ApiImage; choice: SortOptions }) =>
-  await client.post<ApiSortImage>(ENDPOINTS.get("images"), data);
+interface SortImageProps {
+  image: ApiImage;
+  body: Partial<ApiImage>;
+}
+const updateSingleImage = async ({ image, body }: SortImageProps) =>
+  await client.put<ApiSortImage>(
+    `${ENDPOINTS.get("images")}/${image.id}`,
+    body,
+  );
 
 export const useSortImage = (imageType: ImagesType) => {
   const queryClient = useQueryClient();
   const dataKey = Keys.images(imageType);
   return useMutation({
-    mutationFn: sortImage,
+    mutationFn: updateSingleImage,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: dataKey });
       const prevImages: ApiImageUrls = queryClient.getQueryData(dataKey);
@@ -92,22 +98,22 @@ export const useSortImage = (imageType: ImagesType) => {
   });
 };
 
-export const useUpdateSingleImage = (albumId: string) => {
+export const useUpdateSingleAlbumImage = (albumId: string) => {
   const queryClient = useQueryClient();
   const dataKey = Keys.albumImages(albumId);
   return useMutation({
-    mutationFn: sortImage,
-    onMutate: async ({ choice, image }) => {
+    mutationFn: updateSingleImage,
+    onMutate: async ({ body, image }) => {
       await queryClient.cancelQueries({ queryKey: dataKey });
       const prevSingleAlbum: ApiSingleAlbum = queryClient.getQueryData(dataKey);
       queryClient.setQueryData(dataKey, (response: ApiSingleAlbum) => {
         // From here we want to identify the album that we've updated
-        // Update it with the new choice, and return the object
+        // Update it with the new album details, and return the object
         const updatedImages = response.images.map((oldImage) => {
           return oldImage.id === image.id
             ? {
                 ...oldImage,
-                sorted_status: choice,
+                ...body,
               }
             : oldImage;
         });
@@ -194,5 +200,6 @@ export const useGetSingleAlbum = (albumId: string) => {
     enabled: !!token && isNumberAsString,
     queryKey: Keys.albumImages(albumId),
     queryFn: getSingleAlbum,
+    refetchOnWindowFocus: "always",
   });
 };

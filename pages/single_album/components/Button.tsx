@@ -2,7 +2,7 @@ import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { Pressable } from "react-native";
 
-import { useUpdateSingleImage } from "@/api/query";
+import { useUpdateSingleAlbumImage } from "@/api/query";
 import { ApiImage, SortOptions } from "@/api/types";
 import Icons from "@/components/icons";
 
@@ -13,10 +13,10 @@ type Props = {
 
 const Button = ({ image, choice }: Props) => {
   const { albumId } = useLocalSearchParams();
-  const { mutate: updateImage } = useUpdateSingleImage(`${albumId}`);
+  const { mutate: updateImage } = useUpdateSingleAlbumImage(albumId.toString());
 
   const handleClick = () => {
-    updateImage({ image, choice });
+    updateImage({ image, body: { sorted_status: choice } });
   };
   const isSelected = image.sorted_status === choice;
 
