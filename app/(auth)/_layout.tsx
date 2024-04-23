@@ -16,7 +16,7 @@ const Layout = () => {
     <HeadingProvider>
       <ImageProvider>
         <Header />
-        <ScrollView contentContainerStyle={[styles.flex, styles.container]}>
+        <ScrollView contentContainerStyle={styles.flex}>
           <GestureHandlerRootView style={styles.flex}>
             <Slot />
           </GestureHandlerRootView>
@@ -31,8 +31,5 @@ export default Layout;
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
-  },
-  container: {
-    paddingTop: 10,
   },
 });
