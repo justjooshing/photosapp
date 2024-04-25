@@ -40,6 +40,9 @@ const Header = () => {
   const singleAlbum = useGetSingleAlbum(slug);
 
   useEffect(() => {
+    if (path === "") {
+      return setPageTitle(imageType);
+    }
     if (path !== "albums") {
       return setPageTitle(undefined);
     }
@@ -47,7 +50,7 @@ const Header = () => {
       return setPageTitle(singleAlbum.data.title);
     }
     setPageTitle("All Albums");
-  }, [path, slug, singleAlbum]);
+  }, [path, slug, singleAlbum, imageType]);
 
   const Title = () => {
     return (
@@ -64,6 +67,7 @@ const Header = () => {
     }[] = [
       { name: "calendar", option: "today" },
       { name: "picture", option: "similar" },
+      { name: "clockcircleo", option: "oldest" },
     ];
 
     return path === "" ? (

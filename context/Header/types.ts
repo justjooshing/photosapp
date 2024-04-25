@@ -1,1 +1,1 @@
-export type ImagesType = "today" | "similar";
+export type ImagesType = "today" | "similar" | "oldest";

@@ -5,7 +5,7 @@ import AlbumsList from "@/components/albums_list";
 const Albums = () => {
   return (
     <View style={styles.wrapper}>
-      <AlbumsList />
+      <AlbumsList filter="count" />
     </View>
   );
 };

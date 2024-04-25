@@ -19,6 +19,8 @@ export interface ApiAlbums {
     created_at: Date | null;
     title: string;
     firstImage: ApiImage | null;
+    keepCount: number;
+    deleteCount: number;
   }[];
 }
 
