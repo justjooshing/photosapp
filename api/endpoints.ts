@@ -1,14 +1,3 @@
-import { Platform } from "react-native";
-
-const emulatorURL = `192.168.1.117`;
-const webURL = "localhost";
-const platformUrl = Platform.select({
-  android: emulatorURL,
-  default: webURL,
-});
-
-export const baseURL = `http://${platformUrl}:8080`;
-
 const ENDPOINT_STUBS = {
   images: "/api/images",
   login: "/api/login-link",
