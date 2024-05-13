@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { H1 } from "tamagui";
 
-import { useGetSingleAlbum } from "@/api/query";
+import { useGetSingleAlbum } from "@/api/queries/albums";
 import { useHeadingContext } from "@/context/Header";
 import { ImagesType } from "@/context/Header/types";
 import usePathname from "@/hooks/usePathname";
@@ -93,9 +93,15 @@ const Header = () => {
 
   return (
     <View style={styles.header}>
-      <BackButton />
-      <Title />
-      <Mode />
+      <View style={{ flex: 1 }}>
+        <BackButton />
+      </View>
+      <View style={{ flex: 2, alignItems: "center" }}>
+        <Title />
+      </View>
+      <View style={{ flex: 1, alignItems: "flex-end" }}>
+        <Mode />
+      </View>
     </View>
   );
 };
