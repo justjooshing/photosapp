@@ -2,7 +2,7 @@ import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { Pressable } from "react-native";
 
-import { useUpdateSingleAlbumImage } from "@/api/query";
+import { useUpdateSingleAlbumImage } from "@/api/queries/images";
 import { ApiImage, SortOptions } from "@/api/types";
 import Icons from "@/components/icons";
 

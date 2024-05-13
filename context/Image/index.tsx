@@ -12,7 +12,7 @@ import {
 import { AppState, Platform } from "react-native";
 
 import { Keys } from "@/api/keys";
-import { useUpdateSingleAlbumImage } from "@/api/query";
+import { useUpdateSingleAlbumImage } from "@/api/queries/images";
 import { ApiImage } from "@/api/types";
 
 interface InitialState {

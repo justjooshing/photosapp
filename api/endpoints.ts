@@ -1,8 +1,8 @@
 const ENDPOINT_STUBS = {
   images: "/api/images",
+  count: "/api/images/count",
   login: "/api/login-link",
   albums: "/api/albums",
-  count: "/api/count",
   user: "/api/user",
 } as const;
 

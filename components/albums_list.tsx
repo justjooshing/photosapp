@@ -5,7 +5,7 @@ import { H3 } from "tamagui";
 import ImageTile from "./image_tile";
 import Skeleton from "./skeleton";
 
-import { useGetAlbums } from "@/api/query";
+import { useGetAlbums } from "@/api/queries/albums";
 import { ApiAlbums } from "@/api/types";
 
 const numColumns = 2;

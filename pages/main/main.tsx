@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import CarouselImage from "./components/carousel_image";
 import TodayNoData from "./components/today_no_data";
 
-import { useGetImages } from "@/api/query";
+import { useGetImages } from "@/api/queries/images";
 import MainImageHandler from "@/components/main_image_handler";
 import Skeleton from "@/components/skeleton";
 import { useHeadingContext } from "@/context/Header";

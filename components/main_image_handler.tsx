@@ -16,7 +16,7 @@ import FSImage from "./fs_image";
 import Skeleton from "./skeleton";
 import SwipeConfirmation from "./swipe_confirmation";
 
-import { useGetImages, useSortImage } from "@/api/query";
+import { useGetImages, useSortImage } from "@/api/queries/images";
 import { ApiImage, SortOptions } from "@/api/types";
 import { useHeadingContext } from "@/context/Header";
 

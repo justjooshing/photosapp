@@ -1,40 +1,25 @@
 import {
   QueryFunctionContext,
-  useMutation,
   useQuery,
   useQueryClient,
+  useMutation,
 } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
-import { client } from "./axios";
-import { ENDPOINTS } from "./endpoints";
-import { Keys } from "./keys";
+import { client } from "../axios";
+import { ENDPOINTS } from "../endpoints";
+import { Keys } from "../keys";
 import {
-  ApiAlbums,
-  ApiCount,
-  ApiImage,
   ApiImageUrls,
-  ApiLoginLink,
-  ApiSingleAlbum,
+  ApiImage,
   ApiSortImage,
-  ApiUser,
-} from "./types";
+  ApiSingleAlbum,
+  ApiCount,
+} from "../types";
 
 import { ImagesType } from "@/context/Header/types";
 
 const token = Cookies.get("jwt");
-
-const getLoginLink = async () => {
-  const { data } = await client.get<ApiLoginLink>(ENDPOINTS.get("login"));
-  return data;
-};
-
-export const useGetLoginLink = () =>
-  useQuery({
-    queryKey: Keys.loginLink,
-    queryFn: getLoginLink,
-    select: ({ loginLink }) => loginLink,
-  });
 
 const getImages = async ({
   queryKey: [, type],
@@ -149,18 +134,6 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
   });
 };
 
-const getAlbums = async () => {
-  const { data } = await client.get<ApiAlbums>(ENDPOINTS.get("albums"));
-  return data;
-};
-
-export const useGetAlbums = () =>
-  useQuery({
-    enabled: !!token,
-    queryKey: Keys.albums(),
-    queryFn: getAlbums,
-  });
-
 const getCount = async () => {
   const { data } = await client.get<ApiCount>(ENDPOINTS.get("count"));
   return data;
@@ -172,34 +145,3 @@ export const useGetCount = () =>
     queryKey: Keys.count(),
     queryFn: getCount,
   });
-
-const getUser = async () => {
-  const { data } = await client.get<ApiUser>(ENDPOINTS.get("user"));
-  return data;
-};
-export const useGetUser = () =>
-  useQuery({
-    enabled: !!token,
-    queryKey: Keys.user,
-    queryFn: getUser,
-  });
-
-const getSingleAlbum = async ({
-  queryKey: [, albumId],
-}: QueryFunctionContext<ReturnType<(typeof Keys)["albumImages"]>>) => {
-  const { data } = await client.get<ApiSingleAlbum>(
-    `${ENDPOINTS.get("albums")}/${albumId}`,
-  );
-  return data;
-};
-
-export const useGetSingleAlbum = (albumId: string) => {
-  const isNumberAsString = !isNaN(+albumId) && !Array.isArray(albumId);
-
-  return useQuery({
-    enabled: !!token && isNumberAsString,
-    queryKey: Keys.albumImages(albumId),
-    queryFn: getSingleAlbum,
-    refetchOnWindowFocus: "always",
-  });
-};

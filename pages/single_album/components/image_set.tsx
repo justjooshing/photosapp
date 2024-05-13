@@ -5,7 +5,7 @@ import { FlatList } from "react-native-gesture-handler";
 import Image from "./image";
 import { FilterOptions } from "../types";
 
-import { useGetSingleAlbum } from "@/api/query";
+import { useGetSingleAlbum } from "@/api/queries/albums";
 import Skeleton from "@/components/skeleton";
 
 const numColumns = 2;
