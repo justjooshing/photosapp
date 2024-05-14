@@ -1,4 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "expo-router";
 import Cookies from "js-cookie";
 
 import { client } from "../axios";
@@ -11,11 +12,22 @@ const getUser = async () => {
   return data;
 };
 
-const token = Cookies.get("jwt");
-
 export const useGetUser = () =>
   useQuery({
-    enabled: !!token,
     queryKey: Keys.user,
     queryFn: getUser,
   });
+
+export const deleteUser = async () => client.delete(ENDPOINTS.get("user"));
+
+export const useDeleteUser = () => {
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: deleteUser,
+    onSuccess: () => {
+      Cookies.remove("jwt");
+      router.replace("/");
+    },
+  });
+};

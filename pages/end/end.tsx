@@ -1,12 +1,15 @@
 import { Link } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { H3 } from "tamagui";
+import { H3, Button as TamButton } from "tamagui";
 
+import DeleteAccount from "./components/delete_account";
 import Stats from "./components/stats";
 
+import { useLogout } from "@/api/queries/auth";
 import AlbumsList from "@/components/albums_list";
 
 const End = () => {
+  const logout = useLogout();
   const pressedStyles = (isPressed: boolean) => ({
     backgroundColor: isPressed ? "grey" : "white",
     transform: [{ scale: isPressed ? 1.2 : 1 }],
@@ -40,11 +43,13 @@ const End = () => {
       <View style={styles.album_list}>
         <Link href="/albums" asChild style={styles.albums_title}>
           <Pressable>
-            <H3>{`Albums >`}</H3>
+            <H3>{"Albums >"}</H3>
           </Pressable>
         </Link>
         <AlbumsList limit={6} />
       </View>
+      <TamButton onPress={() => logout.mutate()}>Logout</TamButton>
+      <DeleteAccount />
     </>
   );
 };

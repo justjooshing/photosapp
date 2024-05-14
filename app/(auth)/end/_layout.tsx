@@ -14,9 +14,8 @@ export default Layout;
 const styles = StyleSheet.create({
   layout: {
     display: "flex",
-    paddingHorizontal: 20,
+    padding: 20,
     alignItems: "center",
     gap: 30,
-    paddingTop: 10,
   },
 });

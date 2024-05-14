@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import { useGetCount } from "@/api/query";
+import { useGetCount } from "@/api/queries/images";
 import Skeleton from "@/components/skeleton";
 
 const Stats = () => {
