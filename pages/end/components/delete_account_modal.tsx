@@ -19,7 +19,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
       await deleteUser.mutateAsync();
       setDeleteTextValue("");
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

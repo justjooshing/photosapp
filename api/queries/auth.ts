@@ -27,13 +27,8 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      console.log("success");
       Cookies.remove("jwt");
-      // Should be login?
       router.replace("/");
-    },
-    onError: () => {
-      console.log("errored");
     },
   });
 };
