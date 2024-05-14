@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "tamagui";
 
-import { useHeadingContext } from "@/context/Header";
+import { useHeadingContext } from "@/context/_header";
 
 const TodayNoData = () => {
   const { setImageType } = useHeadingContext();

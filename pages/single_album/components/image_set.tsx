@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
-import Image from "./image";
+import Image from "./_image";
 import { FilterOptions } from "../types";
 
 import { useGetSingleAlbum } from "@/api/queries/albums";

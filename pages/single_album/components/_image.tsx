@@ -2,11 +2,11 @@ import { AntDesign } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import { View, Pressable, StyleSheet } from "react-native";
 
-import Button from "./button";
+import Button from "./_button";
 
 import { ApiImage } from "@/api/types";
 import ImageTile from "@/components/image_tile";
-import { useImageContext } from "@/context/Image";
+import { useImageContext } from "@/context/_image";
 
 type Props = { image: ApiImage };
 

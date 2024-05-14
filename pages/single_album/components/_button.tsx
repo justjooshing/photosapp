@@ -4,7 +4,7 @@ import { Pressable } from "react-native";
 
 import { useUpdateSingleAlbumImage } from "@/api/queries/images";
 import { ApiImage, SortOptions } from "@/api/types";
-import Icons from "@/components/icons";
+import Icons from "@/components/_icons";
 
 type Props = {
   image: ApiImage;

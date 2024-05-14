@@ -4,7 +4,7 @@ import { Pressable } from "react-native";
 import { FilterOptions } from "../types";
 
 import { SortOptions } from "@/api/types";
-import Icons from "@/components/icons";
+import Icons from "@/components/_icons";
 
 type Props = {
   choice: SortOptions;

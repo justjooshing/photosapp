@@ -1,11 +1,11 @@
 import { Redirect, Slot } from "expo-router";
 import Cookies from "js-cookie";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import Header from "@/components/header";
-import { HeadingProvider } from "@/context/Header";
-import { ImageProvider } from "@/context/Image";
+import { HeadingProvider } from "@/context/_header";
+import { ImageProvider } from "@/context/_image";
 
 const Layout = () => {
   const jwt = Cookies.get("jwt");
@@ -18,7 +18,11 @@ const Layout = () => {
         <Header />
         <ScrollView contentContainerStyle={styles.flex}>
           <GestureHandlerRootView style={styles.flex}>
-            <Slot />
+            <View style={{ alignItems: "center" }}>
+              <View style={{ width: "100%", height: "100%", maxWidth: 700 }}>
+                <Slot />
+              </View>
+            </View>
           </GestureHandlerRootView>
         </ScrollView>
       </ImageProvider>

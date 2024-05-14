@@ -7,7 +7,7 @@ import TodayNoData from "./components/today_no_data";
 import { useGetImages } from "@/api/queries/images";
 import MainImageHandler from "@/components/main_image_handler";
 import Skeleton from "@/components/skeleton";
-import { useHeadingContext } from "@/context/Header";
+import { useHeadingContext } from "@/context/_header";
 
 const Images = () => {
   const { imageType } = useHeadingContext();
