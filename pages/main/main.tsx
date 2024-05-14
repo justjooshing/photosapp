@@ -31,7 +31,8 @@ const Images = () => {
 
   return (
     <View style={styles.wrapper}>
-      {!images.data?.length && !images.isLoading && imageType === "today" ? (
+      {/* update empty state logic */}
+      {!images.data?.length && !images.isLoading && imageType !== "similar" ? (
         <TodayNoData />
       ) : (
         <>
