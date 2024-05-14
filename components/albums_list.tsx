@@ -44,6 +44,18 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
     );
   }
 
+  if (!albums.data?.albums.length) {
+    return (
+      <View>
+        <Text style={styles.empty}>No data</Text>
+        <Text>
+          If you were expecting something different please refresh or try again
+          later
+        </Text>
+      </View>
+    );
+  }
+
   const { withDeletedCount, noDeletedCount } = albums.data.albums.reduce(
     (acc, album) => {
       if (album.deleteCount) {
@@ -115,4 +127,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
+  empty: { fontSize: 20 },
 });

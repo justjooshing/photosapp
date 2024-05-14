@@ -1,13 +1,26 @@
 import { Redirect } from "expo-router";
-import { Text } from "react-native";
+import { SafeAreaView, ScrollView, Text } from "react-native";
 
-import { useGetLoginLink } from "@/api/query";
+import { useGetLoginLink } from "@/api/queries/auth";
 
 const Login = () => {
   const loginLink = useGetLoginLink();
 
-  if (loginLink.isLoading) return <Text>Loading...</Text>;
-  if (loginLink.isError) return <Text>{loginLink.error.message}</Text>;
+  const getCopy = () => {
+    if (loginLink.isLoading) return "Loading...";
+    if (loginLink.isError) return loginLink.error.stack;
+    else return "Redirecting to Google login";
+  };
+
+  if (loginLink.isLoading || loginLink.isError)
+    return (
+      <SafeAreaView style={{ flex: 1, paddingTop: 120 }}>
+        <ScrollView>
+          <Text>{getCopy()}</Text>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  // To google login page
   return <Redirect href={loginLink.data} />;
 };
 
