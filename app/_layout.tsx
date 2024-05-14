@@ -17,9 +17,11 @@ import { TamaguiProvider } from "tamagui";
 
 import { tamaguiConfig } from "../tamagui.config";
 
+const token = Cookies.get("jwt");
 const config: QueryClientConfig = {
   defaultOptions: {
     queries: {
+      enabled: !!token,
       staleTime: 1000 * 60 * 10,
       retry: (failureCount, err) => {
         if (err instanceof AxiosError) {

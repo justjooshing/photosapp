@@ -15,7 +15,6 @@ const getAlbums = async () => {
 
 export const useGetAlbums = () =>
   useQuery({
-    enabled: !!token,
     queryKey: Keys.albums(),
     queryFn: getAlbums,
   });

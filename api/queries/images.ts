@@ -4,7 +4,6 @@ import {
   useQueryClient,
   useMutation,
 } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 
 import { client } from "../axios";
 import { ENDPOINTS } from "../endpoints";
@@ -19,8 +18,6 @@ import {
 
 import { ImagesType } from "@/context/Header/types";
 
-const token = Cookies.get("jwt");
-
 const getImages = async ({
   queryKey: [, type],
 }: QueryFunctionContext<ReturnType<(typeof Keys)["images"]>>) => {
@@ -34,7 +31,6 @@ const getImages = async ({
 
 export const useGetImages = (imageType: ImagesType) =>
   useQuery({
-    enabled: !!token,
     queryKey: Keys.images(imageType),
     queryFn: getImages,
     select: ({ imageUrls }) => imageUrls,
@@ -141,7 +137,6 @@ const getCount = async () => {
 
 export const useGetCount = () =>
   useQuery({
-    enabled: !!token,
     queryKey: Keys.count(),
     queryFn: getCount,
   });
