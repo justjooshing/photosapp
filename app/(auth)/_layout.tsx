@@ -4,8 +4,8 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import Header from "@/components/header";
-import { HeadingProvider } from "@/context/_header";
-import { ImageProvider } from "@/context/_image";
+import { HeadingProvider } from "@/context/header";
+import { ImageProvider } from "@/context/image";
 
 const Layout = () => {
   const jwt = Cookies.get("jwt");

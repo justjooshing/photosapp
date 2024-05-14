@@ -16,7 +16,7 @@ import {
   ApiCount,
 } from "../types";
 
-import { ImagesType } from "@/context/_header/types";
+import { ImagesType } from "@/context/header/types";
 
 const getImages = async ({
   queryKey: [, type],

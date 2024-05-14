@@ -5,8 +5,8 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { H1 } from "tamagui";
 
 import { useGetSingleAlbum } from "@/api/queries/albums";
-import { useHeadingContext } from "@/context/_header";
-import { ImagesType } from "@/context/_header/types";
+import { useHeadingContext } from "@/context/header";
+import { ImagesType } from "@/context/header/types";
 import usePathname from "@/hooks/usePathname";
 
 const BackButton = () => {

@@ -18,7 +18,7 @@ import SwipeConfirmation from "./swipe_confirmation";
 
 import { useGetImages, useSortImage } from "@/api/queries/images";
 import { ApiImage, SortOptions } from "@/api/types";
-import { useHeadingContext } from "@/context/_header";
+import { useHeadingContext } from "@/context/header";
 
 interface Props {
   mainImage: ApiImage;
