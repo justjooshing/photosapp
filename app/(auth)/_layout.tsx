@@ -1,16 +1,19 @@
 import { Redirect, Slot } from "expo-router";
-import Cookies from "js-cookie";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import Header from "@/components/header";
 import { HeadingProvider } from "@/context/header";
 import { ImageProvider } from "@/context/image";
+import useAuth from "@/hooks/useAuth";
 
 const Layout = () => {
-  const jwt = Cookies.get("jwt");
+  const token = useAuth();
 
-  return !jwt ? (
+  if (token === "loading") {
+    return <Text>Loading...</Text>;
+  }
+  return token === false ? (
     <Redirect href="/login" />
   ) : (
     <HeadingProvider>
