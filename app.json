@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "PhotosApp",
+    "slug": "PhotosApp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "scheme": "expo",
+    "experiments": {
+      "tsconfigPaths": true
+    },
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      // https://docs.expo.dev/guides/deep-linking/
+      // https://github.com/expo/fyi/blob/main/creating-google-service-account.md
+      // com.justjooshing.photosapp://expo-development-client
+      "package": "com.justjooshing.photosapp",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": ["expo-router"],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "68a37e20-cf86-4c7f-99f0-463e5f47d5c9"
+      }
+    }
+  }
+}
