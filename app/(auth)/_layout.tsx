@@ -1,6 +1,5 @@
-import { Slot, useRouter } from "expo-router";
+import { Redirect, Slot } from "expo-router";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -9,17 +8,11 @@ import { HeadingProvider } from "@/context/header";
 import { ImageProvider } from "@/context/image";
 
 const Layout = () => {
-  const router = useRouter();
+  const jwt = Cookies.get("jwt");
 
-  // useEffect to ensure we have access to jwt before redirecting
-  useEffect(() => {
-    const jwt = Cookies.get("jwt");
-    if (!jwt) {
-      router.replace("/login");
-    }
-  }, []);
-
-  return (
+  return !jwt ? (
+    <Redirect href="/login" />
+  ) : (
     <HeadingProvider>
       <ImageProvider>
         <Header />
