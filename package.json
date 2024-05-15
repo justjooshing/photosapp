@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "expo-router/entry",
   "scripts": {
-    "start": "expo start --tunnel",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
+    "android:release": "yarn android --variant release",
     "lint": "eslint . --fix"
   },
   "dependencies": {
@@ -15,13 +16,13 @@
     "@tamagui/config": "^1.93.2",
     "@tamagui/metro-plugin": "^1.93.2",
     "@tanstack/react-query": "^5.24.1",
-    "@types/react": "~18.2.45",
     "axios": "^1.6.7",
     "expo": "~50.0.6",
     "expo-constants": "~15.4.5",
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.7",
     "expo-status-bar": "~1.11.1",
+    "expo-updates": "~0.24.12",
     "expo-web-browser": "~12.8.2",
     "js-cookie": "^3.0.5",
     "react": "18.2.0",
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@tamagui/babel-plugin": "^1.93.2",
+    "@types/react": "~18.2.45",
     "eslint": "^8.57.0",
     "eslint-config-universe": "^12.0.0",
     "prettier": "^3.2.5",
