@@ -3,10 +3,8 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.justjooshing.photosapp",
-      "sha256_cert_fingerprints": [
-        "{sha256_cert_fingerprints}"
-      ]
+      "package_name": "com.justjooshing.picpurge",
+      "sha256_cert_fingerprints": ["{sha256_cert_fingerprints}"]
     }
   }
 ]
