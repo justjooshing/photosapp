@@ -27,7 +27,7 @@ const HeadingContext = createContext<InitialState>(initialState);
 
 export const HeadingProvider = ({ children }) => {
   const [pageTitle, setPageTitle] = useState(initialState.pageTitle);
-  const [imageType, setImageType] = useState<ImagesType>("today");
+  const [imageType, setImageType] = useState<ImagesType>("similar");
 
   const values = useMemo(
     () => ({

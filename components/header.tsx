@@ -65,8 +65,8 @@ const Header = () => {
       name: keyof typeof AntDesign.glyphMap;
       option: ImagesType;
     }[] = [
-      { name: "calendar", option: "today" },
       { name: "picture", option: "similar" },
+      { name: "calendar", option: "today" },
       { name: "clockcircleo", option: "oldest" },
     ];
 
