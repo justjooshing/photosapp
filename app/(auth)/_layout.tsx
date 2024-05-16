@@ -18,8 +18,8 @@ const Layout = () => {
         <Header />
         <ScrollView contentContainerStyle={styles.flex}>
           <GestureHandlerRootView style={styles.flex}>
-            <View style={{ alignItems: "center", height: "100%" }}>
-              <View style={{ width: "100%", height: "100%", maxWidth: 700 }}>
+            <View style={styles.appWrapper}>
+              <View style={styles.contentWrapper}>
                 <Slot />
               </View>
             </View>
@@ -35,5 +35,16 @@ export default Layout;
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
+  },
+  appWrapper: {
+    alignItems: "center",
+    height: "100%",
+    backgroundColor: "#ccc",
+  },
+  contentWrapper: {
+    width: "100%",
+    height: "100%",
+    maxWidth: 700,
+    backgroundColor: "white",
   },
 });

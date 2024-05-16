@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "space-between",
+    overflow: "hidden",
   },
   animated_container: {
     minWidth: "90%",
