@@ -34,6 +34,13 @@ export const useGetImages = (imageType: ImagesType) =>
     queryKey: Keys.images(imageType),
     queryFn: getImages,
     select: ({ imageUrls }) => imageUrls,
+    // Kick off with a refetch interval since we're still pulling their images from Google
+    refetchInterval: (query) =>
+      query &&
+      (query.state.data?.imageUrls.length > 10 ||
+        query.state.dataUpdateCount > 4)
+        ? false
+        : 1000,
   });
 
 interface SortImageProps {
