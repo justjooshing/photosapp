@@ -1,12 +1,13 @@
 import { useQuery, QueryFunctionContext } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 
 import { client } from "../axios";
 import { ENDPOINTS } from "../endpoints";
 import { Keys } from "../keys";
 import { ApiAlbums, ApiSingleAlbum } from "../types";
 
-const token = Cookies.get("jwt");
+import Storage from "@/utils/storage";
+
+const token = Storage.get("jwt");
 
 const getAlbums = async () => {
   const { data } = await client.get<ApiAlbums>(ENDPOINTS.get("albums"));

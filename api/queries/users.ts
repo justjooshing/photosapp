@@ -1,11 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
-import Cookies from "js-cookie";
 
 import { client } from "../axios";
 import { ENDPOINTS } from "../endpoints";
 import { Keys } from "../keys";
 import { ApiUser } from "../types";
+
+import Storage from "@/utils/storage";
 
 const getUser = async () => {
   const { data } = await client.get<ApiUser>(ENDPOINTS.get("user"));
@@ -26,8 +27,8 @@ export const useDeleteUser = () => {
   return useMutation({
     mutationFn: deleteUser,
     onSuccess: () => {
-      Cookies.remove("jwt");
-      router.replace("/");
+      Storage.remove("jwt");
+      router.replace("/login");
     },
   });
 };

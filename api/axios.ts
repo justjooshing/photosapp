@@ -1,7 +1,8 @@
 // request.js
 import axios from "axios";
-import Cookies from "js-cookie";
 import { Platform } from "react-native";
+
+import Storage from "@/utils/storage";
 
 const platformUrl = Platform.select({
   android: "192.168.1.117",
@@ -13,8 +14,12 @@ const baseURL =
     ? `http://${platformUrl}:8080`
     : "https://photosappserver.fly.dev";
 
-const token = Cookies.get("jwt");
 export const client = axios.create({
   baseURL,
-  headers: { Authorization: `Bearer ${token}` },
+});
+
+client.interceptors.request.use((config) => {
+  const token = Storage.get("jwt");
+  config.headers.Authorization = `Bearer ${token}`;
+  return config;
 });

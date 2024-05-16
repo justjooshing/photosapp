@@ -1,11 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
-import Cookies from "js-cookie";
 
 import { client } from "../axios";
 import { ENDPOINTS } from "../endpoints";
 import { Keys } from "../keys";
 import { ApiLoginLink } from "../types";
+
+import Storage from "@/utils/storage";
 
 const getLoginLink = async () => {
   const { data } = await client.get<ApiLoginLink>(ENDPOINTS.get("login"));
@@ -27,8 +28,13 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      Cookies.remove("jwt");
-      router.replace("/");
+      Storage.remove("jwt");
+      router.replace("/login");
     },
   });
+};
+
+export const useGetAuthToken = () => {
+  const token = Storage.get("jwt");
+  return token ? token : false;
 };

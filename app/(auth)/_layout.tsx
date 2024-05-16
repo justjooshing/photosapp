@@ -1,19 +1,16 @@
 import { Redirect, Slot } from "expo-router";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import { useGetAuthToken } from "@/api/queries/auth";
 import Header from "@/components/header";
 import { HeadingProvider } from "@/context/header";
 import { ImageProvider } from "@/context/image";
-import useAuth from "@/hooks/useAuth";
 
 const Layout = () => {
-  const token = useAuth();
+  const token = useGetAuthToken();
 
-  if (token === "loading") {
-    return <Text>Loading...</Text>;
-  }
-  return token === false ? (
+  return !token ? (
     <Redirect href="/login" />
   ) : (
     <HeadingProvider>
