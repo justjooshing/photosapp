@@ -1,6 +1,7 @@
 import { Link } from "expo-router";
+import { useState } from "react";
 import { FlatList, Pressable, Text, StyleSheet, View } from "react-native";
-import { H3 } from "tamagui";
+import { Button } from "tamagui";
 
 import ImageTile from "./image_tile";
 import Skeleton from "./skeleton";
@@ -18,6 +19,7 @@ interface AlbumsListProps {
 
 const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
   const albums = useGetAlbums();
+  const [viewedTab, setViewedTab] = useState<number>(0);
 
   if (albums.isLoading) {
     return (
@@ -56,18 +58,6 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
     );
   }
 
-  const { withDeletedCount, noDeletedCount } = albums.data.albums.reduce(
-    (acc, album) => {
-      if (album.deleteCount) {
-        acc.withDeletedCount.push(album);
-      } else {
-        acc.noDeletedCount.push(album);
-      }
-      return acc;
-    },
-    { withDeletedCount: [], noDeletedCount: [] },
-  );
-
   const GeneratedList = ({ data }: { data: ApiAlbums["albums"] }) => (
     <FlatList
       data={data}
@@ -99,16 +89,42 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
     />
   );
 
+  const tabCopy = [
+    {
+      heading: `Clean up (${albums.data.withDeletedCount.length})`,
+      copy: "Your goal is to have this list empty, it means you've deleted all the images that you decided you wanted to delete.",
+    },
+    {
+      heading: `All sorted (${albums.data.noDeletedCount.length})`,
+      copy: "These are the albums containing only images you've decided you want to keep.",
+    },
+  ];
+
   return (
     <>
-      {filter === "count" && <H3>Clean up</H3>}
-      <GeneratedList data={withDeletedCount} />
       {filter === "count" && (
-        <>
-          <H3>All Sorted</H3>
-          <GeneratedList data={noDeletedCount} />
-        </>
+        <View
+          style={{
+            flexDirection: "row",
+            padding: 10,
+            gap: 10,
+          }}
+        >
+          {tabCopy.map(({ heading }, i) => (
+            <Button key={heading} onPress={() => setViewedTab(i)}>
+              <Text>{heading}</Text>
+            </Button>
+          ))}
+        </View>
       )}
+      {filter === "count" && <Text>{tabCopy[viewedTab].copy}</Text>}
+      <GeneratedList
+        data={
+          viewedTab === 0
+            ? albums.data.withDeletedCount
+            : albums.data.noDeletedCount
+        }
+      />
     </>
   );
 };

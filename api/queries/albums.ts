@@ -14,10 +14,26 @@ const getAlbums = async () => {
   return data;
 };
 
+const organiseAlbums = ({ albums }: ApiAlbums) => {
+  const { withDeletedCount, noDeletedCount } = albums.reduce(
+    (acc, album) => {
+      if (album.deleteCount) {
+        acc.withDeletedCount.push(album);
+      } else {
+        acc.noDeletedCount.push(album);
+      }
+      return acc;
+    },
+    { withDeletedCount: [], noDeletedCount: [] },
+  );
+  return { withDeletedCount, noDeletedCount, albums };
+};
+
 export const useGetAlbums = () =>
   useQuery({
     queryKey: Keys.albums(),
     queryFn: getAlbums,
+    select: organiseAlbums,
   });
 
 const getSingleAlbum = async ({
