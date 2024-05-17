@@ -14,7 +14,6 @@ const Images = () => {
   const images = useGetImages(imageType);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
-  // Update to skeleton
   if (images.isError) return <Text>{images.error.message}</Text>;
   if (!images.data?.length && !images.isLoading && imageType === "similar")
     return <Text> No data </Text>;

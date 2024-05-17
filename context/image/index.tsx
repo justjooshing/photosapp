@@ -14,6 +14,7 @@ import { AppState, Platform } from "react-native";
 import { Keys } from "@/api/keys";
 import { useUpdateSingleAlbumImage } from "@/api/queries/images";
 import { ApiImage } from "@/api/types";
+import { renderToast } from "@/utils/toast";
 
 interface InitialState {
   targetImage: ApiImage;
@@ -43,6 +44,10 @@ export const ImageProvider = ({ children }) => {
    */
   useEffect(() => {
     const focusListener = () => {
+      renderToast({
+        type: "info",
+        message: "Checking image status against Google",
+      });
       updateImage(
         { image: targetImage, body: { baseUrl: null } },
         {

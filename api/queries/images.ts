@@ -17,6 +17,7 @@ import {
 } from "../types";
 
 import { ImagesType } from "@/context/header/types";
+import { renderToast } from "@/utils/toast";
 
 const getImages = async ({
   queryKey: [, type],
@@ -69,6 +70,17 @@ export const useSortImage = (imageType: ImagesType) => {
     onError: (err, _, context) => {
       console.error(err);
       queryClient.setQueryData(dataKey, context.prevImages);
+      throw err;
+    },
+    onSuccess: ({ data }) => {
+      data.image.map(({ sorted_status }) => {
+        const conjugation = sorted_status === "delete" ? "deletion" : "keeping";
+
+        renderToast({
+          type: "success",
+          message: `Image marked for ${conjugation}`,
+        });
+      });
     },
     onSettled: (d, err, v, context) => {
       queryClient.invalidateQueries({
@@ -118,9 +130,20 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
     onError: (err, _, context) => {
       console.error(err);
       queryClient.setQueryData(dataKey, context.prevSingleAlbum);
+      throw err;
     },
-    onSuccess: (response, v, ctx) => {
-      const returnedImage = response.data.image[0];
+    onSuccess: ({ data }, v, ctx) => {
+      // Need to think about how to stop this appearing when checking against Google
+      // ...separate endpoint?
+      data.image.map(({ sorted_status }) => {
+        const conjugation = sorted_status === "delete" ? "deletion" : "keeping";
+
+        renderToast({
+          type: "success",
+          message: `Image marked for ${conjugation}`,
+        });
+      });
+      const returnedImage = data.image[0];
       const updatedImages = ctx.prevSingleAlbum.images.map((oldImage) =>
         oldImage.id === returnedImage.id ? returnedImage : oldImage,
       );

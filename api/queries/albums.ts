@@ -31,9 +31,8 @@ const getSingleAlbum = async ({
 
 export const useGetSingleAlbum = (albumId: string) => {
   const isNumberAsString = !isNaN(+albumId) && !Array.isArray(albumId);
-
   return useQuery({
-    enabled: !!token && isNumberAsString,
+    enabled: !!token && isNumberAsString && !!albumId,
     queryKey: Keys.albumImages(albumId),
     queryFn: getSingleAlbum,
     refetchOnWindowFocus: "always",

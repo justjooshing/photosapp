@@ -4,6 +4,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import {
+  MutationCache,
   QueryClient,
   QueryClientConfig,
   QueryClientProvider,
@@ -12,11 +13,13 @@ import { AxiosError } from "axios";
 import { Slot, router, useGlobalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { useColorScheme } from "react-native";
+import { RootSiblingParent as ToastWrapper } from "react-native-root-siblings";
 import { TamaguiProvider } from "tamagui";
 
 import { tamaguiConfig } from "../tamagui.config";
 
 import Storage from "@/utils/storage";
+import { renderToast } from "@/utils/toast";
 
 const Layout = () => {
   const { jwt }: { jwt?: string } = useGlobalSearchParams();
@@ -26,6 +29,14 @@ const Layout = () => {
   const token = Storage.get("jwt");
 
   const config: QueryClientConfig = {
+    mutationCache: new MutationCache({
+      onError: (err) => {
+        if (err instanceof AxiosError) {
+          renderToast({ type: "error", message: err.message });
+        }
+        return false;
+      },
+    }),
     defaultOptions: {
       queries: {
         enabled: !!token || !!jwt,
@@ -63,15 +74,17 @@ const Layout = () => {
   const [queryClient] = useState(() => new QueryClient(config));
   const colourScheme = useColorScheme();
   return (
-    <QueryClientProvider client={queryClient}>
-      <TamaguiProvider config={tamaguiConfig}>
-        <ThemeProvider
-          value={colourScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
-          <Slot />
-        </ThemeProvider>
-      </TamaguiProvider>
-    </QueryClientProvider>
+    <ToastWrapper>
+      <QueryClientProvider client={queryClient}>
+        <TamaguiProvider config={tamaguiConfig}>
+          <ThemeProvider
+            value={colourScheme === "dark" ? DarkTheme : DefaultTheme}
+          >
+            <Slot />
+          </ThemeProvider>
+        </TamaguiProvider>
+      </QueryClientProvider>
+    </ToastWrapper>
   );
 };
 
