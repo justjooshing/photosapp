@@ -7,7 +7,6 @@ import ImageTile from "./image_tile";
 import Skeleton from "./skeleton";
 
 import { useGetAlbums } from "@/api/queries/albums";
-import { ApiAlbums } from "@/api/types";
 
 const numColumns = 2;
 const imageWidth = { minWidth: `${100 / numColumns}%` } as const;
@@ -21,14 +20,40 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
   const albums = useGetAlbums();
   const [viewedTab, setViewedTab] = useState<number>(0);
 
-  if (albums.isLoading) {
-    return (
-      <>
-        {filter === "count" && (
-          <View style={{ height: 28, width: 120 }}>
-            <Skeleton />
+  const tabCopy = [
+    {
+      heading: `Clean up (${albums.isLoading ? "?" : albums.data.withDeletedCount.length})`,
+      copy: "Your goal is to have this list empty, it means you've deleted all the images that you decided you wanted to delete.",
+    },
+    {
+      heading: `All sorted (${albums.isLoading ? "?" : albums.data.noDeletedCount.length})`,
+      copy: "These are the albums containing only images you've decided you want to keep.",
+    },
+  ];
+
+  return (
+    <>
+      {filter === "count" && (
+        <>
+          <View
+            style={{
+              flexDirection: "row",
+              padding: 10,
+              gap: 10,
+            }}
+          >
+            {tabCopy.map(({ heading }, i) => (
+              <Button key={heading} onPress={() => setViewedTab(i)}>
+                <Text>{heading}</Text>
+              </Button>
+            ))}
           </View>
-        )}
+          <Text>{tabCopy[viewedTab].copy}</Text>
+        </>
+      )}
+
+      {/* Is loading */}
+      {albums.isLoading && (
         <FlatList
           data={Array(6)}
           numColumns={numColumns}
@@ -42,89 +67,54 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
             </View>
           )}
         />
-      </>
-    );
-  }
+      )}
 
-  if (!albums.data?.albums.length) {
-    return (
-      <View>
-        <Text style={styles.empty}>No data</Text>
-        <Text>
-          If you were expecting something different please refresh or try again
-          later
-        </Text>
-      </View>
-    );
-  }
-
-  const GeneratedList = ({ data }: { data: ApiAlbums["albums"] }) => (
-    <FlatList
-      data={data}
-      numColumns={numColumns}
-      columnWrapperStyle={styles.column}
-      keyExtractor={({ id }) => id.toString()}
-      renderItem={({ item: album, index }) => {
-        if (!limit || index < limit) {
-          return (
-            <Link
-              key={album.id}
-              href={`/albums/${album.id}`}
-              asChild
-              style={imageWidth}
-            >
-              <Pressable style={styles.image}>
-                {album.firstImage?.baseUrl ? (
-                  <ImageTile image={album.firstImage} />
-                ) : (
-                  <Text>Where's the image?</Text>
-                )}
-                <Text>{album.title}</Text>
-              </Pressable>
-            </Link>
-          );
-        }
-        return null;
-      }}
-    />
-  );
-
-  const tabCopy = [
-    {
-      heading: `Clean up (${albums.data.withDeletedCount.length})`,
-      copy: "Your goal is to have this list empty, it means you've deleted all the images that you decided you wanted to delete.",
-    },
-    {
-      heading: `All sorted (${albums.data.noDeletedCount.length})`,
-      copy: "These are the albums containing only images you've decided you want to keep.",
-    },
-  ];
-
-  return (
-    <>
-      {filter === "count" && (
-        <View
-          style={{
-            flexDirection: "row",
-            padding: 10,
-            gap: 10,
-          }}
-        >
-          {tabCopy.map(({ heading }, i) => (
-            <Button key={heading} onPress={() => setViewedTab(i)}>
-              <Text>{heading}</Text>
-            </Button>
-          ))}
+      {/* No data */}
+      {!albums.isLoading && !albums.data?.albums.length && (
+        <View>
+          <Text style={styles.empty}>No data</Text>
+          <Text>
+            If you were expecting something different please refresh or try
+            again later
+          </Text>
         </View>
       )}
-      {filter === "count" && <Text>{tabCopy[viewedTab].copy}</Text>}
-      <GeneratedList
-        data={
-          viewedTab === 0
-            ? albums.data.withDeletedCount
-            : albums.data.noDeletedCount
-        }
-      />
+
+      {/* With data */}
+      {!albums.isLoading && !!albums.data.albums.length && (
+        <FlatList
+          data={
+            viewedTab === 0
+              ? albums.data.withDeletedCount
+              : albums.data.noDeletedCount
+          }
+          numColumns={numColumns}
+          columnWrapperStyle={styles.column}
+          keyExtractor={({ id }) => id.toString()}
+          renderItem={({ item: album, index }) => {
+            if (!limit || index < limit) {
+              return (
+                <Link
+                  key={album.id}
+                  href={`/albums/${album.id}`}
+                  asChild
+                  style={imageWidth}
+                >
+                  <Pressable style={styles.image}>
+                    {album.firstImage?.baseUrl ? (
+                      <ImageTile image={album.firstImage} />
+                    ) : (
+                      <Text>Where's the image?</Text>
+                    )}
+                    <Text>{album.title}</Text>
+                  </Pressable>
+                </Link>
+              );
+            }
+            return null;
+          }}
+        />
+      )}
     </>
   );
 };
