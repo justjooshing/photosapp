@@ -21,6 +21,12 @@ import { tamaguiConfig } from "../tamagui.config";
 import Storage from "@/utils/storage";
 import { renderToast } from "@/utils/toast";
 
+import "setimmediate";
+if (!global.setImmediate) {
+  //@ts-expect-error
+  global.setImmediate = setTimeout;
+}
+
 const Layout = () => {
   const { jwt }: { jwt?: string } = useGlobalSearchParams();
   if (jwt) {
