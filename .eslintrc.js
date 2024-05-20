@@ -1,5 +1,5 @@
 module.exports = {
   root: true,
   extends: ["universe/native"],
-  ignorePatterns: ["/dist/**"],
+  ignorePatterns: ["/dist/**", "/node_modules/**"],
 };
