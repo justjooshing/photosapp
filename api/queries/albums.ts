@@ -57,6 +57,5 @@ export const useGetSingleAlbum = (albumId: string) => {
     enabled: !!token && isNumberAsString && !!albumId,
     queryKey: Keys.albumImages(albumId),
     queryFn: getSingleAlbum,
-    refetchOnWindowFocus: "always",
   });
 };

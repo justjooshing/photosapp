@@ -9,7 +9,7 @@ import { FilterOptions } from "@/pages/single_album/types";
 
 const SingleAlbum = () => {
   const { albumId } = useLocalSearchParams();
-  const [filter, setFilter] = useState<FilterOptions>("all");
+  const [filter, setFilter] = useState<FilterOptions>("delete");
 
   const opacityStyle = { opacity: filter === "all" ? 0.5 : 1 };
 
