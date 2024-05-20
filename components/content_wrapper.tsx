@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { Dimensions, Platform, StyleSheet, View } from "react-native";
+const { width } = Dimensions.get("window");
 
 type Props = {
   children: ReactNode;
@@ -26,7 +27,6 @@ const styles = StyleSheet.create({
     height: "100%",
     maxWidth: 700,
     backgroundColor: "white",
-    paddingLeft: Platform.OS === "web" ? 30 : 0,
-    paddingRight: Platform.OS === "web" ? 30 : 0,
+    paddingHorizontal: Platform.OS === "web" && width > 700 ? 30 : 0,
   },
 });
