@@ -14,7 +14,13 @@ const getAlbums = async () => {
   return data;
 };
 
-const organiseAlbums = ({ albums }: ApiAlbums) => {
+const organiseAlbums = ({
+  albums,
+}: ApiAlbums): {
+  withDeletedCount: ApiAlbums["albums"];
+  noDeletedCount: ApiAlbums["albums"];
+  albums: ApiAlbums["albums"];
+} => {
   const { withDeletedCount, noDeletedCount } = albums.reduce(
     (acc, album) => {
       if (album.deleteCount) {
