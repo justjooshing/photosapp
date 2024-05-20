@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
-import { StyleSheet } from "react-native";
-import { View } from "tamagui";
+import { StyleSheet, View } from "react-native";
 
 type Props = {
   children: ReactNode;

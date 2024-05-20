@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { Anchor, H1, Spinner, Text, View } from "tamagui";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { Anchor, H1, Spinner, Text } from "tamagui";
 
 import { useGetLoginLink } from "@/api/queries/auth";
 
