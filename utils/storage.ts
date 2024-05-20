@@ -1,9 +1,6 @@
-import Cookies from "js-cookie";
+import { MMKV } from "react-native-mmkv";
 
-const Storage = {
-  set: Cookies.set,
-  get: Cookies.get,
-  remove: Cookies.remove,
-};
+export const storage = new MMKV();
+const Storage = storage;
 
 export default Storage;

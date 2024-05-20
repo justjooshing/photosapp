@@ -28,13 +28,13 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      Storage.remove("jwt");
+      Storage.delete("jwt");
       router.replace("/login");
     },
   });
 };
 
 export const useGetAuthToken = () => {
-  const token = Storage.get("jwt");
+  const token = Storage.getString("jwt");
   return token ? token : false;
 };

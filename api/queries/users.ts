@@ -27,7 +27,7 @@ export const useDeleteUser = () => {
   return useMutation({
     mutationFn: deleteUser,
     onSuccess: () => {
-      Storage.remove("jwt");
+      Storage.delete("jwt");
       router.replace("/login");
     },
   });

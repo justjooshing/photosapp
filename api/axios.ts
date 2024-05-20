@@ -19,7 +19,7 @@ export const client = axios.create({
 });
 
 client.interceptors.request.use((config) => {
-  const token = Storage.get("jwt");
+  const token = Storage.getString("jwt");
   config.headers.Authorization = `Bearer ${token}`;
   return config;
 });

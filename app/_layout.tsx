@@ -32,7 +32,7 @@ const Layout = () => {
   if (jwt) {
     Storage.set("jwt", jwt);
   }
-  const token = Storage.get("jwt");
+  const token = Storage.getString("jwt");
 
   const config: QueryClientConfig = {
     mutationCache: new MutationCache({
@@ -66,7 +66,7 @@ const Layout = () => {
             if (err.response?.status === 401) {
               // Logout after half a second
               setTimeout(() => {
-                Storage.remove("jwt");
+                Storage.delete("jwt");
                 router.push("/login");
               }, 500);
             }

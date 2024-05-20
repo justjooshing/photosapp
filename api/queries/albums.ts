@@ -7,7 +7,7 @@ import { ApiAlbums, ApiSingleAlbum } from "../types";
 
 import Storage from "@/utils/storage";
 
-const token = Storage.get("jwt");
+const token = Storage.getString("jwt");
 
 const getAlbums = async () => {
   const { data } = await client.get<ApiAlbums>(ENDPOINTS.get("albums"));
