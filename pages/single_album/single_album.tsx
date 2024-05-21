@@ -32,7 +32,7 @@ const SingleAlbum = () => {
           </Pressable>
         </View>
       </View>
-      <ImageSet albumId={singleAlbumId} filter={filter} />
+      <ImageSet albumId={singleAlbumId} setFilter={setFilter} filter={filter} />
     </View>
   );
 };

@@ -51,11 +51,37 @@ const getSingleAlbum = async ({
   return data;
 };
 
+const organiseSingleAlbum = (data: ApiSingleAlbum) => {
+  const organisedImages = data.images.reduce(
+    (
+      acc: {
+        deleted: ApiSingleAlbum["images"];
+        kept: ApiSingleAlbum["images"];
+      },
+      curr,
+    ) => {
+      if (curr.sorted_status === "delete") {
+        acc.deleted.push(curr);
+      } else {
+        acc.kept.push(curr);
+      }
+      return acc;
+    },
+    { deleted: [], kept: [] },
+  );
+  const organisedSingleAlbum = {
+    ...data,
+    ...organisedImages,
+  };
+  return organisedSingleAlbum;
+};
+
 export const useGetSingleAlbum = (albumId: string) => {
   const isNumberAsString = !isNaN(+albumId) && !Array.isArray(albumId);
   return useQuery({
     enabled: !!token && isNumberAsString && !!albumId,
     queryKey: Keys.albumImages(albumId),
     queryFn: getSingleAlbum,
+    select: organiseSingleAlbum,
   });
 };

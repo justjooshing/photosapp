@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import { Button } from "tamagui";
 
 import Image from "./image";
 import { FilterOptions } from "../types";
@@ -14,19 +15,12 @@ const imageWidth = { minWidth: `${100 / numColumns}%` } as const;
 type Props = {
   albumId: string;
   filter: FilterOptions;
+  setFilter: Dispatch<SetStateAction<FilterOptions>>;
 };
-const ImageSet = ({ albumId, filter }: Props) => {
+const ImageSet = ({ albumId, filter, setFilter }: Props) => {
   const singleAlbum = useGetSingleAlbum(albumId);
 
   if (singleAlbum.isError) return <Text>{singleAlbum.error.message}</Text>;
-
-  const images =
-    filter === "all"
-      ? singleAlbum.data?.images
-      : singleAlbum.data?.images.filter(
-          (image) => image.sorted_status === filter,
-        );
-
   if (singleAlbum.isLoading)
     return (
       <FlatList
@@ -44,18 +38,32 @@ const ImageSet = ({ albumId, filter }: Props) => {
       />
     );
 
+  const images = (() => {
+    if (filter === "keep") return singleAlbum.data?.kept;
+    if (filter === "delete") return singleAlbum.data?.deleted;
+    return singleAlbum.data?.images;
+  })();
+
   return (
-    <FlatList
-      data={images}
-      keyExtractor={({ id }) => id.toString()}
-      numColumns={numColumns}
-      contentContainerStyle={styles.album_container}
-      renderItem={({ item }) => (
-        <View style={imageWidth}>
-          <Image image={item} key={item.id} />
+    <>
+      {!images.length && (
+        <View>
+          <Text> No images marked under {filter}, try setting to 'All'</Text>
+          <Button onPress={() => setFilter("all")}>View All Images</Button>
         </View>
       )}
-    />
+      <FlatList
+        data={images}
+        keyExtractor={({ id }) => id.toString()}
+        numColumns={numColumns}
+        contentContainerStyle={styles.album_container}
+        renderItem={({ item }) => (
+          <View style={imageWidth}>
+            <Image image={item} key={item.id} />
+          </View>
+        )}
+      />
+    </>
   );
 };
 
