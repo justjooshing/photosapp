@@ -22,11 +22,11 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
 
   const tabCopy = [
     {
-      heading: `Clean up (${albums.isLoading ? "?" : albums.data.withDeletedCount.length})`,
+      heading: `Clean up (${albums.isLoading ? "?" : albums.data?.withDeletedCount.length})`,
       copy: "Your goal is to have this list empty, it means you've deleted all the images that you decided you wanted to delete.",
     },
     {
-      heading: `All sorted (${albums.isLoading ? "?" : albums.data.noDeletedCount.length})`,
+      heading: `All sorted (${albums.isLoading ? "?" : albums.data?.noDeletedCount.length})`,
       copy: "These are the albums containing only images you've decided you want to keep.",
     },
   ];
@@ -35,13 +35,7 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
     <>
       {filter === "count" && (
         <>
-          <View
-            style={{
-              flexDirection: "row",
-              padding: 10,
-              gap: 10,
-            }}
-          >
+          <View style={styles.filters}>
             {tabCopy.map(({ heading }, i) => (
               <Button
                 variant="secondary"
@@ -54,7 +48,7 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
               </Button>
             ))}
           </View>
-          <Text>{tabCopy[viewedTab].copy}</Text>
+          <Text style={styles.filter_text}>{tabCopy[viewedTab].copy}</Text>
         </>
       )}
 
@@ -128,6 +122,15 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
 export default AlbumsList;
 
 const styles = StyleSheet.create({
+  filters: {
+    flexDirection: "row",
+    padding: 10,
+    gap: 10,
+  },
+  filter_text: {
+    paddingTop: 10,
+    paddingBottom: 20,
+  },
   column: {
     paddingBottom: 10,
   },
