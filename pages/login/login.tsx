@@ -1,14 +1,16 @@
 import { AntDesign } from "@expo/vector-icons";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { Anchor, H1, Spinner, Text } from "tamagui";
+import { H1, Spinner, Text } from "tamagui";
 
 import { useGetLoginLink } from "@/api/queries/auth";
+import { color } from "@/tamagui/tokens";
+import { Anchor } from "@/tamagui/variants";
 
 const Login = () => {
   const loginLink = useGetLoginLink();
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: 120 }}>
+    <SafeAreaView style={{ flex: 1, paddingTop: 120, paddingHorizontal: 30 }}>
       <ScrollView>
         <H1 style={{ paddingBottom: 20 }}>Welcome, you're logged out</H1>
         <Text style={{ paddingBottom: 20 }}>
@@ -17,11 +19,16 @@ const Login = () => {
         </Text>
         <View style={styles.container}>
           {!loginLink.data ? (
-            <View style={styles.button}>
-              <Spinner color="white" />
+            <View style={styles.buttonPlaceholder}>
+              <Spinner color={color.grey1} />
             </View>
           ) : (
-            <Anchor href={loginLink.data} style={styles.button}>
+            <Anchor
+              variant="google"
+              size="small"
+              centered
+              href={loginLink.data}
+            >
               <AntDesign name="google" size={24} style={styles.icon} />
               <Text>Login with Google</Text>
             </Anchor>
@@ -43,18 +50,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  button: {
-    display: "flex",
-    padding: 10,
-    width: 200,
-    backgroundColor: "#DB4437", // Google brand color
-    borderRadius: 5,
+  buttonPlaceholder: {
     alignItems: "center",
     justifyContent: "center",
-    textDecorationLine: "none",
+    width: 200,
   },
   icon: {
-    color: "white",
+    color: color.grey1,
     paddingRight: 10,
   },
 });

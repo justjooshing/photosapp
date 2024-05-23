@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import { Dimensions, Platform, StyleSheet, View } from "react-native";
+
+import { color } from "@/tamagui/tokens";
 const { width } = Dimensions.get("window");
 
 type Props = {
@@ -20,13 +22,13 @@ const styles = StyleSheet.create({
   appWrapper: {
     alignItems: "center",
     minHeight: "100%",
-    backgroundColor: "#ccc",
+    backgroundColor: color.grey4,
   },
   contentWrapper: {
     width: "100%",
     minHeight: "100%",
     maxWidth: 700,
-    backgroundColor: "white",
+    backgroundColor: color.white,
     paddingHorizontal: Platform.OS === "web" && width > 700 ? 30 : 0,
   },
 });

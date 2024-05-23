@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 import { SortOptions } from "@/api/types";
+import { color } from "@/tamagui/tokens";
 
 type Props = {
   choice: SortOptions;
@@ -11,14 +12,14 @@ type Props = {
 };
 
 const Icons = ({ choice, isSelected, size = 22 }: Props) => {
-  const { name, color } = {
+  const { name, color: inactiveColor } = {
     keep: {
       name: "folder1",
-      color: "green",
+      color: color.green,
     } as const,
     delete: {
       name: "delete",
-      color: "red",
+      color: color.red,
     } as const,
   }[choice];
 
@@ -26,7 +27,7 @@ const Icons = ({ choice, isSelected, size = 22 }: Props) => {
     <AntDesign
       size={size}
       name={name}
-      color={isSelected ? "grey" : color}
+      color={isSelected ? color.grey8 : inactiveColor}
       style={styles(isSelected).icon}
     />
   );

@@ -8,6 +8,7 @@ import { useGetSingleAlbum } from "@/api/queries/albums";
 import { useHeadingContext } from "@/context/header";
 import { ImagesType } from "@/context/header/types";
 import usePathname from "@/hooks/usePathname";
+import { color } from "@/tamagui/tokens";
 
 const BackButton = () => {
   const { path, slug } = usePathname();
@@ -28,7 +29,7 @@ const BackButton = () => {
 
   return (
     <Pressable onPress={handleBackClick}>
-      <AntDesign name="arrowleft" size={24} color="#ADD8E6" />
+      <AntDesign name="arrowleft" size={24} color={color.blue4} />
     </Pressable>
   );
 };
@@ -54,7 +55,7 @@ const Header = () => {
 
   const Title = () => {
     return (
-      <H1 numberOfLines={1} size={20} color="#ADD8E6">
+      <H1 numberOfLines={1} size={20} color={color.blue4}>
         {pageTitle}
       </H1>
     );
@@ -80,7 +81,7 @@ const Header = () => {
           >
             <AntDesign
               name={name}
-              color={imageType === option ? "#000080" : "#ADD8E6"}
+              color={imageType === option ? color.blue2 : color.blue4}
               size={24}
             />
           </Pressable>
@@ -116,8 +117,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     width: "100%",
-    backgroundColor: "blue",
-    color: "white",
+    backgroundColor: color.blue,
+    color: color.white,
   },
   mode_placeholder: {
     width: 24,

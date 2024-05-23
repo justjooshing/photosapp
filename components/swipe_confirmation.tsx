@@ -1,14 +1,15 @@
 import { ImageStyle, StyleSheet } from "react-native";
 import Animated from "react-native-reanimated";
 
+import { color } from "@/tamagui/tokens";
+
 interface Props {
   type: "keep" | "delete";
   style: ImageStyle;
 }
 
 const SwipeConfirmation = ({ type, style }: Props) => {
-  const colour =
-    type === "keep" ? "hsla(122, 100%, 50%, .8)" : "hsla(0, 100%, 50%, .8)";
+  const colour = type === "keep" ? color.green : color.red;
 
   return (
     <Animated.View style={[styles.bar, style, { backgroundColor: colour }]} />

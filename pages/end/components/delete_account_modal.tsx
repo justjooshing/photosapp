@@ -1,8 +1,10 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
-import { Button, H1 } from "tamagui";
+import { H1 } from "tamagui";
 
 import { useDeleteUser } from "@/api/queries/users";
+import { color } from "@/tamagui/tokens";
+import { Button } from "@/tamagui/variants";
 type Props = {
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -12,7 +14,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
   const [deleteTextValue, setDeleteTextValue] = useState("");
   const deleteUser = useDeleteUser();
 
-  const textToMatch = "delete my account";
+  const textToMatch = "delete";
 
   const handleDeleteAccount = async () => {
     try {
@@ -40,7 +42,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
             </Text>
             <TextInput
               placeholder="Input text here"
-              placeholderTextColor="#999"
+              placeholderTextColor={color.grey6}
               inputMode="text"
               value={deleteTextValue}
               onChangeText={setDeleteTextValue}
@@ -54,7 +56,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
           <View style={styles.buttons}>
             <Button
               disabled={deleteTextValue !== textToMatch}
-              // variant="danger"
+              variant="danger"
               onPress={handleDeleteAccount}
             >
               Permanently delete account
@@ -77,25 +79,25 @@ const styles = StyleSheet.create({
   },
   content_wrapper: {
     justifyContent: "space-between",
-    backgroundColor: "white",
+    backgroundColor: color.white,
     borderRadius: 20,
     padding: 20,
     height: "100%",
     width: "100%",
     maxWidth: "80%",
     maxHeight: "50%",
-    borderColor: "black",
+    borderColor: color.black,
     borderStyle: "solid",
     borderWidth: 1,
   },
   content: { gap: 10 },
   delete_text: { fontWeight: "700", paddingLeft: 5 },
   input: {
-    borderColor: "black",
+    borderColor: color.black,
     borderStyle: "solid",
     borderWidth: 1,
     padding: 10,
   },
-  input_error: { color: "red", fontWeight: "600" },
+  input_error: { color: color.red, fontWeight: "600" },
   buttons: { gap: 20 },
 });

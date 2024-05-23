@@ -1,17 +1,19 @@
 import { StyleProp, ViewStyle } from "react-native";
 import Toast from "react-native-root-toast";
 
+import { color } from "@/tamagui/tokens";
+
 type ToastTypes = "error" | "success" | "info";
 
 const toastStyles: { [key in ToastTypes]: StyleProp<ViewStyle> } = {
   error: {
-    backgroundColor: "red",
+    backgroundColor: color.red,
   },
   success: {
-    backgroundColor: "green",
+    backgroundColor: color.green,
   },
   info: {
-    backgroundColor: "#e1ad01",
+    backgroundColor: color.yellow,
   },
 };
 
