@@ -8,7 +8,7 @@ import Stats from "./components/stats";
 import AlbumsList from "@/components/albums_list";
 import { Anchor } from "@/tamagui/variants";
 
-const End = () => {
+const Dashboard = () => {
   const buttons = [
     { href: "/", copy: "Another round?" },
     { href: "/goodbye", copy: "End" },
@@ -44,7 +44,7 @@ const End = () => {
   );
 };
 
-export default End;
+export default Dashboard;
 
 const styles = StyleSheet.create({
   button_container: {

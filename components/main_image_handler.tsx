@@ -59,7 +59,7 @@ const MainImageHandler = ({
     sortImage({ image: mainImage, body: { sorted_status } });
     updateCurrentIndex();
     if (isLastImage) {
-      router.push("/end");
+      router.push("/dashboard");
     }
   };
 

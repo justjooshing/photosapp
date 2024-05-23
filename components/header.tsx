@@ -20,11 +20,11 @@ const BackButton = () => {
 
     // If no route to go back to, trigger back based on flow
     const backRoute = {
-      albums: slug ? "/albums" : "/end",
-      end: "/",
+      albums: slug ? "/albums" : "/dashboard",
+      dashboard: "/",
     }[path];
 
-    return router.replace(backRoute ? backRoute : "/end");
+    return router.replace(backRoute ? backRoute : "/dashboard");
   };
 
   return (
