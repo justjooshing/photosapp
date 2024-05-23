@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 
 import CarouselImage from "./components/carousel_image";
-import TodayNoData from "./components/today_no_data";
+import NoData from "./components/no_data";
 
 import { useGetImages } from "@/api/queries/images";
 import MainImageHandler from "@/components/main_image_handler";
@@ -15,8 +15,6 @@ const Images = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
   if (images.isError) return <Text>{images.error.message}</Text>;
-  if (!images.data?.length && !images.isLoading && imageType === "similar")
-    return <Text> No data </Text>;
 
   /**
    * Fixes issue where after sorting final index image
@@ -30,9 +28,8 @@ const Images = () => {
 
   return (
     <View style={styles.wrapper}>
-      {/* update empty state logic */}
-      {!images.data?.length && !images.isLoading && imageType !== "similar" ? (
-        <TodayNoData />
+      {!images.data?.length && !images.isLoading ? (
+        <NoData />
       ) : (
         <>
           <MainImageHandler
