@@ -50,7 +50,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
             </Text>
             <TextInput
               placeholder="Input text here"
-              placeholderTextColor={color.grey4}
+              placeholderTextColor={color.grey3}
               inputMode="text"
               value={deleteTextValue}
               onChangeText={setDeleteTextValue}

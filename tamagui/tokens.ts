@@ -2,12 +2,12 @@ import { createTokens } from "tamagui";
 
 export const color = {
   grey1: "hsl(0, 0%, 94%)",
-  grey3: "hsl(0, 0%, 85%)",
-  grey4: "hsl(0, 0%, 80%)",
-  grey5: "hsl(0, 0%, 70%)",
-  grey6: "hsl(0, 0%, 65%)",
-  grey8: "hsl(0, 0%, 50%)",
-  grey9: "hsl(0, 0%, 40%)",
+  grey2: "hsl(0, 0%, 85%)",
+  grey3: "hsl(0, 0%, 80%)",
+  grey4: "hsl(0, 0%, 70%)",
+  grey5: "hsl(0, 0%, 65%)",
+  grey6: "hsl(0, 0%, 50%)",
+  grey7: "hsl(0, 0%, 40%)",
   blue: "hsl(210, 100%, 50%)",
   blue2: "hsl(210, 100%, 40%)",
   blue3: "hsl(210, 100%, 30%)",

@@ -1,5 +1,6 @@
 import { Slot } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View, Dimensions } from "react-native";
+const { width } = Dimensions.get("window");
 
 const Layout = () => {
   return (
@@ -17,5 +18,6 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: "center",
     gap: 30,
+    paddingHorizontal: Platform.OS === "web" && width > 700 ? 30 : 0,
   },
 });

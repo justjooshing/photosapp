@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   box: {
     width: "100%",
     height: "100%",
-    backgroundColor: color.grey3,
+    backgroundColor: color.grey2,
     justifyContent: "center",
     overflow: "hidden",
   },
