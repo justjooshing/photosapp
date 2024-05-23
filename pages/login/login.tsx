@@ -25,7 +25,8 @@ const Login = () => {
           ) : (
             <Anchor
               variant="google"
-              size="small"
+              size="$small"
+              radius="$small"
               centered
               href={loginLink.data}
             >

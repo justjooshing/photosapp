@@ -1,13 +1,13 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { Button } from "tamagui";
 
 import Image from "./image";
 import { FilterOptions } from "../types";
 
 import { useGetSingleAlbum } from "@/api/queries/albums";
 import Skeleton from "@/components/skeleton";
+import { Button } from "@/tamagui/variants";
 
 const numColumns = 2;
 const imageWidth = { minWidth: `${100 / numColumns}%` } as const;
@@ -46,23 +46,31 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
 
   return (
     <>
-      {!images.length && (
-        <View>
+      {!images.length ? (
+        <View style={styles.no_data}>
           <Text> No images marked under {filter}, try setting to 'All'</Text>
-          <Button onPress={() => setFilter("all")}>View All Images</Button>
+          <Button
+            variant="primary"
+            size="$small"
+            radius="$small"
+            onPress={() => setFilter("all")}
+          >
+            View All Images
+          </Button>
         </View>
+      ) : (
+        <FlatList
+          data={images}
+          keyExtractor={({ id }) => id.toString()}
+          numColumns={numColumns}
+          contentContainerStyle={styles.album_container}
+          renderItem={({ item }) => (
+            <View style={imageWidth}>
+              <Image image={item} key={item.id} />
+            </View>
+          )}
+        />
       )}
-      <FlatList
-        data={images}
-        keyExtractor={({ id }) => id.toString()}
-        numColumns={numColumns}
-        contentContainerStyle={styles.album_container}
-        renderItem={({ item }) => (
-          <View style={imageWidth}>
-            <Image image={item} key={item.id} />
-          </View>
-        )}
-      />
     </>
   );
 };
@@ -75,6 +83,11 @@ const styles = StyleSheet.create({
     width: "80%",
     aspectRatio: 1,
     overflow: "hidden",
+  },
+  no_data: {
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
   },
   album_container: { gap: 20 },
   image: {

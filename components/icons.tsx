@@ -27,7 +27,7 @@ const Icons = ({ choice, isSelected, size = 22 }: Props) => {
     <AntDesign
       size={size}
       name={name}
-      color={isSelected ? color.grey8 : inactiveColor}
+      color={isSelected ? color.grey5 : inactiveColor}
       style={styles(isSelected).icon}
     />
   );

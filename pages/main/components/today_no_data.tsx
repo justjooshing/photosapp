@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Button } from "tamagui";
 
 import { useHeadingContext } from "@/context/header";
+import { Button } from "@/tamagui/variants";
 
 const TodayNoData = () => {
   const { setImageType } = useHeadingContext();
@@ -12,7 +12,12 @@ const TodayNoData = () => {
         No more images from this date over the years needing to be sorted.
       </Text>
       <Text>Check back again tomorrow.</Text>
-      <Button onPress={() => setImageType("similar")}>
+      <Button
+        variant="primary"
+        size="$small"
+        radius="$small"
+        onPress={() => setImageType("similar")}
+      >
         Click here to view similar images
       </Button>
     </View>
@@ -23,6 +28,8 @@ export default TodayNoData;
 
 const styles = StyleSheet.create({
   wrapper: {
+    justifyContent: "center",
+    alignItems: "center",
     padding: 10,
     gap: 10,
   },

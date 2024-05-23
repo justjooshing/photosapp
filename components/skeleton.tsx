@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   box: {
     width: "100%",
     height: "100%",
-    backgroundColor: color.grey4,
+    backgroundColor: color.grey3,
     justifyContent: "center",
     overflow: "hidden",
   },
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     transform: "rotate(5deg)",
     height: "100%",
     shadowOffset: { height: 0, width: -30 },
-    shadowColor: color.grey3,
+    shadowColor: color.grey1,
     shadowOpacity: 0.4,
     shadowRadius: 30,
   },

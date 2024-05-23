@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
 import { H1 } from "tamagui";
 
@@ -16,6 +16,12 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
 
   const textToMatch = "delete";
 
+  useEffect(() => {
+    if (!modalOpen) {
+      setDeleteTextValue(undefined);
+    }
+  }, [modalOpen]);
+
   const handleDeleteAccount = async () => {
     try {
       await deleteUser.mutateAsync();
@@ -24,6 +30,8 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
       console.error(err);
     }
   };
+
+  const buttonDisabled = deleteTextValue !== textToMatch;
 
   return (
     <Modal
@@ -42,7 +50,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
             </Text>
             <TextInput
               placeholder="Input text here"
-              placeholderTextColor={color.grey6}
+              placeholderTextColor={color.grey4}
               inputMode="text"
               value={deleteTextValue}
               onChangeText={setDeleteTextValue}
@@ -55,13 +63,27 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
           </View>
           <View style={styles.buttons}>
             <Button
-              disabled={deleteTextValue !== textToMatch}
               variant="danger"
+              disabled={buttonDisabled}
+              size="$small"
+              radius="$small"
+              centered
               onPress={handleDeleteAccount}
             >
-              Permanently delete account
+              <Button.Text disabled={buttonDisabled}>
+                Permanently delete account
+              </Button.Text>
             </Button>
-            <Button onPress={() => setModalOpen(false)}>Close modal</Button>
+            <Button
+              variant="secondary"
+              size="$small"
+              radius="$small"
+              onPress={() => {
+                setModalOpen(false);
+              }}
+            >
+              <Button.Text>Close modal</Button.Text>
+            </Button>
           </View>
         </View>
       </View>
@@ -99,5 +121,5 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   input_error: { color: color.red, fontWeight: "600" },
-  buttons: { gap: 20 },
+  buttons: { flexDirection: "row", gap: 10 },
 });

@@ -1,12 +1,12 @@
 import { Link } from "expo-router";
 import { useState } from "react";
 import { FlatList, Pressable, Text, StyleSheet, View } from "react-native";
-import { Button } from "tamagui";
 
 import ImageTile from "./image_tile";
 import Skeleton from "./skeleton";
 
 import { useGetAlbums } from "@/api/queries/albums";
+import { Button } from "@/tamagui/variants";
 
 const numColumns = 2;
 const imageWidth = { minWidth: `${100 / numColumns}%` } as const;
@@ -43,8 +43,14 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
             }}
           >
             {tabCopy.map(({ heading }, i) => (
-              <Button key={heading} onPress={() => setViewedTab(i)}>
-                <Text>{heading}</Text>
+              <Button
+                variant="secondary"
+                size="$small"
+                radius="$small"
+                key={heading}
+                onPress={() => setViewedTab(i)}
+              >
+                {heading}
               </Button>
             ))}
           </View>
@@ -85,8 +91,8 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
         <FlatList
           data={
             viewedTab === 0
-              ? albums.data.withDeletedCount
-              : albums.data.noDeletedCount
+              ? albums.data?.withDeletedCount
+              : albums.data?.noDeletedCount
           }
           numColumns={numColumns}
           columnWrapperStyle={styles.column}

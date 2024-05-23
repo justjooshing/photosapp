@@ -14,14 +14,14 @@ import { Slot, router, useGlobalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { useColorScheme } from "react-native";
 import { RootSiblingParent as ToastWrapper } from "react-native-root-siblings";
+import "setimmediate";
 import { TamaguiProvider } from "tamagui";
 
-import { tamaguiConfig } from "../tamagui.config";
+import tamaguiConfig from "../tamagui.config";
 
 import Storage from "@/utils/storage";
 import { renderToast } from "@/utils/toast";
 
-import "setimmediate";
 if (!global.setImmediate) {
   //@ts-expect-error
   global.setImmediate = setTimeout;
@@ -79,13 +79,13 @@ const Layout = () => {
 
   const [queryClient] = useState(() => new QueryClient(config));
   const colourScheme = useColorScheme();
+  const theme = colourScheme === "dark" ? DarkTheme : DefaultTheme;
+
   return (
     <ToastWrapper>
       <QueryClientProvider client={queryClient}>
         <TamaguiProvider config={tamaguiConfig}>
-          <ThemeProvider
-            value={colourScheme === "dark" ? DarkTheme : DefaultTheme}
-          >
+          <ThemeProvider value={theme}>
             <Slot />
           </ThemeProvider>
         </TamaguiProvider>

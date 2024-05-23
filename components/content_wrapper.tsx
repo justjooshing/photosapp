@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   appWrapper: {
     alignItems: "center",
     minHeight: "100%",
-    backgroundColor: color.grey4,
+    backgroundColor: color.grey3,
   },
   contentWrapper: {
     width: "100%",

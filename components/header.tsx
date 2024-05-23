@@ -29,7 +29,7 @@ const BackButton = () => {
 
   return (
     <Pressable onPress={handleBackClick}>
-      <AntDesign name="arrowleft" size={24} color={color.blue4} />
+      <AntDesign name="arrowleft" size={24} color={color.blue3} />
     </Pressable>
   );
 };
@@ -55,7 +55,7 @@ const Header = () => {
 
   const Title = () => {
     return (
-      <H1 numberOfLines={1} size={20} color={color.blue4}>
+      <H1 numberOfLines={1} size={20} color={color.blue3}>
         {pageTitle}
       </H1>
     );
@@ -81,7 +81,7 @@ const Header = () => {
           >
             <AntDesign
               name={name}
-              color={imageType === option ? color.blue2 : color.blue4}
+              color={imageType === option ? color.blue2 : color.blue3}
               size={24}
             />
           </Pressable>

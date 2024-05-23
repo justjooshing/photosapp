@@ -1,7 +1,16 @@
+// tamagui.config.ts
 import { config } from "@tamagui/config/v3";
 import { createTamagui } from "tamagui";
 
-export const tamaguiConfig = createTamagui(config);
+import { allThemes } from "./tamagui/themes";
+import { tokens } from "./tamagui/tokens";
+
+const tamaguiConfig = createTamagui({
+  ...config,
+  themes: allThemes,
+  defaultTheme: "light",
+  tokens,
+});
 
 export default tamaguiConfig;
 
