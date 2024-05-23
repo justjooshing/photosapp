@@ -34,6 +34,8 @@ export const useGetImages = (imageType: ImagesType) =>
   useQuery({
     queryKey: Keys.images(imageType),
     queryFn: getImages,
+    // ensure order is kept after refetching
+    select: (images) => images?.sort((a, b) => (a.id > b.id ? -1 : 1)),
     // Kick off with a refetch interval since we're still pulling their images from Google
     refetchInterval: (query) =>
       query &&
