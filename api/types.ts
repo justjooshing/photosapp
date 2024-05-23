@@ -33,9 +33,7 @@ export interface ApiLoginLink {
   loginLink: string;
 }
 
-export interface ApiImageUrls {
-  imageUrls: ApiImage[];
-}
+export type ApiImageUrls = ApiImage[];
 
 export interface ApiImage {
   baseUrl: string;

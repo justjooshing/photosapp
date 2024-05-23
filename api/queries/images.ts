@@ -34,12 +34,10 @@ export const useGetImages = (imageType: ImagesType) =>
   useQuery({
     queryKey: Keys.images(imageType),
     queryFn: getImages,
-    select: ({ imageUrls }) => imageUrls,
     // Kick off with a refetch interval since we're still pulling their images from Google
     refetchInterval: (query) =>
       query &&
-      (query.state.data?.imageUrls.length > 10 ||
-        query.state.dataUpdateCount > 4)
+      (query.state.data?.length > 10 || query.state.dataUpdateCount > 4)
         ? false
         : 1000,
   });
@@ -62,9 +60,9 @@ export const useSortImage = (imageType: ImagesType) => {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: dataKey });
       const prevImages: ApiImageUrls = queryClient.getQueryData(dataKey);
-      queryClient.setQueryData(dataKey, ({ imageUrls }: ApiImageUrls) => ({
-        imageUrls: imageUrls.filter((old) => old.id !== data.image.id),
-      }));
+      queryClient.setQueryData(dataKey, (images: ApiImageUrls) =>
+        images.filter((old) => old.id !== data.image.id),
+      );
       return { prevImages };
     },
     onError: (err, _, context) => {
@@ -91,7 +89,7 @@ export const useSortImage = (imageType: ImagesType) => {
       });
 
       // Allow refetch if last image has been sorted successfully
-      if (context.prevImages.imageUrls.length === 1 && !err) {
+      if (context.prevImages.length === 1 && !err) {
         queryClient.invalidateQueries({ queryKey: dataKey });
       }
     },
