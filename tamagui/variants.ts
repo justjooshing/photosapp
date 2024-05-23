@@ -78,8 +78,8 @@ const buttonStyles: VariantDefinitions<typeof TamButton> &
 } as const;
 
 const baseButtonStyles = {
-  width: "200px",
-  height: "min-content",
+  minWidth: "100px",
+  height: "auto",
   disabledStyle: {
     cursor: "default",
     opacity: 0.6,
