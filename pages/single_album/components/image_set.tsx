@@ -39,6 +39,7 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
     );
 
   const images = (() => {
+    if (!singleAlbum.data?.images.length) return [];
     if (filter === "keep") return singleAlbum.data?.kept;
     if (filter === "delete") return singleAlbum.data?.deleted;
     return singleAlbum.data?.images;
