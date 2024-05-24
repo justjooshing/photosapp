@@ -1,10 +1,10 @@
 import { AntDesign } from "@expo/vector-icons";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { H1, Spinner, Text } from "tamagui";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { H1, Spinner, Text, View } from "tamagui";
 
 import { useGetLoginLink } from "@/api/queries/auth";
 import { color } from "@/tamagui/tokens";
-import { Anchor } from "@/tamagui/variants";
+import { Anchor, Button } from "@/tamagui/variants";
 
 const Login = () => {
   const loginLink = useGetLoginLink();
@@ -12,16 +12,22 @@ const Login = () => {
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: 120, paddingHorizontal: 30 }}>
       <ScrollView>
-        <H1 style={{ paddingBottom: 20 }}>Welcome, you're logged out</H1>
-        <Text style={{ paddingBottom: 20 }}>
+        <H1 paddingBottom="$space.large">Welcome, you're logged out</H1>
+        <Text paddingBottom="$space.large">
           This wee app was built to help me sort through my loads of images on
           Google Photos, so hopefully it helps you too!
         </Text>
         <View style={styles.container}>
-          {!loginLink.data ? (
-            <View style={styles.buttonPlaceholder}>
-              <Spinner color={color.grey1} />
-            </View>
+          {loginLink.isLoading ? (
+            <Button
+              variant="google"
+              size="$small"
+              radius="$small"
+              centered
+              disabled
+            >
+              <Spinner color="$color.grey1" />
+            </Button>
           ) : (
             <Anchor
               variant="google"
@@ -31,7 +37,7 @@ const Login = () => {
               href={loginLink.data}
             >
               <AntDesign name="google" size={24} style={styles.icon} />
-              <Text>Login with Google</Text>
+              <Text color="$color.white">Login with Google</Text>
             </Anchor>
           )}
         </View>
@@ -50,11 +56,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  buttonPlaceholder: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 200,
   },
   icon: {
     color: color.grey1,
