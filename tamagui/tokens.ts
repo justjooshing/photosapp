@@ -39,10 +39,10 @@ export const tokens = createTokens({
     large: 20,
   },
   zIndex: {
-    small: "",
-    medium: "",
-    true: "",
-    large: "",
+    small: 1,
+    medium: 2,
+    true: 3,
+    large: 4,
   },
   size: {
     small: "8px",
