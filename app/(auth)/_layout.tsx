@@ -1,15 +1,26 @@
-import { Redirect, Slot } from "expo-router";
+import { AntDesign } from "@expo/vector-icons";
+import { Redirect, Tabs } from "expo-router";
 import { ScrollView, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Text } from "tamagui";
 
 import { useGetAuthToken } from "@/api/queries/auth";
 import ContentWrapper from "@/components/content_wrapper";
 import Header from "@/components/header";
 import { HeadingProvider } from "@/context/header";
 import { ImageProvider } from "@/context/image";
+import { color } from "@/tamagui/tokens";
 
 const Layout = () => {
   const token = useGetAuthToken();
+
+  const activeTabs = [
+    { name: "index", label: "Sort", icon: "swap" },
+    { name: "dashboard", label: "Dashboard", icon: "home" },
+    { name: "albums", label: "Albums", icon: "picture" },
+  ] as const;
+
+  const hiddenTabs = ["goodbye/index"];
 
   return !token ? (
     <Redirect href="/login" />
@@ -20,7 +31,42 @@ const Layout = () => {
         <ScrollView contentContainerStyle={styles.flex}>
           <GestureHandlerRootView style={styles.flex}>
             <ContentWrapper>
-              <Slot />
+              <Tabs>
+                {activeTabs.map(({ name, icon, label }) => (
+                  <Tabs.Screen
+                    key={name}
+                    name={name}
+                    options={{
+                      tabBarActiveBackgroundColor: color.grey1,
+                      tabBarInactiveBackgroundColor: color.grey4,
+                      headerShown: false,
+                      tabBarIcon: ({ focused }) => (
+                        <AntDesign
+                          name={icon}
+                          size={20}
+                          color={focused ? color.blue3 : color.grey1}
+                        />
+                      ),
+                      tabBarLabel: ({ focused }) => (
+                        <Text
+                          fontSize={12}
+                          color={focused ? "$color.blue3" : "$color.grey1"}
+                        >
+                          {label}
+                        </Text>
+                      ),
+                    }}
+                  />
+                ))}
+
+                {hiddenTabs.map((name) => (
+                  <Tabs.Screen
+                    name={name}
+                    key={name}
+                    options={{ href: null, headerShown: false }}
+                  />
+                ))}
+              </Tabs>
             </ContentWrapper>
           </GestureHandlerRootView>
         </ScrollView>
