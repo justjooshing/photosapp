@@ -35,8 +35,14 @@ const BackButton = () => {
 };
 
 const Header = () => {
-  const { pageTitle, setPageTitle, imageType, setImageType } =
-    useHeadingContext();
+  const {
+    pageTitle,
+    setPageTitle,
+    imageType,
+    setImageType,
+    currentImageIndex,
+    setCurrentImageIndex,
+  } = useHeadingContext();
   const { path, slug } = usePathname();
   const singleAlbum = useGetSingleAlbum(slug);
 
@@ -70,13 +76,17 @@ const Header = () => {
       { name: "calendar", option: "today" },
       { name: "clockcircleo", option: "oldest" },
     ];
+    const updateImageType = (option: ImagesType) => {
+      if (currentImageIndex) setCurrentImageIndex(0);
+      setImageType(option);
+    };
 
     return path === "" ? (
       <View style={{ flexDirection: "row", gap: 10 }}>
         {icons.map(({ name, option }) => (
           <Pressable
             key={option}
-            onPress={() => setImageType(option)}
+            onPress={() => updateImageType(option)}
             disabled={imageType === option}
           >
             <AntDesign

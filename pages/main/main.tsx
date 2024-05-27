@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 
 import CarouselImage from "./components/carousel_image";
@@ -10,12 +9,11 @@ import Skeleton from "@/components/skeleton";
 import { useHeadingContext } from "@/context/header";
 
 const Images = () => {
-  const { imageType } = useHeadingContext();
+  const { imageType, currentImageIndex, setCurrentImageIndex } =
+    useHeadingContext();
   const images = useGetImages(imageType);
-  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
   if (images.isError) return <Text>{images.error.message}</Text>;
-
   /**
    * Fixes issue where after sorting final index image
    * we were still trying to access that index

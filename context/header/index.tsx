@@ -14,20 +14,31 @@ interface InitialState {
   setPageTitle: Dispatch<SetStateAction<InitialState["pageTitle"]>>;
   imageType: ImagesType;
   setImageType: Dispatch<SetStateAction<InitialState["imageType"]>>;
+  currentImageIndex: number;
+  setCurrentImageIndex: Dispatch<
+    SetStateAction<InitialState["currentImageIndex"]>
+  >;
 }
 
 const initialState: InitialState = {
-  setPageTitle: () => {},
   pageTitle: undefined,
+  setPageTitle: () => {},
   imageType: "similar",
   setImageType: () => {},
+  currentImageIndex: 0,
+  setCurrentImageIndex: () => {},
 };
 
 const HeadingContext = createContext<InitialState>(initialState);
 
 export const HeadingProvider = ({ children }) => {
   const [pageTitle, setPageTitle] = useState(initialState.pageTitle);
-  const [imageType, setImageType] = useState<ImagesType>("similar");
+  const [imageType, setImageType] = useState<ImagesType>(
+    initialState.imageType,
+  );
+  const [currentImageIndex, setCurrentImageIndex] = useState(
+    initialState.currentImageIndex,
+  );
 
   const values = useMemo(
     () => ({
@@ -35,8 +46,10 @@ export const HeadingProvider = ({ children }) => {
       setPageTitle,
       imageType,
       setImageType,
+      currentImageIndex,
+      setCurrentImageIndex,
     }),
-    [pageTitle, imageType],
+    [pageTitle, imageType, currentImageIndex],
   );
 
   return (
