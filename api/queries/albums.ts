@@ -7,8 +7,6 @@ import { ApiAlbums, ApiSingleAlbum } from "../types";
 
 import Storage from "@/utils/storage";
 
-const token = Storage.getString("jwt");
-
 const getAlbums = async () => {
   const { data } = await client.get<ApiAlbums>(ENDPOINTS.get("albums"));
   return data;
@@ -77,7 +75,9 @@ const organiseSingleAlbum = (data: ApiSingleAlbum) => {
 };
 
 export const useGetSingleAlbum = (albumId: string) => {
+  const token = Storage.getString("jwt");
   const isNumberAsString = !isNaN(+albumId) && !Array.isArray(albumId);
+
   return useQuery({
     enabled: !!token && isNumberAsString && !!albumId,
     queryKey: Keys.albumImages(albumId),
