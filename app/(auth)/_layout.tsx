@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Text } from "tamagui";
 
+import { useGetAlbums } from "@/api/queries/albums";
 import { useGetAuthToken } from "@/api/queries/auth";
 import ContentWrapper from "@/components/content_wrapper";
 import Header from "@/components/header";
@@ -13,6 +14,7 @@ import { color } from "@/tamagui/tokens";
 
 const Layout = () => {
   const token = useGetAuthToken();
+  const albums = useGetAlbums();
 
   const activeTabs = [
     { name: "index", label: "Sort", icon: "swap" },
@@ -40,6 +42,17 @@ const Layout = () => {
                       tabBarActiveBackgroundColor: color.grey1,
                       tabBarInactiveBackgroundColor: color.grey4,
                       headerShown: false,
+                      tabBarBadge:
+                        name === "albums" &&
+                        albums.data?.withDeletedCount.length
+                          ? albums.data?.withDeletedCount.length
+                          : null,
+                      tabBarBadgeStyle: {
+                        display: "flex",
+                        fontSize: 10,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      },
                       tabBarIcon: ({ focused }) => (
                         <AntDesign
                           name={icon}
