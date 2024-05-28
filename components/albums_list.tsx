@@ -6,6 +6,7 @@ import ImageTile from "./image_tile";
 import Skeleton from "./skeleton";
 
 import { useGetAlbums } from "@/api/queries/albums";
+import { color } from "@/tamagui/tokens";
 import { Button } from "@/tamagui/variants";
 
 const numColumns = 2;
@@ -90,6 +91,11 @@ const AlbumsList = () => {
               style={imageWidth}
             >
               <Pressable style={styles.image}>
+                {!!album.deleteCount && (
+                  <View style={styles.notification_dot}>
+                    {album.deleteCount}
+                  </View>
+                )}
                 {album.firstImage?.baseUrl ? (
                   <ImageTile image={album.firstImage} />
                 ) : (
@@ -120,7 +126,22 @@ const styles = StyleSheet.create({
   column: {
     paddingBottom: 10,
   },
-  image: { alignItems: "center" },
+  image: { alignItems: "center", position: "relative" },
+  notification_dot: {
+    position: "absolute",
+    top: 0,
+    right: 20,
+    margin: 2,
+    zIndex: 1,
+    backgroundColor: color.red2,
+    alignItems: "center",
+    justifyContent: "center",
+    color: color.white,
+    fontSize: 10,
+    height: 20,
+    aspectRatio: 1,
+    borderRadius: 20,
+  },
   skeleton_container: {
     borderRadius: 20,
     width: "80%",

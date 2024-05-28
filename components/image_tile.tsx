@@ -1,6 +1,7 @@
 import { ImageSourcePropType, Image, StyleSheet } from "react-native";
 
 import { ApiImage } from "@/api/types";
+import { color } from "@/tamagui/tokens";
 type Props = {
   image: ApiImage;
 };
@@ -23,5 +24,7 @@ const styles = StyleSheet.create({
     width: "80%",
     alignSelf: "center",
     aspectRatio: 1,
+    borderColor: color.grey2,
+    borderWidth: 1,
   },
 });
