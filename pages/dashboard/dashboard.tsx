@@ -1,11 +1,8 @@
-import { Link } from "expo-router";
-import { Pressable, StyleSheet, View } from "react-native";
-import { H3 } from "tamagui";
+import { StyleSheet, View } from "react-native";
 
 import DeleteAccount from "./components/delete_account";
 import Stats from "./components/stats";
 
-import AlbumsList from "@/components/albums_list";
 import { Anchor } from "@/tamagui/variants";
 
 const Dashboard = () => {
@@ -30,14 +27,6 @@ const Dashboard = () => {
             {copy}
           </Anchor>
         ))}
-      </View>
-      <View style={styles.album_list}>
-        <Link href="/albums" asChild style={styles.albums_title}>
-          <Pressable>
-            <H3>{"Albums >"}</H3>
-          </Pressable>
-        </Link>
-        <AlbumsList limit={6} />
       </View>
       <DeleteAccount />
     </>
