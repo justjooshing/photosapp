@@ -33,7 +33,7 @@ const Layout = () => {
         <ScrollView contentContainerStyle={styles.flex}>
           <GestureHandlerRootView style={styles.flex}>
             <ContentWrapper>
-              <Tabs>
+              <Tabs screenOptions={{ tabBarLabelPosition: "below-icon" }}>
                 {activeTabs.map(({ name, icon, label }) => (
                   <Tabs.Screen
                     key={name}
