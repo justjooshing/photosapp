@@ -24,7 +24,6 @@ export const color = {
   yellow: "hsl(46, 99%, 44%)",
 };
 
-// tokens.ts
 export const tokens = createTokens({
   color,
   space: {
@@ -51,8 +50,9 @@ export const tokens = createTokens({
     large: "16px",
   },
   fontSize: {
-    small: "12px",
-    medium: "16px",
-    large: "20px",
+    small: 12,
+    medium: 16,
+    true: 16,
+    large: 24,
   },
 });
