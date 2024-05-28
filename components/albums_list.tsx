@@ -11,12 +11,7 @@ import { Button } from "@/tamagui/variants";
 const numColumns = 2;
 const imageWidth = { minWidth: `${100 / numColumns}%` } as const;
 
-interface AlbumsListProps {
-  limit?: number;
-  filter?: "count" | "none";
-}
-
-const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
+const AlbumsList = () => {
   const albums = useGetAlbums();
   const [viewedTab, setViewedTab] = useState<number>(0);
 
@@ -33,24 +28,20 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
 
   return (
     <>
-      {filter === "count" && (
-        <>
-          <View style={styles.filters}>
-            {tabCopy.map(({ heading }, i) => (
-              <Button
-                variant="secondary"
-                size="$small"
-                radius="$small"
-                key={heading}
-                onPress={() => setViewedTab(i)}
-              >
-                {heading}
-              </Button>
-            ))}
-          </View>
-          <Text style={styles.filter_text}>{tabCopy[viewedTab].copy}</Text>
-        </>
-      )}
+      <View style={styles.filters}>
+        {tabCopy.map(({ heading }, i) => (
+          <Button
+            variant="secondary"
+            size="$small"
+            radius="$small"
+            key={heading}
+            onPress={() => setViewedTab(i)}
+          >
+            {heading}
+          </Button>
+        ))}
+      </View>
+      <Text style={styles.filter_text}>{tabCopy[viewedTab].copy}</Text>
 
       {/* Is loading */}
       {albums.isLoading && (
@@ -91,28 +82,23 @@ const AlbumsList = ({ limit, filter = "none" }: AlbumsListProps) => {
           numColumns={numColumns}
           columnWrapperStyle={styles.column}
           keyExtractor={({ id }) => id.toString()}
-          renderItem={({ item: album, index }) => {
-            if (!limit || index < limit) {
-              return (
-                <Link
-                  key={album.id}
-                  href={`/albums/${album.id}`}
-                  asChild
-                  style={imageWidth}
-                >
-                  <Pressable style={styles.image}>
-                    {album.firstImage?.baseUrl ? (
-                      <ImageTile image={album.firstImage} />
-                    ) : (
-                      <Text>Where's the image?</Text>
-                    )}
-                    <Text>{album.title}</Text>
-                  </Pressable>
-                </Link>
-              );
-            }
-            return null;
-          }}
+          renderItem={({ item: album }) => (
+            <Link
+              key={album.id}
+              href={`/albums/${album.id}`}
+              asChild
+              style={imageWidth}
+            >
+              <Pressable style={styles.image}>
+                {album.firstImage?.baseUrl ? (
+                  <ImageTile image={album.firstImage} />
+                ) : (
+                  <Text>Where's the image?</Text>
+                )}
+                <Text>{album.title}</Text>
+              </Pressable>
+            </Link>
+          )}
         />
       )}
     </>
