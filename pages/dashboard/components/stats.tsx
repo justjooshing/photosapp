@@ -10,13 +10,29 @@ const Stats = () => {
   if (count.isError) return <Text>{count.error.message}</Text>;
 
   const counts = {
-    sorted: {
-      label: "kept:",
-      value: count.data?.counts.sortedCount,
+    markKeep: {
+      label: "Marked to keep:",
+      value: count.data?.counts.numMarkKeep,
     },
-    deleted: {
-      label: "deleted:",
-      value: count.data?.counts.deletedCount,
+    markKeepLaterDelete: {
+      label: "Marked to keep but later deleted:",
+      value: count.data?.counts.numMarkKeepLaterDeleted,
+    },
+    markDelete: {
+      label: "Marked to delete:",
+      value: count.data?.counts.numMarkDelete,
+    },
+    markDeleteLaterDelete: {
+      label: "Marked to delete and later deleted:",
+      value: count.data?.counts.numMarkDeleteLaterDeleted,
+    },
+    totalSorted: {
+      label: "Total sorted",
+      value: count.data?.counts.totalSorted,
+    },
+    totalDeleted: {
+      label: "Total deleted",
+      value: count.data?.counts.totalDeleted,
     },
   };
 
@@ -24,7 +40,7 @@ const Stats = () => {
     <View style={styles.stats}>
       {Object.values(counts).map(({ label, value }) => (
         <View style={styles.singleStats} key={label}>
-          <Text>{`Photos ${label}`}</Text>
+          <Text>{label}</Text>
           <View>
             {count.isLoading ? (
               <View style={styles.skeleton_container}>

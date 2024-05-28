@@ -8,6 +8,6 @@ export const Keys = {
   images: (type: ImagesType) => [...Keys.baseImages, type] as const,
   albums: () => [...Keys.baseAlbums] as const,
   albumImages: (albumId: string) => [...Keys.albums(), albumId] as const,
-  count: () => ["count"] as const,
+  count: ["count"] as const,
   user: ["user"] as const,
 };

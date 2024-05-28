@@ -7,8 +7,10 @@ export interface ApiUser {
 
 export interface ApiCount {
   counts: {
-    sortedCount: number;
-    deletedCount: number;
+    numMarkDelete: number;
+    numMarkKeep: number;
+    numMarkDeleteLaterDeleted: number;
+    numMarkKeepLaterDeleted: number;
   };
 }
 

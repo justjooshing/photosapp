@@ -84,7 +84,7 @@ export const useSortImage = (imageType: ImagesType) => {
     },
     onSettled: (d, err, v, context) => {
       queryClient.invalidateQueries({
-        queryKey: Keys.count(),
+        queryKey: Keys.count,
       });
       queryClient.invalidateQueries({
         queryKey: Keys.baseAlbums,
@@ -155,7 +155,7 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
       queryClient.setQueryData(dataKey, updatedSingleAlbum);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: Keys.count() });
+      queryClient.invalidateQueries({ queryKey: Keys.count });
     },
   });
 };
@@ -167,6 +167,16 @@ const getCount = async () => {
 
 export const useGetCount = () =>
   useQuery({
-    queryKey: Keys.count(),
+    queryKey: Keys.count,
     queryFn: getCount,
+    select: (data) => ({
+      ...data,
+      counts: {
+        ...data.counts,
+        totalSorted: data.counts.numMarkDelete + data.counts.numMarkKeep,
+        totalDeleted:
+          data.counts.numMarkDeleteLaterDeleted +
+          data.counts.numMarkKeepLaterDeleted,
+      },
+    }),
   });
