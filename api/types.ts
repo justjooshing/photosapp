@@ -44,6 +44,7 @@ export interface ApiImage {
   sorted_album_id?: number;
   sorted_status: SortOptions;
   updated_at: Date;
+  size: string | null;
 }
 
 export interface ApiSortImage {
