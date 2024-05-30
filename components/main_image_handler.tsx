@@ -57,9 +57,10 @@ const MainImageHandler = ({
 
   const updateImage = async (sorted_status: SortOptions) => {
     sortImage({ image: mainImage, body: { sorted_status } });
-    updateCurrentIndex();
     if (isLastImage) {
       router.push("/dashboard");
+    } else {
+      updateCurrentIndex();
     }
   };
 
