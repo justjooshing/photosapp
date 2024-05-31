@@ -33,26 +33,30 @@ const Layout = () => {
         <ScrollView contentContainerStyle={styles.flex}>
           <GestureHandlerRootView style={styles.flex}>
             <ContentWrapper>
-              <Tabs screenOptions={{ tabBarLabelPosition: "below-icon" }}>
+              <Tabs
+                screenOptions={{
+                  tabBarLabelPosition: "below-icon",
+                  tabBarActiveBackgroundColor: color.grey1,
+                  tabBarInactiveBackgroundColor: color.grey4,
+                  headerShown: false,
+                  tabBarBadgeStyle: {
+                    display: "flex",
+                    fontSize: 10,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  },
+                }}
+              >
                 {activeTabs.map(({ name, icon, label }) => (
                   <Tabs.Screen
                     key={name}
                     name={name}
                     options={{
-                      tabBarActiveBackgroundColor: color.grey1,
-                      tabBarInactiveBackgroundColor: color.grey4,
-                      headerShown: false,
                       tabBarBadge:
                         name === "albums" &&
                         albums.data?.withDeletedCount.length
                           ? albums.data?.withDeletedCount.length
                           : null,
-                      tabBarBadgeStyle: {
-                        display: "flex",
-                        fontSize: 10,
-                        alignItems: "center",
-                        justifyContent: "center",
-                      },
                       tabBarIcon: ({ focused }) => (
                         <AntDesign
                           name={icon}
