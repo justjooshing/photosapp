@@ -6,30 +6,41 @@ import Stats from "./components/stats";
 import { Anchor } from "@/tamagui/variants";
 
 const Dashboard = () => {
-  const buttons = [
-    { href: "/", copy: "Another round?" },
-    { href: "/goodbye", copy: "End" },
-  ];
-
   return (
-    <>
+    <View
+      style={{
+        width: "100%",
+        minHeight: "100%",
+        justifyContent: "space-between",
+      }}
+    >
       <Stats />
       <View style={styles.button_container}>
-        {buttons.map(({ href, copy }) => (
-          <Anchor
-            key={href}
-            variant="primary"
-            size="$small"
-            radius="$small"
-            centered
-            href={href}
-          >
-            {copy}
-          </Anchor>
-        ))}
+        <Anchor
+          key="/"
+          variant="primary"
+          size="$medium"
+          radius="$medium"
+          centered
+          href="/"
+        >
+          Another round?
+        </Anchor>
       </View>
-      <DeleteAccount />
-    </>
+      <View style={{ flexDirection: "row", gap: 20, justifyContent: "center" }}>
+        <Anchor
+          key="/goodbye"
+          variant="secondary"
+          size="$small"
+          radius="$small"
+          centered
+          href="/goodbye"
+        >
+          End
+        </Anchor>
+        <DeleteAccount />
+      </View>
+    </View>
   );
 };
 
@@ -37,7 +48,6 @@ export default Dashboard;
 
 const styles = StyleSheet.create({
   button_container: {
-    flexDirection: "row",
     width: "100%",
     alignItems: "center",
     gap: 30,

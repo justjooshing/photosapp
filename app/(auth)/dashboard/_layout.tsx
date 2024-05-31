@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     display: "flex",
     padding: 20,
     alignItems: "center",
+    minHeight: "100%",
     gap: 30,
   },
 });
