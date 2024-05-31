@@ -1,5 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
-import { Redirect, Tabs } from "expo-router";
+import { Redirect, Tabs, router } from "expo-router";
 import { ScrollView, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Text } from "tamagui";
@@ -10,11 +10,13 @@ import ContentWrapper from "@/components/content_wrapper";
 import Header from "@/components/header";
 import { HeadingProvider } from "@/context/header";
 import { ImageProvider } from "@/context/image";
+import usePathname from "@/hooks/usePathname";
 import { color } from "@/tamagui/tokens";
 
 const Layout = () => {
   const token = useGetAuthToken();
   const albums = useGetAlbums();
+  const { slug } = usePathname();
 
   const activeTabs = [
     { name: "index", label: "Sort", icon: "swap" },
@@ -51,6 +53,13 @@ const Layout = () => {
                   <Tabs.Screen
                     key={name}
                     name={name}
+                    listeners={{
+                      tabPress: () => {
+                        // override issue clicking album tab when in album/[albumId]
+                        // wouldn't navigate anywhere
+                        if (name === "albums" && slug) router.push(`/${name}`);
+                      },
+                    }}
                     options={{
                       tabBarBadge:
                         name === "albums" &&
