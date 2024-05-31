@@ -21,9 +21,7 @@ const Image = ({ image }: Props) => {
 
   return (
     <>
-      <Pressable>
-        <ImageTile image={image} />
-      </Pressable>
+      <ImageTile image={image} />
       <View style={styles.button_wrapper}>
         <Button image={image} choice="keep" />
         <Button image={image} choice="delete" />
