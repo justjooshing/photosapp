@@ -15,6 +15,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
   const deleteUser = useDeleteUser();
 
   const textToMatch = "delete";
+  const buttonDisabled = deleteTextValue?.toLowerCase().trim() !== textToMatch;
 
   useEffect(() => {
     if (!modalOpen) {
@@ -24,14 +25,14 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
 
   const handleDeleteAccount = async () => {
     try {
-      await deleteUser.mutateAsync();
-      setDeleteTextValue("");
+      if (!buttonDisabled) {
+        await deleteUser.mutateAsync();
+        setDeleteTextValue("");
+      }
     } catch (err) {
       console.error(err);
     }
   };
-
-  const buttonDisabled = deleteTextValue !== textToMatch;
 
   return (
     <Modal
@@ -52,7 +53,6 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
               placeholder="Input text here"
               placeholderTextColor={color.grey3}
               inputMode="text"
-              value={deleteTextValue}
               onChangeText={setDeleteTextValue}
               style={styles.input}
             />
@@ -121,5 +121,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   input_error: { color: color.red, fontWeight: "600" },
+  // Set MQ for smaller screens with flexDir column
   buttons: { flexDirection: "row", gap: 10 },
 });
