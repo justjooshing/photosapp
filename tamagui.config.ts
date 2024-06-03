@@ -8,6 +8,7 @@ import { tokens } from "./tamagui/tokens";
 const tamaguiConfig = createTamagui({
   ...config,
   themes: allThemes,
+  defaultFont: "body",
   defaultTheme: "light",
   tokens,
 });
