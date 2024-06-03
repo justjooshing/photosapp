@@ -1,9 +1,10 @@
+import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
 import DeleteAccount from "./components/delete_account";
 import Stats from "./components/stats";
 
-import { Anchor } from "@/tamagui/variants";
+import { Button } from "@/tamagui/variants";
 
 const Dashboard = () => {
   return (
@@ -16,28 +17,18 @@ const Dashboard = () => {
     >
       <Stats />
       <View style={styles.button_container}>
-        <Anchor
-          key="/"
-          variant="primary"
-          size="$medium"
-          radius="$medium"
-          centered
-          href="/"
-        >
-          Another round?
-        </Anchor>
+        <Link href="/">
+          <Button variant="primary" size="$medium" radius="$medium" centered>
+            Another round?
+          </Button>
+        </Link>
       </View>
       <View style={{ flexDirection: "row", gap: 20, justifyContent: "center" }}>
-        <Anchor
-          key="/goodbye"
-          variant="secondary"
-          size="$small"
-          radius="$small"
-          centered
-          href="/goodbye"
-        >
-          End
-        </Anchor>
+        <Link href="/goodbye">
+          <Button variant="secondary" size="$small" radius="$small" centered>
+            End
+          </Button>
+        </Link>
         <DeleteAccount />
       </View>
     </View>
@@ -47,6 +38,9 @@ const Dashboard = () => {
 export default Dashboard;
 
 const styles = StyleSheet.create({
+  link: {
+    textDecorationLine: "none",
+  },
   button_container: {
     width: "100%",
     alignItems: "center",
