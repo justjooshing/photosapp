@@ -10,6 +10,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { useFonts } from "expo-font";
 import { Slot, router, useGlobalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { useColorScheme } from "react-native";
@@ -80,6 +81,15 @@ const Layout = () => {
   const [queryClient] = useState(() => new QueryClient(config));
   const colourScheme = useColorScheme();
   const theme = colourScheme === "dark" ? DarkTheme : DefaultTheme;
+
+  const [loaded] = useFonts({
+    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
+    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <ToastWrapper>
