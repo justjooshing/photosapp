@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
-import { Image, Pressable } from "react-native";
+import { Pressable } from "react-native";
 
 import { ApiImage } from "@/api/types";
+import ImageWithError from "@/components/image_with_error_handler";
 
 interface CarouselImageProps {
   image: ApiImage;
@@ -25,8 +26,12 @@ const CarouselImage = ({
   };
 
   return (
-    <Pressable onPress={handleClick} key={image.id}>
-      <Image source={imageSrc} />
+    <Pressable onPress={handleClick}>
+      <ImageWithError
+        imageProps={{
+          source: imageSrc,
+        }}
+      />
     </Pressable>
   );
 };

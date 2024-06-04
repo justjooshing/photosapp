@@ -1,7 +1,10 @@
-import { ImageSourcePropType, Image, StyleSheet } from "react-native";
+import { ImageSourcePropType, StyleSheet } from "react-native";
+
+import ImageWithError from "./image_with_error_handler";
 
 import { ApiImage } from "@/api/types";
 import { color } from "@/tamagui/tokens";
+
 type Props = {
   image: ApiImage;
 };
@@ -12,7 +15,14 @@ function ImageTile({ image }: Props) {
   };
 
   return (
-    <Image source={imageSource} resizeMode="contain" style={styles.image} />
+    <ImageWithError
+      imageProps={{
+        source: imageSource,
+        resizeMode: "contain",
+        style: styles.image,
+      }}
+      errorProps={{ size: 72 }}
+    />
   );
 }
 

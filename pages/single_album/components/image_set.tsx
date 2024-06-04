@@ -66,8 +66,8 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
           numColumns={numColumns}
           contentContainerStyle={styles.album_container}
           renderItem={({ item }) => (
-            <View style={imageWidth}>
-              <Image image={item} key={item.id} />
+            <View style={imageWidth} key={item.id}>
+              <Image image={item} />
             </View>
           )}
         />

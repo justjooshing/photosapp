@@ -1,9 +1,11 @@
 import {
-  Image,
   ImageSourcePropType,
   StyleSheet,
+  View,
   useWindowDimensions,
 } from "react-native";
+
+import ImageWithError from "./image_with_error_handler";
 
 import { ApiImage } from "@/api/types";
 
@@ -13,14 +15,23 @@ type Props = {
 
 const FSImage = ({ image }: Props) => {
   const { width, height } = useWindowDimensions();
-  // For some reason these don't work on Android but LocalImage does
   const sourceImage: ImageSourcePropType = {
     uri: image.baseUrl,
     width: width - 10,
     height,
   };
+
   return (
-    <Image resizeMode="contain" source={sourceImage} style={styles.image} />
+    <View style={{ justifyContent: "center", height: "100%" }}>
+      <ImageWithError
+        imageProps={{
+          resizeMode: "contain",
+          source: sourceImage,
+          style: styles.image,
+        }}
+        errorProps={{ size: width - 56 }}
+      />
+    </View>
   );
 };
 
