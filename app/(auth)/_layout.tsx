@@ -1,8 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Redirect, Tabs, router } from "expo-router";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Text } from "tamagui";
 
 import { useGetAlbums } from "@/api/queries/albums";
 import { useGetAuthToken } from "@/api/queries/auth";
@@ -75,8 +74,10 @@ const Layout = () => {
                       ),
                       tabBarLabel: ({ focused }) => (
                         <Text
-                          fontSize={12}
-                          color={focused ? "$color.blue3" : "$color.grey1"}
+                          style={[
+                            styles.tab_label,
+                            { color: focused ? color.blue3 : color.grey1 },
+                          ]}
                         >
                           {label}
                         </Text>
@@ -106,5 +107,8 @@ export default Layout;
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
+  },
+  tab_label: {
+    fontSize: 12,
   },
 });

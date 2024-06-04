@@ -24,14 +24,16 @@ export const color = {
   yellow: "hsl(46, 99%, 44%)",
 };
 
+export const space = {
+  small: 8,
+  medium: 12,
+  true: 12,
+  large: 16,
+} as const;
+
 export const tokens = createTokens({
   color,
-  space: {
-    small: "8px",
-    medium: "12px",
-    true: "12px",
-    large: "16px",
-  },
+  space,
   radius: {
     small: 5,
     medium: 10,

@@ -1,9 +1,9 @@
 import { AntDesign } from "@expo/vector-icons";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { H1, Spinner, Text, View } from "tamagui";
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { H1, Spinner } from "tamagui";
 
 import { useGetLoginLink } from "@/api/queries/auth";
-import { color } from "@/tamagui/tokens";
+import { color, space } from "@/tamagui/tokens";
 import { Anchor, Button } from "@/tamagui/variants";
 
 const Login = () => {
@@ -13,7 +13,7 @@ const Login = () => {
     <SafeAreaView style={{ flex: 1, paddingTop: 120, paddingHorizontal: 30 }}>
       <ScrollView>
         <H1 paddingBottom="$space.large">Welcome, you're logged out</H1>
-        <Text paddingBottom="$space.large">
+        <Text style={styles.subheading}>
           This wee app was built to help me sort through my loads of images on
           Google Photos, so hopefully it helps you too!
         </Text>
@@ -37,7 +37,7 @@ const Login = () => {
               href={loginLink.data}
             >
               <AntDesign name="google" size={24} style={styles.icon} />
-              <Text color="$color.white">Login with Google</Text>
+              <Text style={styles.button_text}>Login with Google</Text>
             </Anchor>
           )}
         </View>
@@ -60,5 +60,11 @@ const styles = StyleSheet.create({
   icon: {
     color: color.grey1,
     paddingRight: 10,
+  },
+  subheading: {
+    paddingBottom: space.large,
+  },
+  button_text: {
+    color: color.white,
   },
 });
