@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, useWindowDimensions } from "react-native";
 import {
   Gesture,
   GestureDetector,
@@ -33,12 +33,19 @@ const MainImageHandler = ({
 }: Props) => {
   const { imageType } = useHeadingContext();
   const { isLoading } = useGetImages(imageType);
+  const { width } = useWindowDimensions();
 
   const offset = useSharedValue(0);
   const { mutate: sortImage } = useSortImage(imageType);
 
   const animatedStyles = useAnimatedStyle(() => ({
-    transform: [{ translateX: offset.value }],
+    transform: [
+      { translateX: offset.value },
+      {
+        rotate:
+          offset.value === 0 ? "0deg" : `${0 + (offset.value / width) * 80}deg`,
+      },
+    ] as const,
   }));
 
   const threshold = 100;
