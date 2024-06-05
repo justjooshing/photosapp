@@ -18,6 +18,15 @@ export const client = axios.create({
   baseURL,
 });
 
+client.interceptors.response.use((res) => {
+  // @ts-expect-error - says we can't call .get()
+  const token = res.headers.get("Jwt");
+  if (token) {
+    Storage.set("jwt", token);
+  }
+  return res;
+});
+
 client.interceptors.request.use((config) => {
   const token = Storage.getString("jwt");
   config.headers.Authorization = `Bearer ${token}`;
