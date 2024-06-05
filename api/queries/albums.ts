@@ -35,7 +35,7 @@ const organiseAlbums = ({
 
 export const useGetAlbums = () =>
   useQuery({
-    queryKey: Keys.albums(),
+    queryKey: Keys.albums,
     queryFn: getAlbums,
     select: organiseAlbums,
   });

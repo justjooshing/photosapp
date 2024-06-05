@@ -1,13 +1,18 @@
 import { ImagesType } from "@/context/header/types";
 
+const baseKeys = {
+  loginLink: "login-link",
+  images: "images",
+  albums: "albums",
+  count: "count",
+  user: "user",
+};
+
 export const Keys = {
-  loginLink: ["login-link"] as const,
-  baseImages: ["images"] as const,
-  baseAlbums: ["albums"],
-  // Need to add userId to these
-  images: (type: ImagesType) => [...Keys.baseImages, type] as const,
-  albums: () => [...Keys.baseAlbums] as const,
-  albumImages: (albumId: string) => [...Keys.albums(), albumId] as const,
-  count: ["count"] as const,
-  user: ["user"] as const,
+  loginLink: [baseKeys.loginLink] as const,
+  count: [baseKeys.count] as const,
+  user: [baseKeys.user] as const,
+  albums: [baseKeys.albums] as const,
+  images: (type: ImagesType) => [baseKeys.images, type] as const,
+  albumImages: (albumId: string) => [baseKeys.albums, albumId] as const,
 };

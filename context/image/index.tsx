@@ -53,9 +53,10 @@ export const ImageProvider = ({ children }) => {
         {
           onSettled: () => {
             queryClient.invalidateQueries({
-              queryKey: Keys.albumImages(
-                targetImage.sorted_album_id.toString(),
-              ),
+              queryKey: [
+                ...Keys.albumImages(targetImage.sorted_album_id.toString()),
+                ...Keys.count,
+              ],
             });
           },
         },
