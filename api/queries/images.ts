@@ -87,7 +87,7 @@ export const useSortImage = (imageType: ImagesType) => {
         queryKey: Keys.count,
       });
       queryClient.invalidateQueries({
-        queryKey: Keys.baseAlbums,
+        queryKey: Keys.albums,
       });
 
       // Allow refetch if last image has been sorted successfully
@@ -132,7 +132,7 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
       queryClient.setQueryData(dataKey, context.prevSingleAlbum);
       throw err;
     },
-    onSuccess: ({ data }, v, ctx) => {
+    onSuccess: ({ data }, requestData, ctx) => {
       // Need to think about how to stop this appearing when checking against Google
       // ...separate endpoint?
       data.image.map(({ sorted_status }) => {
@@ -143,16 +143,33 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
           message: `Image marked for ${conjugation}`,
         });
       });
+
       const returnedImage = data.image[0];
       const updatedImages = ctx.prevSingleAlbum.images.map((oldImage) =>
-        oldImage.id === returnedImage.id ? returnedImage : oldImage,
+        oldImage.id === requestData.image.id ? returnedImage : oldImage,
       );
+
       const updatedSingleAlbum = {
         ...ctx.prevSingleAlbum,
         images: updatedImages,
       };
 
       queryClient.setQueryData(dataKey, updatedSingleAlbum);
+      if (
+        // if actually deleted
+        !returnedImage ||
+        // OR if all entries now match last update
+        updatedSingleAlbum.images.every(
+          (img) => img.sorted_status === requestData.image.sorted_status,
+        ) ||
+        // OR if last update means there's now one different to the rest
+        updatedSingleAlbum.images.filter(
+          (img) => img.sorted_status === requestData.image.sorted_status,
+        ).length === 1
+      ) {
+        // refresh albums list
+        queryClient.invalidateQueries({ queryKey: Keys.albums });
+      }
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: Keys.count });
