@@ -57,14 +57,16 @@ const Layout = () => {
             const defaultRetry = new QueryClient().getDefaultOptions().queries
               ?.retry;
 
-            return Number.isSafeInteger(defaultRetry)
+            const shouldRetry = Number.isSafeInteger(defaultRetry)
               ? failureCount < (Number(defaultRetry) ?? 0)
               : false;
+
+            return shouldRetry;
           }
         },
         throwOnError: (err: AxiosError) => {
           if (err instanceof AxiosError) {
-            if (err.response?.status === 401) {
+            if (err.response?.status === 401 || err.response?.status === 422) {
               // Logout after half a second
               setTimeout(() => {
                 Storage.delete("jwt");
