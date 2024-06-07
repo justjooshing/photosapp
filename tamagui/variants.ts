@@ -78,16 +78,22 @@ const buttonStyles: VariantDefinitions<typeof TamButton> &
 } as const;
 
 const baseButtonStyles = {
-  minWidth: "100px",
-  height: "auto",
+  style: {
+    minWidth: "100px",
+    maxWidth: "80%",
+    height: "auto",
+  },
   disabledStyle: {
     cursor: "default",
     opacity: 0.6,
   },
-};
+} as const;
 
 const ButtonText = styled(TamButtonText, {
   name: "ButtonText",
+  style: {
+    whiteSpace: "balance",
+  },
   disabledStyle: {
     cursor: "default",
   },

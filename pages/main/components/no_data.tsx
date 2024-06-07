@@ -12,17 +12,17 @@ const NoData = () => {
   const { copy, cta, handlePress } = {
     similar: {
       copy: "No more similar image sets needing to be sorted.",
-      cta: "Click here to view images from this date over the years",
+      cta: "View images from prior years",
       handlePress: () => setImageType("today"),
     },
     today: {
       copy: "No more images from this date over the years needing to be sorted.",
-      cta: "Click here to view your oldest images",
+      cta: "View oldest images",
       handlePress: () => setImageType("oldest"),
     },
     oldest: {
       copy: "Wow, no more images to sort through at all!",
-      cta: "Click here to see whether you have some marked to be deleted",
+      cta: "View images to be deleted",
       handlePress: () => router.push("/albums"),
     },
   }[imageType];
