@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 import { color } from "@/tamagui/tokens";
 
@@ -9,9 +9,9 @@ type Props = {
 
 const ContentWrapper = ({ children }: Props) => {
   return (
-    <View style={styles.appWrapper}>
+    <ScrollView contentContainerStyle={styles.appWrapper}>
       <View style={styles.contentWrapper}>{children}</View>
-    </View>
+    </ScrollView>
   );
 };
 
