@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "scheme": "expo",
+    "scheme": "https",
     "experiments": {
       "tsconfigPaths": true
     },
@@ -20,10 +20,20 @@
       "supportsTablet": true
     },
     "android": {
-      // https://docs.expo.dev/guides/deep-linking/
-      // https://github.com/expo/fyi/blob/main/creating-google-service-account.md
-      // com.justjooshing.picpurge://expo-development-client
       "package": "com.justjooshing.picpurge",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "*.picpurge.app"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -38,7 +48,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "68a37e20-cf86-4c7f-99f0-463e5f47d5c9"
+        "projectId": "fd0e4b92-c827-4bc8-8cf1-7a21c3172c0b"
       }
     }
   }

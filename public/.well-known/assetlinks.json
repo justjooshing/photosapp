@@ -4,7 +4,9 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.justjooshing.picpurge",
-      "sha256_cert_fingerprints": ["{sha256_cert_fingerprints}"]
+      "sha256_cert_fingerprints": [
+        "6D:ED:B0:D2:5E:82:83:37:C4:A2:9A:C7:65:3A:E2:A1:8F:F7:EB:26:0F:64:37:B7:11:65:62:62:C1:6D:EC:AD"
+      ]
     }
   }
 ]
