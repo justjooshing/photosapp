@@ -4,6 +4,10 @@ import {
   Button as TamButton,
   Anchor as TamAnchor,
   ButtonText as TamButtonText,
+  H1 as TamH1,
+  H2 as TamH2,
+  H3 as TamH3,
+  Text as TamText,
   TamaguiComponent,
   withStaticProperties,
 } from "tamagui";
@@ -115,3 +119,32 @@ export const Anchor: TamaguiComponent = styled(TamAnchor, {
   ...baseButtonStyles,
   variants: buttonStyles,
 } as const);
+
+export const H1: TamaguiComponent = styled(TamH1, {
+  name: "H1",
+  color: "$color.grey7",
+  paddingTop: "$space.large",
+  paddingBottom: "$space.medium",
+});
+
+export const H2: TamaguiComponent = styled(TamH2, {
+  name: "H2",
+  color: "$color.grey7",
+  fontSize: "$fontSize.large",
+  paddingTop: "$space.large",
+  paddingBottom: "$space.small",
+});
+
+export const H3: TamaguiComponent = styled(TamH3, {
+  name: "H3",
+  color: "$color.grey7",
+  fontSize: "$fontSize.medium",
+  paddingTop: "$space.large",
+  paddingBottom: "$space.small",
+});
+
+export const LegalText: TamaguiComponent = styled(TamText, {
+  name: "LegalText",
+  lineHeight: 24,
+  paddingVertical: "$space.small",
+});
