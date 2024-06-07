@@ -1,8 +1,4 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import {
   MutationCache,
   QueryClient,
@@ -78,7 +74,8 @@ const Layout = () => {
 
   const [queryClient] = useState(() => new QueryClient(config));
   const colourScheme = useColorScheme();
-  const theme = colourScheme === "dark" ? DarkTheme : DefaultTheme;
+  // Update after checking over dark mode themes
+  const theme = colourScheme === "dark" ? DefaultTheme : DefaultTheme;
 
   const [loaded] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
