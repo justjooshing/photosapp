@@ -1,19 +1,15 @@
-import { Redirect, Slot } from "expo-router";
+import { Slot } from "expo-router";
 import React from "react";
+import { ScrollView } from "react-native";
 
-import { useGetAuthToken } from "@/api/queries/auth";
 import ContentWrapper from "@/components/content_wrapper";
 
-const Layout = () => {
-  const token = useGetAuthToken();
-
-  return token ? (
-    <Redirect href="/" />
-  ) : (
+const Layout = () => (
+  <ScrollView>
     <ContentWrapper>
       <Slot />
     </ContentWrapper>
-  );
-};
+  </ScrollView>
+);
 
 export default Layout;

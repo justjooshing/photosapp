@@ -1,4 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
+import { Link } from "expo-router";
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import { H1, Spinner } from "tamagui";
 
@@ -44,6 +45,19 @@ const Login = () => {
         {loginLink.isError && (
           <Text>Something's gone wrong. {loginLink.error.message}</Text>
         )}
+        <View
+          style={{
+            paddingTop: 40,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Link href="/privacy">
+            <Button variant="secondary" size="$small" radius="$small">
+              Privacy Policy
+            </Button>
+          </Link>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
