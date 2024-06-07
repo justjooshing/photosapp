@@ -80,7 +80,7 @@ const buttonStyles: VariantDefinitions<typeof TamButton> &
 const baseButtonStyles = {
   style: {
     minWidth: "100px",
-    maxWidth: "80%",
+    maxWidth: "80vw",
     height: "auto",
   },
   disabledStyle: {
