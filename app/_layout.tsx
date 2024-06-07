@@ -50,10 +50,6 @@ const Layout = () => {
         staleTime: 1000 * 60 * 10,
         retry: (failureCount, err) => {
           if (err instanceof AxiosError) {
-            if (err.response?.status === 401) {
-              return false;
-            }
-
             const defaultRetry = new QueryClient().getDefaultOptions().queries
               ?.retry;
 
@@ -66,7 +62,7 @@ const Layout = () => {
         },
         throwOnError: (err: AxiosError) => {
           if (err instanceof AxiosError) {
-            if (err.response?.status === 401 || err.response?.status === 422) {
+            if (err.response?.status === 401) {
               // Logout after half a second
               setTimeout(() => {
                 Storage.delete("jwt");
