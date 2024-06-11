@@ -46,7 +46,7 @@ const Layout = () => {
         for (const [key, val] of Object.entries(data.queryParams)) {
           if (typeof val === "string") urlSearchParams.append(key, val);
         }
-        Linking.openURL(`${appUrl}?${urlSearchParams}`);
+        Linking.openURL(`${appUrl}?${urlSearchParams.toString()}`);
       }
     };
 
