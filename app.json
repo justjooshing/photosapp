@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "scheme": "https",
+    "scheme": "picpurge",
     "experiments": {
       "tsconfigPaths": true
     },
@@ -17,7 +17,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "associatedDomains": ["applinks:www.picpurge.app"]
     },
     "android": {
       "package": "com.justjooshing.picpurge",
@@ -27,8 +28,19 @@
           "autoVerify": true,
           "data": [
             {
+              "scheme": "picpurge"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        },
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
               "scheme": "https",
-              "host": "*.picpurge.app"
+              "host": "*.picpurge.app",
+              "pathPrefix": "/"
             }
           ],
           "category": ["BROWSABLE", "DEFAULT"]
