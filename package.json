@@ -8,6 +8,9 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "android:release": "yarn android --variant release",
+    "configure": "eas build:configure",
+    "build:android": "eas build -p android",
+    "build:android:preview": "yarn build:android --profile preview",
     "lint": "eslint . --fix"
   },
   "dependencies": {
