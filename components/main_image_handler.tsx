@@ -1,5 +1,10 @@
 import { router } from "expo-router";
-import { StyleSheet, View, useWindowDimensions } from "react-native";
+import {
+  ImageSourcePropType,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import {
   Gesture,
   GestureDetector,
@@ -12,7 +17,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
-import FSImage from "./fs_image";
+import ImageWithError from "./image_with_error_handler";
 import Skeleton from "./skeleton";
 import SwipeConfirmation from "./swipe_confirmation";
 
@@ -33,7 +38,7 @@ const MainImageHandler = ({
 }: Props) => {
   const { imageType } = useHeadingContext();
   const { isLoading } = useGetImages(imageType);
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
 
   const offset = useSharedValue(0);
   const { mutate: sortImage } = useSortImage(imageType);
@@ -99,6 +104,12 @@ const MainImageHandler = ({
       offset.value = 0;
     });
 
+  const sourceImage: ImageSourcePropType = {
+    uri: mainImage?.baseUrl,
+    width: width - 10,
+    height,
+  };
+
   return (
     <View style={styles.container}>
       {isLoading ? (
@@ -110,7 +121,14 @@ const MainImageHandler = ({
           <SwipeConfirmation type="delete" style={delBarStyles} />
           <GestureDetector gesture={pan}>
             <Animated.View style={[animatedStyles, styles.animated_container]}>
-              <FSImage image={mainImage} />
+              <ImageWithError
+                imageProps={{
+                  resizeMode: "contain",
+                  source: sourceImage,
+                  style: styles.image,
+                }}
+                errorProps={{ size: width - 56 }}
+              />
             </Animated.View>
           </GestureDetector>
           <SwipeConfirmation type="keep" style={keepBarStyles} />
@@ -139,5 +157,10 @@ const styles = StyleSheet.create({
     width: "100%",
     aspectRatio: 1,
     padding: 20,
+  },
+  image: {
+    alignSelf: "center",
+    width: "100%",
+    height: "100%",
   },
 });
