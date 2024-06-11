@@ -24,8 +24,7 @@ const Layout = () => {
   if (jwt) {
     Storage.set("jwt", jwt);
   }
-  const scheme = Linking.hasCustomScheme();
-  console.log({ scheme });
+
   const [queryClient] = useState(() => new QueryClient(config(jwt)));
   const colourScheme = useColorScheme();
   // Update after checking over dark mode themes
@@ -39,20 +38,28 @@ const Layout = () => {
   useEffect(() => {
     const handleDeepLink = ({ url }) => {
       const data = Linking.parse(url);
-      console.log("Deep link data:", data);
-      // Add your handling logic here
+      const appUrl = new URL("picpurge://");
+
+      // Only try opening app when not already on app url
+      if (!appUrl.href.includes(data.scheme)) {
+        const urlSearchParams = new URLSearchParams();
+        for (const [key, val] of Object.entries(data.queryParams)) {
+          if (typeof val === "string") urlSearchParams.append(key, val);
+        }
+        Linking.openURL(`${appUrl}?${urlSearchParams}`);
+      }
     };
 
-    // Check if the app was opened from a deep link
+    // If url opened directly
     Linking.getInitialURL().then((url) => {
       if (url) {
         handleDeepLink({ url });
       }
     });
 
+    // When url changes
     const deepLinkingEvent = Linking.addEventListener("url", handleDeepLink);
     return () => {
-      // Remove event listener on cleanup
       deepLinkingEvent.remove();
     };
   }, []);
