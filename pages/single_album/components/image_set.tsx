@@ -7,7 +7,7 @@ import { FilterOptions } from "../types";
 
 import { useGetSingleAlbum } from "@/api/queries/albums";
 import Skeleton from "@/components/skeleton";
-import { Button } from "@/tamagui/variants";
+import { Button } from "@/config/tamagui/variants";
 
 const numColumns = 2;
 const imageWidth = { minWidth: `${100 / numColumns}%` } as const;

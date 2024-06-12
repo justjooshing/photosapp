@@ -7,10 +7,10 @@ import { useGetAlbums } from "@/api/queries/albums";
 import { useGetAuthToken } from "@/api/queries/auth";
 import ContentWrapper from "@/components/content_wrapper";
 import Header from "@/components/header";
+import { color } from "@/config/tamagui/tokens";
 import { HeadingProvider } from "@/context/header";
 import { ImageProvider } from "@/context/image";
 import usePathname from "@/hooks/usePathname";
-import { color } from "@/tamagui/tokens";
 
 const Layout = () => {
   const token = useGetAuthToken();

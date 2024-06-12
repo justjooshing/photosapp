@@ -3,8 +3,8 @@ import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
 import { H1 } from "tamagui";
 
 import { useDeleteUser } from "@/api/queries/users";
-import { color } from "@/tamagui/tokens";
-import { Button } from "@/tamagui/variants";
+import { color } from "@/config/tamagui/tokens";
+import { Button } from "@/config/tamagui/variants";
 type Props = {
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;

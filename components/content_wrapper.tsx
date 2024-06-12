@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
-import { color } from "@/tamagui/tokens";
+import { color } from "@/config/tamagui/tokens";
 
 type Props = {
   children: ReactNode;

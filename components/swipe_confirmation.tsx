@@ -1,7 +1,7 @@
 import { ImageStyle, StyleSheet } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { color } from "@/tamagui/tokens";
+import { color } from "@/config/tamagui/tokens";
 
 interface Props {
   type: "keep" | "delete";

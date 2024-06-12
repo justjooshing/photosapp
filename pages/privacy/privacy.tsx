@@ -2,7 +2,7 @@ import { useNavigation, useRouter } from "expo-router";
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
-import { Button, H1, H2, H3, LegalText } from "@/tamagui/variants";
+import { Button, H1, H2, H3, LegalText } from "@/config/tamagui/variants";
 
 const PrivacyPolicy = () => {
   const { goBack, canGoBack } = useNavigation();

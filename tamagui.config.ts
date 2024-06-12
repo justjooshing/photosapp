@@ -1,8 +1,8 @@
 import { config } from "@tamagui/config/v3";
 import { createTamagui } from "tamagui";
 
-import { allThemes } from "./tamagui/themes";
-import { tokens } from "./tamagui/tokens";
+import { allThemes } from "./config/tamagui/themes";
+import { tokens } from "./config/tamagui/tokens";
 
 const tamaguiConfig = createTamagui({
   ...config,

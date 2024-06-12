@@ -7,7 +7,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import { color } from "@/tamagui/tokens";
+import { color } from "@/config/tamagui/tokens";
 
 const Skeleton = () => {
   const [offsetWidth, setOffsetWidth] = useState(180);

@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 import { SortOptions } from "@/api/types";
-import { color } from "@/tamagui/tokens";
+import { color } from "@/config/tamagui/tokens";
 
 type Props = {
   choice: SortOptions;

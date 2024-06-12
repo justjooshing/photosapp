@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import DeleteAccountModal from "./delete_account_modal";
 
-import { Button } from "@/tamagui/variants";
+import { Button } from "@/config/tamagui/variants";
 
 const DeleteAccount = () => {
   const [modalOpen, setModalOpen] = useState(false);

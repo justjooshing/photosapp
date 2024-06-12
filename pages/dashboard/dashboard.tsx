@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import DeleteAccount from "./components/delete_account";
 import Stats from "./components/stats";
 
-import { Button } from "@/tamagui/variants";
+import { Button } from "@/config/tamagui/variants";
 
 const Dashboard = () => (
   <View style={styles.container}>
@@ -12,7 +12,7 @@ const Dashboard = () => (
     <View style={styles.another_round_container}>
       <Link href="/">
         <Button variant="primary" size="$medium" radius="$medium" centered>
-          <Button.Text>Another round?</Button.Text>
+          <Button.Text color="$color.white">Another round?</Button.Text>
         </Button>
       </Link>
     </View>

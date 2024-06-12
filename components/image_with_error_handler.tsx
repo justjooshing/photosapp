@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Image, ImageProps, StyleSheet } from "react-native";
 
-import { color } from "@/tamagui/tokens";
+import { color } from "@/config/tamagui/tokens";
 
 type Props = {
   imageProps: ImageProps;

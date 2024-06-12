@@ -6,8 +6,8 @@ import ImageTile from "./image_tile";
 import Skeleton from "./skeleton";
 
 import { useGetAlbums } from "@/api/queries/albums";
-import { color } from "@/tamagui/tokens";
-import { Button } from "@/tamagui/variants";
+import { color } from "@/config/tamagui/tokens";
+import { Button } from "@/config/tamagui/variants";
 
 const numColumns = 2;
 const imageWidth = { minWidth: `${100 / numColumns}%` } as const;

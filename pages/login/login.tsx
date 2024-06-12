@@ -4,8 +4,8 @@ import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import { H1, Spinner } from "tamagui";
 
 import { useGetLoginLink } from "@/api/queries/auth";
-import { color, space } from "@/tamagui/tokens";
-import { Anchor, Button } from "@/tamagui/variants";
+import { color, space } from "@/config/tamagui/tokens";
+import { Anchor, Button } from "@/config/tamagui/variants";
 
 const Login = () => {
   const loginLink = useGetLoginLink();

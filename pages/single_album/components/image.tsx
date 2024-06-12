@@ -6,8 +6,8 @@ import Button from "./button";
 
 import { ApiImage } from "@/api/types";
 import ImageTile from "@/components/image_tile";
+import { color } from "@/config/tamagui/tokens";
 import { useImageContext } from "@/context/image";
-import { color } from "@/tamagui/tokens";
 
 type Props = { image: ApiImage };
 

@@ -1,7 +1,7 @@
 import { StyleProp, ViewStyle } from "react-native";
 import Toast from "react-native-root-toast";
 
-import { color } from "@/tamagui/tokens";
+import { color } from "@/config/tamagui/tokens";
 
 type ToastTypes = "error" | "success" | "info";
 

@@ -5,10 +5,10 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { H1 } from "tamagui";
 
 import { useGetSingleAlbum } from "@/api/queries/albums";
+import { color } from "@/config/tamagui/tokens";
 import { useHeadingContext } from "@/context/header";
 import { ImagesType } from "@/context/header/types";
 import usePathname from "@/hooks/usePathname";
-import { color } from "@/tamagui/tokens";
 
 const BackButton = () => {
   const { path, slug } = usePathname();

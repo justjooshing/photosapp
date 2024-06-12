@@ -95,6 +95,7 @@ const baseButtonStyles = {
 
 const ButtonText = styled(TamButtonText, {
   name: "ButtonText",
+  color: "inherit",
   style: {
     whiteSpace: "balance",
   },

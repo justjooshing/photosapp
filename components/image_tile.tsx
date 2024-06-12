@@ -3,7 +3,7 @@ import { ImageSourcePropType, StyleSheet } from "react-native";
 import ImageWithError from "./image_with_error_handler";
 
 import { ApiImage } from "@/api/types";
-import { color } from "@/tamagui/tokens";
+import { color } from "@/config/tamagui/tokens";
 
 type Props = {
   image: ApiImage;
