@@ -33,8 +33,8 @@ const AlbumsList = () => {
         {tabCopy.map(({ heading }, i) => (
           <Button
             variant="secondary"
-            size="$small"
-            radius="$small"
+            size="$1"
+            radius="$1"
             key={heading}
             onPress={() => setViewedTab(i)}
           >
@@ -93,7 +93,9 @@ const AlbumsList = () => {
               <Pressable style={styles.image}>
                 {!!album.deleteCount && (
                   <View style={styles.notification_dot}>
-                    <Text>{album.deleteCount}</Text>
+                    <Text style={styles.notification_dot_text}>
+                      {album.deleteCount}
+                    </Text>
                   </View>
                 )}
                 {album.firstImage?.baseUrl ? (
@@ -136,12 +138,11 @@ const styles = StyleSheet.create({
     backgroundColor: color.red2,
     alignItems: "center",
     justifyContent: "center",
-    color: color.white,
-    fontSize: 10,
     height: 20,
     aspectRatio: 1,
     borderRadius: 20,
   },
+  notification_dot_text: { color: color.white, fontSize: 10 },
   skeleton_container: {
     borderRadius: 20,
     width: "80%",

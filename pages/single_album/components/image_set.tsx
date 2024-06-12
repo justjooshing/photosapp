@@ -52,8 +52,8 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
           <Text> No images marked under {filter}, try setting to 'All'</Text>
           <Button
             variant="primary"
-            size="$small"
-            radius="$small"
+            size="$1"
+            radius="$1"
             onPress={() => setFilter("all")}
           >
             <Text>View All Images</Text>

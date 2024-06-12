@@ -25,36 +25,36 @@ export const color = {
 };
 
 export const space = {
-  small: 8,
-  medium: 12,
+  1: 8,
+  2: 12,
   true: 12,
-  large: 16,
+  3: 16,
 } as const;
 
 export const tokens = createTokens({
   color,
   space,
   radius: {
-    small: 5,
-    medium: 10,
-    large: 20,
+    1: 5,
+    2: 10,
+    3: 20,
   },
   zIndex: {
-    small: 1,
-    medium: 2,
+    1: 1,
+    2: 2,
     true: 3,
-    large: 4,
+    3: 4,
   },
   size: {
-    small: "8px",
-    medium: "12px",
+    1: "8px",
+    2: "12px",
     true: "12px",
-    large: "16px",
+    3: "16px",
   },
   fontSize: {
-    small: 12,
-    medium: 16,
+    1: 12,
+    2: 16,
     true: 16,
-    large: 24,
+    3: 24,
   },
 });

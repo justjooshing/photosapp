@@ -10,8 +10,8 @@ const DeleteAccount = () => {
     <>
       <Button
         variant="danger"
-        size="$small"
-        radius="$small"
+        size="$1"
+        radius="$1"
         centered
         onPress={() => setModalOpen(true)}
       >

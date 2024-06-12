@@ -31,12 +31,7 @@ const NoData = () => {
     <View style={styles.wrapper}>
       <Text>{copy}</Text>
       <Text>Check back again tomorrow.</Text>
-      <Button
-        variant="primary"
-        size="$small"
-        radius="$small"
-        onPress={handlePress}
-      >
+      <Button variant="primary" size="$1" radius="$1" onPress={handlePress}>
         <Button.Text>{cta}</Button.Text>
       </Button>
     </View>

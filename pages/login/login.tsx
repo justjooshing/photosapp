@@ -20,20 +20,14 @@ const Login = () => {
         </Text>
         <View style={styles.login_container}>
           {loginLink.isLoading ? (
-            <Button
-              variant="google"
-              size="$small"
-              radius="$small"
-              centered
-              disabled
-            >
+            <Button variant="google" size="$1" radius="$1" centered disabled>
               <Spinner color="$color.grey1" />
             </Button>
           ) : (
             <Anchor
               variant="google"
-              size="$small"
-              radius="$small"
+              size="$1"
+              radius="$1"
               centered
               href={loginLink.data}
             >
@@ -47,7 +41,7 @@ const Login = () => {
         )}
         <View style={styles.privacy_policy}>
           <Link href="/privacy">
-            <Button variant="secondary" size="$small" radius="$small">
+            <Button variant="secondary" size="$1" radius="$1">
               <Button.Text>Privacy Policy</Button.Text>
             </Button>
           </Link>
@@ -71,7 +65,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   subheading: {
-    paddingBottom: space.large,
+    paddingBottom: space[3],
   },
   button_text: {
     color: color.white,
