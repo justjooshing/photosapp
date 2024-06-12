@@ -83,9 +83,12 @@ const buttonStyles: VariantDefinitions<typeof TamButton> &
 
 const baseButtonStyles = {
   style: {
-    minWidth: "100px",
-    maxWidth: "80vw",
+    minWidth: 100,
+    maxWidth: 200,
     height: "auto",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   disabledStyle: {
     cursor: "default",
