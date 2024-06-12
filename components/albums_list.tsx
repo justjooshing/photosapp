@@ -27,9 +27,6 @@ const AlbumsList = () => {
     },
   ];
 
-  // Critical!
-  // .albums of undefined :thinking:
-  // Text strings must be rendered with <Text>
   return (
     <>
       <View style={styles.filters}>
@@ -41,7 +38,7 @@ const AlbumsList = () => {
             key={heading}
             onPress={() => setViewedTab(i)}
           >
-            {heading}
+            <Button.Text>{heading}</Button.Text>
           </Button>
         ))}
       </View>
@@ -76,7 +73,7 @@ const AlbumsList = () => {
       )}
 
       {/* With data */}
-      {!albums.isLoading && !!albums.data.albums.length && (
+      {!albums.isLoading && !!albums.data?.albums.length && (
         <FlatList
           data={
             viewedTab === 0
@@ -96,7 +93,7 @@ const AlbumsList = () => {
               <Pressable style={styles.image}>
                 {!!album.deleteCount && (
                   <View style={styles.notification_dot}>
-                    {album.deleteCount}
+                    <Text>{album.deleteCount}</Text>
                   </View>
                 )}
                 {album.firstImage?.baseUrl ? (
