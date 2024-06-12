@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   subheading: {
-    paddingBottom: space[3],
+    paddingVertical: space[3],
   },
   button_text: {
     color: color.white,
