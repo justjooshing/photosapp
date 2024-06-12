@@ -28,7 +28,7 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
         numColumns={2}
         contentContainerStyle={styles.album_container}
         renderItem={() => (
-          <View style={[imageWidth, styles.image, { paddingVertical: 10 }]}>
+          <View style={[imageWidth, styles.image]}>
             <View style={styles.skeleton_container}>
               <Skeleton />
             </View>
@@ -56,7 +56,7 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
             radius="$small"
             onPress={() => setFilter("all")}
           >
-            View All Images
+            <Text>View All Images</Text>
           </Button>
         </View>
       ) : (
@@ -93,5 +93,6 @@ const styles = StyleSheet.create({
   album_container: { gap: 20 },
   image: {
     alignItems: "center",
+    paddingVertical: 10,
   },
 });

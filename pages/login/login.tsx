@@ -11,14 +11,14 @@ const Login = () => {
   const loginLink = useGetLoginLink();
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: 120, paddingHorizontal: 30 }}>
-      <ScrollView>
+    <SafeAreaView>
+      <ScrollView contentContainerStyle={styles.container}>
         <H1 paddingBottom="$space.large">Welcome, you're logged out</H1>
         <Text style={styles.subheading}>
           This wee app was built to help me sort through my loads of images on
           Google Photos, so hopefully it helps you too!
         </Text>
-        <View style={styles.container}>
+        <View style={styles.login_container}>
           {loginLink.isLoading ? (
             <Button
               variant="google"
@@ -45,16 +45,10 @@ const Login = () => {
         {loginLink.isError && (
           <Text>Something's gone wrong. {loginLink.error.message}</Text>
         )}
-        <View
-          style={{
-            paddingTop: 40,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <View style={styles.privacy_policy}>
           <Link href="/privacy">
             <Button variant="secondary" size="$small" radius="$small">
-              Privacy Policy
+              <Button.Text>Privacy Policy</Button.Text>
             </Button>
           </Link>
         </View>
@@ -66,7 +60,8 @@ const Login = () => {
 export default Login;
 
 const styles = StyleSheet.create({
-  container: {
+  container: { flex: 1, paddingTop: 120, paddingHorizontal: 30 },
+  login_container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -80,5 +75,10 @@ const styles = StyleSheet.create({
   },
   button_text: {
     color: color.white,
+  },
+  privacy_policy: {
+    paddingTop: 40,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

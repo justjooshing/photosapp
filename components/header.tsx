@@ -82,7 +82,7 @@ const Header = () => {
     };
 
     return path === "" ? (
-      <View style={{ flexDirection: "row", gap: 10 }}>
+      <View style={styles.mode_container}>
         {icons.map(({ name, option }) => (
           <Pressable
             key={option}
@@ -104,13 +104,13 @@ const Header = () => {
 
   return (
     <View style={styles.header}>
-      <View style={{ flex: 1 }}>
+      <View style={styles.header_side}>
         <BackButton />
       </View>
-      <View style={{ flex: 2, alignItems: "center" }}>
+      <View style={styles.header_center}>
         <Title />
       </View>
-      <View style={{ flex: 1, alignItems: "flex-end" }}>
+      <View style={styles.header_side}>
         <Mode />
       </View>
     </View>
@@ -129,6 +129,18 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: color.blue,
     color: color.white,
+  },
+  header_side: {
+    flex: 1,
+  },
+  header_center: {
+    flex: 2,
+    alignItems: "center",
+  },
+  mode_container: {
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "flex-end",
   },
   mode_placeholder: {
     width: 24,

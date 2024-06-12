@@ -1,15 +1,22 @@
-import { useNavigation } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import React from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 import { Button, H1, H2, H3, LegalText } from "@/tamagui/variants";
 
 const PrivacyPolicy = () => {
-  const { goBack } = useNavigation();
+  const { goBack, canGoBack } = useNavigation();
+  const { push } = useRouter();
+
+  const handleBack = () => {
+    if (canGoBack()) goBack();
+    else push("/");
+  };
+
   return (
-    <ScrollView style={{ paddingHorizontal: 20, paddingBottom: 20 }}>
-      <Button variant="secondary" onPress={goBack}>
-        Back
+    <ScrollView style={styles.container}>
+      <Button variant="secondary" onPress={handleBack}>
+        <Button.Text>Back</Button.Text>
       </Button>
       <H1>Privacy Policy for PicPurge</H1>
       <LegalText>Effective Date: 07/06/2024</LegalText>
@@ -90,7 +97,7 @@ const PrivacyPolicy = () => {
       <H2>Advertising</H2>
       <LegalText>
         We may include ads in the app in the future.{" "}
-        <LegalText style={{ fontWeight: "bold" }}>
+        <LegalText style={styles.bold}>
           However, we will never use your personal data for advertising
           purposes.
         </LegalText>{" "}
@@ -118,10 +125,7 @@ const PrivacyPolicy = () => {
       <LegalText>
         You can permanently delete your account at any time from within the app
         or by emailing us at{" "}
-        <LegalText style={{ fontWeight: "bold" }}>
-          justjooshing@gmail.com
-        </LegalText>
-        .
+        <LegalText style={styles.bold}>justjooshing@gmail.com</LegalText>.
       </LegalText>
 
       <H2>Your Consent</H2>
@@ -141,11 +145,7 @@ const PrivacyPolicy = () => {
       <H2>Contact Us</H2>
       <LegalText>
         If you have any questions about this Privacy Policy, please contact us
-        at{" "}
-        <LegalText style={{ fontWeight: "bold" }}>
-          justjooshing@gmail.com
-        </LegalText>
-        .
+        at <LegalText style={styles.bold}>justjooshing@gmail.com</LegalText>.
       </LegalText>
 
       <LegalText>
@@ -161,3 +161,8 @@ const PrivacyPolicy = () => {
 };
 
 export default PrivacyPolicy;
+
+const styles = StyleSheet.create({
+  container: { paddingHorizontal: 20, paddingBottom: 20 },
+  bold: { fontWeight: "bold" },
+});

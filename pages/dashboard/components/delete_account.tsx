@@ -15,7 +15,7 @@ const DeleteAccount = () => {
         centered
         onPress={() => setModalOpen(true)}
       >
-        Delete Account
+        <Button.Text>Delete Account</Button.Text>
       </Button>
       <DeleteAccountModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </>

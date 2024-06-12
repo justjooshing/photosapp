@@ -40,7 +40,7 @@ const Images = () => {
               <FlatList
                 horizontal
                 data={Array(5)}
-                contentContainerStyle={{ gap: 1 }}
+                contentContainerStyle={styles.item_container}
                 renderItem={() => (
                   <View style={styles.skeleton_container}>
                     <Skeleton />
@@ -52,7 +52,7 @@ const Images = () => {
                 horizontal
                 data={images.data}
                 keyExtractor={({ id }) => id.toString()}
-                contentContainerStyle={{ gap: 1 }}
+                contentContainerStyle={styles.item_container}
                 renderItem={({ item, index }) => (
                   <CarouselImage
                     image={item}
@@ -75,5 +75,8 @@ const styles = StyleSheet.create({
   skeleton_container: { width: 100, aspectRatio: 1 },
   wrapper: {
     flex: 1,
+  },
+  item_container: {
+    gap: 1,
   },
 });

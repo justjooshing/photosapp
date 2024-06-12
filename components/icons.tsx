@@ -27,19 +27,17 @@ const Icons = ({ choice, isSelected, size = 22 }: Props) => {
     <AntDesign
       size={size}
       name={name}
-      color={isSelected ? color.grey4 : inactiveColor}
-      style={styles(isSelected).icon}
+      color={isSelected ? color.grey3 : inactiveColor}
+      style={styles.icon}
     />
   );
 };
 
 export default Icons;
 
-const styles = (isSelected: boolean) =>
-  StyleSheet.create({
-    icon: {
-      padding: 5,
-      userSelect: "none",
-      opacity: isSelected ? 0.5 : 1,
-    },
-  });
+const styles = StyleSheet.create({
+  icon: {
+    padding: 5,
+    userSelect: "none",
+  },
+});

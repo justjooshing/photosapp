@@ -27,6 +27,9 @@ const AlbumsList = () => {
     },
   ];
 
+  // Critical!
+  // .albums of undefined :thinking:
+  // Text strings must be rendered with <Text>
   return (
     <>
       <View style={styles.filters}>
@@ -51,7 +54,7 @@ const AlbumsList = () => {
           numColumns={numColumns}
           columnWrapperStyle={styles.column}
           renderItem={() => (
-            <View style={[imageWidth, styles.image, { paddingVertical: 10 }]}>
+            <View style={[imageWidth, styles.image, styles.loading_container]}>
               <View style={styles.skeleton_container}>
                 <Skeleton />
               </View>
@@ -149,5 +152,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
+  loading_container: { paddingVertical: 10 },
   empty: { fontSize: 20 },
 });
