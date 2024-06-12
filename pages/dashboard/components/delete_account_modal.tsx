@@ -65,8 +65,8 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
             <Button
               variant="danger"
               disabled={buttonDisabled}
-              size="$small"
-              radius="$small"
+              size="$1"
+              radius="$1"
               centered
               onPress={handleDeleteAccount}
             >
@@ -76,8 +76,8 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
             </Button>
             <Button
               variant="secondary"
-              size="$small"
-              radius="$small"
+              size="$1"
+              radius="$1"
               onPress={() => {
                 setModalOpen(false);
               }}
@@ -98,6 +98,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center",
+    maxWidth: 700,
   },
   content_wrapper: {
     justifyContent: "space-between",
@@ -122,5 +124,5 @@ const styles = StyleSheet.create({
   },
   input_error: { color: color.red, fontWeight: "600" },
   // Set MQ for smaller screens with flexDir column
-  buttons: { flexDirection: "row", gap: 10 },
+  buttons: { flexDirection: "column", gap: 10 },
 });
