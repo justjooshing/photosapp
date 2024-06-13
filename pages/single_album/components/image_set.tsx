@@ -56,7 +56,7 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
             radius="$1"
             onPress={() => setFilter("all")}
           >
-            <Text>View All Images</Text>
+            <Button.Text>View All Images</Button.Text>
           </Button>
         </View>
       ) : (
