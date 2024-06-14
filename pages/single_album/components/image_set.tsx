@@ -10,7 +10,7 @@ import Skeleton from "@/components/skeleton";
 import { Button } from "@/config/tamagui/variants";
 
 const numColumns = 2;
-const imageWidth = { minWidth: `${100 / numColumns}%` } as const;
+const imageWidth = { width: `${100 / numColumns}%` } as const;
 
 type Props = {
   albumId: string;

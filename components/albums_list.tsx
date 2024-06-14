@@ -10,7 +10,7 @@ import { color } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 
 const numColumns = 2;
-const imageWidth = { minWidth: `${100 / numColumns}%` } as const;
+const imageWidth = { width: `${100 / numColumns}%` } as const;
 
 const AlbumsList = () => {
   const albums = useGetAlbums();
