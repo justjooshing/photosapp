@@ -17,7 +17,7 @@ module.exports = {
     "react-native/no-color-literals": 2,
     "react-native/no-single-element-style-arrays": 2,
   },
-  ignorePatterns: ["/dist/**", "/node_modules/**"],
+  ignorePatterns: ["/dist/**", "/node_modules/**", "android/**", ".expo/**"],
   settings: {
     "react-native/text-component-names": ["Text", "Button.Text"],
   },
