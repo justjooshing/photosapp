@@ -84,7 +84,7 @@ const buttonStyles: VariantDefinitions<typeof TamButton> &
 const baseButtonStyles = {
   style: {
     minWidth: 100,
-    maxWidth: 200,
+    maxWidth: 300,
     height: "auto",
     display: "flex",
     justifyContent: "center",
@@ -99,9 +99,6 @@ const baseButtonStyles = {
 const ButtonText = styled(TamButtonText, {
   name: "ButtonText",
   color: "$color.white",
-  style: {
-    whiteSpace: "balance",
-  },
   disabledStyle: {
     cursor: "default",
   },

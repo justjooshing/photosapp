@@ -45,10 +45,13 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
         <View style={styles.content_wrapper}>
           <View style={styles.content}>
             <H1 fontSize={22}>Confirm account deletion</H1>
-            <Text>
-              To permanently delete your account please type below
-              <Text style={styles.delete_text}>{textToMatch}</Text>
-            </Text>
+            <View>
+              <Text>
+                To permanently delete your account, please type
+                <Text style={styles.delete_text}> {textToMatch} </Text>
+                below
+              </Text>
+            </View>
             <TextInput
               placeholder="Input text here"
               placeholderTextColor={color.grey3}
@@ -106,16 +109,17 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
     borderRadius: 20,
     padding: 20,
-    height: "100%",
+    height: "auto",
     width: "100%",
     maxWidth: "80%",
-    maxHeight: "50%",
     borderColor: color.black,
     borderStyle: "solid",
     borderWidth: 1,
   },
   content: { gap: 10 },
-  delete_text: { fontWeight: "700", paddingLeft: 5 },
+  delete_text: {
+    fontWeight: "700",
+  },
   input: {
     borderColor: color.black,
     borderStyle: "solid",
