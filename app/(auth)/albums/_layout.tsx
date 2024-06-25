@@ -1,11 +1,11 @@
 import { Slot } from "expo-router";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 const Layout = () => {
   return (
-    <ScrollView contentContainerStyle={styles.layout}>
+    <View style={styles.layout}>
       <Slot />
-    </ScrollView>
+    </View>
   );
 };
 

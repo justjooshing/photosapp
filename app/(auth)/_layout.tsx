@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Redirect, Tabs, router } from "expo-router";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { useGetAlbums } from "@/api/queries/albums";
@@ -31,7 +31,7 @@ const Layout = () => {
     <HeadingProvider>
       <ImageProvider>
         <Header />
-        <ScrollView contentContainerStyle={styles.flex}>
+        <View style={styles.flex}>
           <GestureHandlerRootView style={styles.flex}>
             <ContentWrapper>
               <Tabs
@@ -96,7 +96,7 @@ const Layout = () => {
               </Tabs>
             </ContentWrapper>
           </GestureHandlerRootView>
-        </ScrollView>
+        </View>
       </ImageProvider>
     </HeadingProvider>
   );

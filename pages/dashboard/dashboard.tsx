@@ -31,8 +31,7 @@ export default Dashboard;
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    minHeight: "100%",
+    flex: 1,
     justifyContent: "space-between",
   },
   button_container: { flexDirection: "row", gap: 20, justifyContent: "center" },
