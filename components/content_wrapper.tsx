@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { color } from "@/config/tamagui/tokens";
 
@@ -9,9 +9,9 @@ type Props = {
 
 const ContentWrapper = ({ children }: Props) => {
   return (
-    <ScrollView contentContainerStyle={styles.appWrapper}>
+    <View style={styles.appWrapper}>
       <View style={styles.contentWrapper}>{children}</View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -20,7 +20,6 @@ export default ContentWrapper;
 const styles = StyleSheet.create({
   appWrapper: {
     alignItems: "center",
-    minHeight: "100%",
     backgroundColor: color.grey2,
   },
   contentWrapper: {
