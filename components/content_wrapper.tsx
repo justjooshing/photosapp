@@ -19,6 +19,7 @@ export default ContentWrapper;
 
 const styles = StyleSheet.create({
   appWrapper: {
+    flex: 1,
     alignItems: "center",
     backgroundColor: color.grey2,
   },
