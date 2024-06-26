@@ -18,11 +18,11 @@ const AlbumsList = () => {
 
   const tabCopy = [
     {
-      heading: `Clean up (${albums.isLoading ? "?" : albums.data?.withDeletedCount.length})`,
+      heading: `Clean up (${albums.isLoading ? "?" : albums.data?.withDeletedCount.length || 0})`,
       copy: "Your goal is to have this list empty, it means you've deleted all the images that you decided you wanted to delete.",
     },
     {
-      heading: `All sorted (${albums.isLoading ? "?" : albums.data?.noDeletedCount.length})`,
+      heading: `All sorted (${albums.isLoading ? "?" : albums.data?.noDeletedCount.length || 0})`,
       copy: "These are the albums containing only images you've decided you want to keep.",
     },
   ];
