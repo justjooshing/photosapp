@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { H1, Spinner } from "tamagui";
 
 import { useGetLoginLink } from "@/api/queries/auth";
@@ -11,13 +11,13 @@ const Login = () => {
   const loginLink = useGetLoginLink();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <H1 paddingBottom="$space.large">Welcome, you're logged out</H1>
       <Text style={styles.subheading}>
         This wee app was built to help me sort through my loads of images on
         Google Photos, so hopefully it helps you too!
       </Text>
-      <View style={styles.login_container}>
+      <View style={styles.login_button}>
         {loginLink.isLoading ? (
           <Button variant="google" size="$1" radius="$1" centered disabled>
             <Spinner color="$color.grey1" />
@@ -45,7 +45,7 @@ const Login = () => {
           </Button>
         </Link>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -53,8 +53,7 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: { flex: 1, paddingTop: 120, paddingHorizontal: 30 },
-  login_container: {
-    flex: 1,
+  login_button: {
     justifyContent: "center",
     alignItems: "center",
   },

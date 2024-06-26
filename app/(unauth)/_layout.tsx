@@ -1,15 +1,13 @@
 import { Slot } from "expo-router";
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import ContentWrapper from "@/components/content_wrapper";
 
 const Layout = () => (
   <View style={styles.flex}>
     <ContentWrapper>
-      <ScrollView>
-        <Slot />
-      </ScrollView>
+      <Slot />
     </ContentWrapper>
   </View>
 );
