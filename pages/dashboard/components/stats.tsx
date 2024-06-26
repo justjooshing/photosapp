@@ -12,27 +12,27 @@ const Stats = () => {
   const counts = {
     markKeep: {
       label: "Marked to keep:",
-      value: count.data?.counts.numMarkKeep,
+      value: count.data?.counts.numMarkKeep || 0,
     },
     markKeepLaterDelete: {
       label: "Marked to keep but later deleted:",
-      value: count.data?.counts.numMarkKeepLaterDeleted,
+      value: count.data?.counts.numMarkKeepLaterDeleted || 0,
     },
     markDelete: {
       label: "Marked to delete:",
-      value: count.data?.counts.numMarkDelete,
+      value: count.data?.counts.numMarkDelete || 0,
     },
     markDeleteLaterDelete: {
       label: "Marked to delete and later deleted:",
-      value: count.data?.counts.numMarkDeleteLaterDeleted,
+      value: count.data?.counts.numMarkDeleteLaterDeleted || 0,
     },
     totalSorted: {
-      label: "Total sorted",
-      value: count.data?.counts.totalSorted,
+      label: "Total sorted:",
+      value: count.data?.counts.totalSorted || 0,
     },
     totalDeleted: {
-      label: "Total deleted",
-      value: count.data?.counts.totalDeleted,
+      label: "Total deleted:",
+      value: count.data?.counts.totalDeleted || 0,
     },
   };
 
