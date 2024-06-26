@@ -43,11 +43,11 @@ const Login = () => {
         )}
       </View>
       <View style={styles.privacy_policy}>
-        <Link href="/privacy">
-          <Button variant="secondary" size="$1" radius="$1">
+        <Button variant="secondary" size="$1" radius="$1">
+          <Link href="/privacy">
             <Button.Text>Privacy Policy</Button.Text>
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </View>
     </View>
   );

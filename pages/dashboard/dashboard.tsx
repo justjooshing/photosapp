@@ -17,11 +17,11 @@ const Dashboard = () => (
       </Link>
     </View>
     <View style={styles.button_container}>
-      <Link href="/goodbye">
-        <Button variant="secondary" size="$1" radius="$1">
+      <Button variant="secondary" size="$1" radius="$1">
+        <Link href="/goodbye">
           <Button.Text>Log out</Button.Text>
-        </Button>
-      </Link>
+        </Link>
+      </Button>
       <DeleteAccount />
     </View>
   </View>
