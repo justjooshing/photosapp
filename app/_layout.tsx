@@ -3,9 +3,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Slot, useGlobalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { useColorScheme } from "react-native";
+import { StyleSheet, View, useColorScheme } from "react-native";
 import { RootSiblingParent as ToastWrapper } from "react-native-root-siblings";
 import "setimmediate";
+import {
+  SafeAreaInsetsContext,
+  SafeAreaProvider,
+} from "react-native-safe-area-context";
 import { TamaguiProvider } from "tamagui";
 
 import tamaguiConfig from "../tamagui.config";
@@ -44,7 +48,15 @@ const Layout = () => {
       <QueryClientProvider client={queryClient}>
         <TamaguiProvider config={tamaguiConfig}>
           <ThemeProvider value={theme}>
-            <Slot />
+            <SafeAreaProvider>
+              <SafeAreaInsetsContext.Consumer>
+                {(insets) => (
+                  <View style={[{ paddingTop: insets.top }, styles.flex]}>
+                    <Slot />
+                  </View>
+                )}
+              </SafeAreaInsetsContext.Consumer>
+            </SafeAreaProvider>
           </ThemeProvider>
         </TamaguiProvider>
       </QueryClientProvider>
@@ -53,3 +65,7 @@ const Layout = () => {
 };
 
 export default Layout;
+
+const styles = StyleSheet.create({
+  flex: { flex: 1 },
+});
