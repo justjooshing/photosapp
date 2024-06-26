@@ -61,7 +61,6 @@ const buttonStyles: VariantDefinitions<typeof TamButton> &
       },
     },
   } as const,
-
   radius: {
     "...size": (name: Sizes, { tokens }) => ({
       borderRadius: tokens.radius[name],
@@ -125,7 +124,7 @@ export const H1: TamaguiComponent = styled(TamH1, {
 export const H2: TamaguiComponent = styled(TamH2, {
   name: "H2",
   color: "$color.grey7",
-  fontSize: "$fontSize.large",
+  fontSize: "$fontSize.3",
   paddingTop: "$space.large",
   paddingBottom: "$space.small",
 });
@@ -133,7 +132,7 @@ export const H2: TamaguiComponent = styled(TamH2, {
 export const H3: TamaguiComponent = styled(TamH3, {
   name: "H3",
   color: "$color.grey7",
-  fontSize: "$fontSize.medium",
+  fontSize: "$fontSize.2",
   paddingTop: "$space.large",
   paddingBottom: "$space.small",
 });
