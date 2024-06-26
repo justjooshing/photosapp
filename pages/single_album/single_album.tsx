@@ -40,7 +40,7 @@ const SingleAlbum = () => {
 export default SingleAlbum;
 
 const styles = StyleSheet.create({
-  container: { width: "100%" },
+  container: { flex: 1, width: "100%" },
   filter_header: {
     flexDirection: "row",
     justifyContent: "flex-end",
