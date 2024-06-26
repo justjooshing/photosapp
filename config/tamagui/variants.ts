@@ -61,13 +61,7 @@ const buttonStyles: VariantDefinitions<typeof TamButton> &
       },
     },
   } as const,
-  centered: {
-    true: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-  },
+
   radius: {
     "...size": (name: Sizes, { tokens }) => ({
       borderRadius: tokens.radius[name],

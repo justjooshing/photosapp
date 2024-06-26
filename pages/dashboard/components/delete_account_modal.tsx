@@ -70,7 +70,6 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
               disabled={buttonDisabled}
               size="$1"
               radius="$1"
-              centered
               onPress={handleDeleteAccount}
             >
               <Button.Text disabled={buttonDisabled}>
