@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { H1, Spinner } from "tamagui";
 
 import { useGetLoginLink } from "@/api/queries/auth";
@@ -17,9 +17,9 @@ const Login = () => {
         This wee app was built to help me sort through my loads of images on
         Google Photos, so hopefully it helps you too!
       </Text>
-      <View style={styles.login_button}>
+      <View style={styles.login_wrapper}>
         {loginLink.isLoading ? (
-          <Button variant="google" size="$1" radius="$1" centered disabled>
+          <Button variant="google" size="$1" radius="$1" disabled>
             <Spinner color="$color.grey1" />
           </Button>
         ) : (
@@ -27,17 +27,21 @@ const Login = () => {
             variant="google"
             size="$1"
             radius="$1"
-            centered
             href={loginLink.data}
+            disabled={loginLink.isError}
           >
-            <AntDesign name="google" size={24} style={styles.icon} />
-            <Text style={styles.button_text}>Login with Google</Text>
+            <View style={styles.login_button}>
+              <AntDesign name="google" size={24} style={styles.icon} />
+              <Text style={styles.button_text}>Login with Google</Text>
+            </View>
           </Anchor>
         )}
+        {loginLink.isError && (
+          <Text style={styles.error}>
+            Something's gone wrong. {loginLink.error.message}
+          </Text>
+        )}
       </View>
-      {loginLink.isError && (
-        <Text>Something's gone wrong. {loginLink.error.message}</Text>
-      )}
       <View style={styles.privacy_policy}>
         <Link href="/privacy">
           <Button variant="secondary" size="$1" radius="$1">
@@ -53,23 +57,31 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: { flex: 1, paddingTop: 120, paddingHorizontal: 30 },
+  login_wrapper: {
+    alignItems: "center",
+  },
   login_button: {
+    paddingTop: Platform.OS !== "web" ? space[1] : 0,
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
   icon: {
     color: color.grey1,
-    paddingRight: 10,
   },
   subheading: {
     paddingVertical: space[3],
   },
   button_text: {
+    paddingLeft: 10,
     color: color.white,
   },
   privacy_policy: {
     paddingTop: 40,
     justifyContent: "center",
     alignItems: "center",
+  },
+  error: {
+    paddingTop: space[1],
   },
 });
