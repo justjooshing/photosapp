@@ -1,6 +1,6 @@
 import { useNavigation, useRouter } from "expo-router";
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { StyleSheet, SectionList, ScrollView } from "react-native";
 
 import { Button, H1, H2, H3, LegalText } from "@/config/tamagui/variants";
 
@@ -12,6 +12,40 @@ const PrivacyPolicy = () => {
     if (canGoBack()) goBack();
     else push("/");
   };
+
+  const informationWeCollectSections = [
+    {
+      title: "Google Account Information",
+      data: ["Google User ID", "Email Address", "Profile Picture"],
+    },
+    {
+      title: "Google Photos Information",
+      data: [
+        "Google Photo ID",
+        "Creation Date",
+        "Size",
+        "Base URL",
+        "Product URL",
+        "MIME Type",
+      ],
+    },
+  ];
+
+  const howWeUseSections = [
+    {
+      title: "Access and Display Photos:",
+      data: [
+        "To access your Google Photos and present them to you within the app.",
+        "To allow for filtering and sorting of your photos based on different criteria.",
+      ],
+    },
+    {
+      title: "User Experience and Statistics:",
+      data: [
+        " To present usage statistics such as the percentage of photos sorted and the amount of data saved.",
+      ],
+    },
+  ];
 
   return (
     <ScrollView style={styles.container}>
@@ -35,64 +69,18 @@ const PrivacyPolicy = () => {
         When you use our app, we collect the following information about your
         Google account:
       </LegalText>
-      <H3>Google Account Information:</H3>
-      <ul>
-        <li>
-          <LegalText>Google User ID</LegalText>
-        </li>
-        <li>
-          <LegalText>Email Address</LegalText>
-        </li>
-        <li>
-          <LegalText>Profile Picture</LegalText>
-        </li>
-      </ul>
-      <H3>Google Photos Information:</H3>
-      <ul>
-        <li>
-          <LegalText>Google Photo ID</LegalText>
-        </li>
-        <li>
-          <LegalText>Creation Date</LegalText>
-        </li>
-        <li>
-          <LegalText>Size</LegalText>
-        </li>
-        <li>
-          <LegalText>Base URL</LegalText>
-        </li>
-        <li>
-          <LegalText>Product URL</LegalText>
-        </li>
-        <li>
-          <LegalText>MIME Type</LegalText>
-        </li>
-      </ul>
+      <SectionList
+        sections={informationWeCollectSections}
+        renderItem={({ item }) => <LegalText>- {item}</LegalText>}
+        renderSectionHeader={({ section }) => <H3>{section.title}</H3>}
+      />
 
       <H2>How We Use Your Information</H2>
-      <H3>Access and Display Photos:</H3>
-      <ul>
-        <li>
-          <LegalText>
-            To access your Google Photos and present them to you within the app.
-          </LegalText>
-        </li>
-        <li>
-          <LegalText>
-            To allow for filtering and sorting of your photos based on different
-            criteria.
-          </LegalText>
-        </li>
-      </ul>
-      <H3>User Experience and Statistics:</H3>
-      <ul>
-        <li>
-          <LegalText>
-            To present usage statistics such as the percentage of photos sorted
-            and the amount of data saved.
-          </LegalText>
-        </li>
-      </ul>
+      <SectionList
+        sections={howWeUseSections}
+        renderItem={({ item }) => <LegalText>- {item}</LegalText>}
+        renderSectionHeader={({ section }) => <H3>{section.title}</H3>}
+      />
 
       <H2>Advertising</H2>
       <LegalText>

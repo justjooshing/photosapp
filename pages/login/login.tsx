@@ -56,7 +56,7 @@ const Login = () => {
 export default Login;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingTop: 120, paddingHorizontal: 30 },
+  container: { paddingTop: 120, paddingHorizontal: 30 },
   login_wrapper: {
     alignItems: "center",
   },

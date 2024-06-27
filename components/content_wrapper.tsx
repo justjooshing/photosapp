@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.grey2,
   },
   contentWrapper: {
+    flex: 1,
     width: "100%",
     minHeight: "100%",
     maxWidth: 700,
