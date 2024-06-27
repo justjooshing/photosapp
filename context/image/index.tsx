@@ -1,7 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import {
   createContext,
-  useRef,
   useContext,
   useEffect,
   Dispatch,
@@ -30,7 +29,6 @@ const ImageContext = createContext<InitialState>(initialState);
 
 export const ImageProvider = ({ children }) => {
   const queryClient = useQueryClient();
-  const appState = useRef(AppState.currentState);
   const [targetImage, setTargetImage] = useState(initialState.targetImage);
 
   const { mutate: updateImage } = useUpdateSingleAlbumImage(
@@ -58,10 +56,10 @@ export const ImageProvider = ({ children }) => {
                 ...Keys.count,
               ],
             });
+            setTargetImage(undefined);
           },
         },
       );
-      setTargetImage(undefined);
     };
     if (targetImage) {
       // WEB
@@ -72,18 +70,7 @@ export const ImageProvider = ({ children }) => {
         };
       } else {
         // NATIVE
-        const subscription = AppState.addEventListener(
-          "change",
-          (nextAppState) => {
-            if (
-              appState.current.match(/inactive|background/) &&
-              nextAppState === "active"
-            ) {
-              focusListener();
-            }
-          },
-        );
-
+        const subscription = AppState.addEventListener("focus", focusListener);
         return () => {
           subscription.remove();
         };
