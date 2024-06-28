@@ -2,7 +2,7 @@ import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Slot, useGlobalSearchParams } from "expo-router";
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, useColorScheme } from "react-native";
 import { RootSiblingParent as ToastWrapper } from "react-native-root-siblings";
 import "setimmediate";
@@ -29,7 +29,7 @@ const Layout = () => {
     Storage.set("jwt", jwt);
   }
   useDeeplink();
-  const [queryClient] = useState(() => new QueryClient(config(jwt)));
+  const queryClient = new QueryClient(config(jwt));
   const colourScheme = useColorScheme();
   // Update after checking over dark mode themes
   const theme = colourScheme === "dark" ? DefaultTheme : DefaultTheme;
