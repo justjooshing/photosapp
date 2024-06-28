@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 
 import { client } from "../axios";
@@ -24,11 +24,14 @@ export const useGetLoginLink = () =>
 const logout = async () => client.delete(ENDPOINTS.get("login"));
 
 export const useLogout = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
+
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
       Storage.delete("jwt");
+      queryClient.clear();
       router.replace("/login");
     },
   });
