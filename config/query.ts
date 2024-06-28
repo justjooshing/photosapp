@@ -40,8 +40,8 @@ export const config = (jwt: string | null): QueryClientConfig => ({
         if (err instanceof AxiosError) {
           if (err.response?.status === 401) {
             // Logout after half a second
+            Storage.delete("jwt");
             setTimeout(() => {
-              Storage.delete("jwt");
               router.push("/login");
             }, 500);
           }

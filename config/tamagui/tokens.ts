@@ -31,14 +31,16 @@ export const space = {
   3: 16,
 } as const;
 
+export const radius = {
+  1: 5,
+  2: 10,
+  3: 20,
+} as const;
+
 export const tokens = createTokens({
   color,
   space,
-  radius: {
-    1: 5,
-    2: 10,
-    3: 20,
-  },
+  radius,
   zIndex: {
     1: 1,
     2: 2,

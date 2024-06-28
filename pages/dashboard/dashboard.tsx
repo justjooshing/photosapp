@@ -2,6 +2,7 @@ import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
 import DeleteAccount from "./components/delete_account";
+import Logout from "./components/logout";
 import Stats from "./components/stats";
 
 import { Button } from "@/config/tamagui/variants";
@@ -17,11 +18,7 @@ const Dashboard = () => (
       </Link>
     </View>
     <View style={styles.button_container}>
-      <Button variant="secondary" size="$1" radius="$1">
-        <Link href="/goodbye">
-          <Button.Text>Log out</Button.Text>
-        </Link>
-      </Button>
+      <Logout />
       <DeleteAccount />
     </View>
   </View>

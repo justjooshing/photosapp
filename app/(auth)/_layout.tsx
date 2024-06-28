@@ -23,8 +23,6 @@ const Layout = () => {
     { name: "albums", label: "Albums", icon: "picture" },
   ] as const;
 
-  const hiddenTabs = ["goodbye/index"];
-
   return !token ? (
     <Redirect href="/login" />
   ) : (
@@ -83,14 +81,6 @@ const Layout = () => {
                         </Text>
                       ),
                     }}
-                  />
-                ))}
-
-                {hiddenTabs.map((name) => (
-                  <Tabs.Screen
-                    name={name}
-                    key={name}
-                    options={{ href: null, headerShown: false }}
                   />
                 ))}
               </Tabs>
