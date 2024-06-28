@@ -109,14 +109,13 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
       queryClient.setQueryData(dataKey, (response: ApiSingleAlbum) => {
         // From here we want to identify the album that we've updated
         // Update it with the new album details, and return the object
-        const updatedImages = response.images.map((oldImage) => {
-          return oldImage.id === image.id
-            ? {
-                ...oldImage,
-                ...body,
-              }
-            : oldImage;
-        });
+        const updatedImages = response.images.reduce((acc, oldImage) => {
+          const updatedImage =
+            oldImage.id === image.id ? { ...oldImage, ...body } : oldImage;
+
+          acc.push(updatedImage);
+          return acc;
+        }, []);
 
         const updatedResponse = {
           ...response,
@@ -135,8 +134,9 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
     onSuccess: ({ data }, requestData, ctx) => {
       // Need to think about how to stop this appearing when checking against Google
       // ...separate endpoint?
-      data.image.map(({ sorted_status }) => {
-        const conjugation = sorted_status === "delete" ? "deletion" : "keeping";
+      data.image.forEach((singleImage) => {
+        const conjugation =
+          singleImage?.sorted_status === "keep" ? "keeping" : "deletion";
 
         renderToast({
           type: "success",

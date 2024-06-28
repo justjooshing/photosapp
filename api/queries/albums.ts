@@ -58,11 +58,12 @@ const organiseSingleAlbum = (data: ApiSingleAlbum) => {
       },
       curr,
     ) => {
-      if (curr.sorted_status === "delete") {
-        acc.deleted.push(curr);
-      } else {
-        acc.kept.push(curr);
+      // Something to do with optimistic updates or refetching causing curr to be undefined natively
+      if (!curr) {
+        return acc;
       }
+      const sortBy = curr.sorted_status === "delete" ? "deleted" : "kept";
+      acc[sortBy].push(curr);
       return acc;
     },
     { deleted: [], kept: [] },
