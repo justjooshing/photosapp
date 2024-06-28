@@ -72,7 +72,7 @@ export const useSortImage = (imageType: ImagesType) => {
       queryClient.setQueryData(dataKey, context.prevImages);
       throw err;
     },
-    onSuccess: ({ data }) => {
+    onSuccess: ({ data }, v, context) => {
       data.image.map(({ sorted_status }) => {
         const conjugation = sorted_status === "delete" ? "deletion" : "keeping";
 
@@ -81,19 +81,18 @@ export const useSortImage = (imageType: ImagesType) => {
           message: `Image marked for ${conjugation}`,
         });
       });
+      // Allow refetch if last image has been sorted successfully
+      if (context.prevImages.length === 1) {
+        queryClient.invalidateQueries({ queryKey: dataKey });
+      }
     },
-    onSettled: (d, err, v, context) => {
+    onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: Keys.count,
       });
       queryClient.invalidateQueries({
         queryKey: Keys.albums,
       });
-
-      // Allow refetch if last image has been sorted successfully
-      if (context.prevImages.length === 1 && !err) {
-        queryClient.invalidateQueries({ queryKey: dataKey });
-      }
     },
   });
 };
