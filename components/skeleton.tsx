@@ -7,7 +7,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import { color } from "@/config/tamagui/tokens";
+import { tokens } from "@/config/tamagui/tokens";
 
 const Skeleton = () => {
   const [offsetWidth, setOffsetWidth] = useState(180);
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   box: {
     width: "100%",
     height: "100%",
-    backgroundColor: color.grey2,
+    backgroundColor: tokens.color.grey2,
     justifyContent: "center",
     overflow: "hidden",
   },
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     transform: "rotate(5deg)",
     height: "100%",
     shadowOffset: { height: 0, width: -30 },
-    shadowColor: color.grey1,
+    shadowColor: tokens.color.grey1,
     shadowOpacity: 0.4,
     shadowRadius: 30,
   },

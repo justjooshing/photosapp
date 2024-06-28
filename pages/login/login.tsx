@@ -4,7 +4,7 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import { H1, Spinner } from "tamagui";
 
 import { useGetLoginLink } from "@/api/queries/auth";
-import { color, space } from "@/config/tamagui/tokens";
+import { tokens } from "@/config/tamagui/tokens";
 import { Anchor, Button } from "@/config/tamagui/variants";
 
 const Login = () => {
@@ -61,20 +61,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   login_button: {
-    paddingTop: Platform.OS !== "web" ? space[1] : 0,
+    paddingTop: Platform.OS !== "web" ? tokens.space[1] : 0,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
   icon: {
-    color: color.grey1,
+    color: tokens.color.grey1,
   },
   subheading: {
-    paddingVertical: space[3],
+    paddingVertical: tokens.space[3],
   },
   button_text: {
     paddingLeft: 10,
-    color: color.white,
+    color: tokens.color.white,
   },
   privacy_policy: {
     paddingTop: 40,
@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   error: {
-    paddingTop: space[1],
+    paddingTop: tokens.space[1],
   },
 });

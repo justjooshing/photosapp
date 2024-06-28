@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Image, ImageProps, StyleSheet } from "react-native";
 
-import { color } from "@/config/tamagui/tokens";
+import { tokens } from "@/config/tamagui/tokens";
 
 type Props = {
   imageProps: ImageProps;
@@ -21,7 +21,7 @@ const ImageWithError = ({ imageProps, errorProps = { size: 96 } }: Props) => {
   ) : (
     <MaterialIcons
       name="image-not-supported"
-      color={color.red2}
+      color={tokens.color.red2}
       size={errorProps.size}
       style={styles.icon}
     />

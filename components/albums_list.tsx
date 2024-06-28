@@ -6,7 +6,7 @@ import ImageTile from "./image_tile";
 import Skeleton from "./skeleton";
 
 import { useGetAlbums } from "@/api/queries/albums";
-import { color } from "@/config/tamagui/tokens";
+import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 
 const numColumns = 2;
@@ -135,14 +135,14 @@ const styles = StyleSheet.create({
     right: 20,
     margin: 2,
     zIndex: 1,
-    backgroundColor: color.red2,
+    backgroundColor: tokens.color.red2,
     alignItems: "center",
     justifyContent: "center",
     height: 20,
     aspectRatio: 1,
     borderRadius: 20,
   },
-  notification_dot_text: { color: color.white, fontSize: 10 },
+  notification_dot_text: { color: tokens.color.white, fontSize: 10 },
   skeleton_container: {
     borderRadius: 20,
     width: "80%",

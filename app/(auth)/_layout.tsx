@@ -7,7 +7,7 @@ import { useGetAlbums } from "@/api/queries/albums";
 import { useGetAuthToken } from "@/api/queries/auth";
 import ContentWrapper from "@/components/content_wrapper";
 import Header from "@/components/header";
-import { color } from "@/config/tamagui/tokens";
+import { tokens } from "@/config/tamagui/tokens";
 import { HeadingProvider } from "@/context/header";
 import { ImageProvider } from "@/context/image";
 import usePathname from "@/hooks/usePathname";
@@ -35,8 +35,8 @@ const Layout = () => {
               <Tabs
                 screenOptions={{
                   tabBarLabelPosition: "below-icon",
-                  tabBarActiveBackgroundColor: color.grey1,
-                  tabBarInactiveBackgroundColor: color.grey4,
+                  tabBarActiveBackgroundColor: tokens.color.grey1,
+                  tabBarInactiveBackgroundColor: tokens.color.grey4,
                   headerShown: false,
                   tabBarBadgeStyle: {
                     display: "flex",
@@ -67,14 +67,20 @@ const Layout = () => {
                         <AntDesign
                           name={icon}
                           size={20}
-                          color={focused ? color.blue3 : color.grey1}
+                          color={
+                            focused ? tokens.color.blue3 : tokens.color.grey1
+                          }
                         />
                       ),
                       tabBarLabel: ({ focused }) => (
                         <Text
                           style={[
                             styles.tab_label,
-                            { color: focused ? color.blue3 : color.grey1 },
+                            {
+                              color: focused
+                                ? tokens.color.blue3
+                                : tokens.color.grey1,
+                            },
                           ]}
                         >
                           {label}

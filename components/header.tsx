@@ -5,7 +5,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { H1 } from "tamagui";
 
 import { useGetSingleAlbum } from "@/api/queries/albums";
-import { color } from "@/config/tamagui/tokens";
+import { tokens } from "@/config/tamagui/tokens";
 import { useHeadingContext } from "@/context/header";
 import { ImagesType } from "@/context/header/types";
 import usePathname from "@/hooks/usePathname";
@@ -29,7 +29,7 @@ const BackButton = () => {
 
   return (
     <Pressable onPress={handleBackClick}>
-      <AntDesign name="arrowleft" size={24} color={color.blue4} />
+      <AntDesign name="arrowleft" size={24} color={tokens.color.blue4} />
     </Pressable>
   );
 };
@@ -61,7 +61,7 @@ const Header = () => {
 
   const Title = () => {
     return (
-      <H1 numberOfLines={1} size={20} color={color.grey1}>
+      <H1 numberOfLines={1} size={20} color={tokens.color.grey1}>
         {pageTitle}
       </H1>
     );
@@ -91,7 +91,9 @@ const Header = () => {
           >
             <AntDesign
               name={name}
-              color={imageType === option ? color.blue2 : color.blue4}
+              color={
+                imageType === option ? tokens.color.blue2 : tokens.color.blue4
+              }
               size={24}
             />
           </Pressable>
@@ -127,8 +129,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     width: "100%",
-    backgroundColor: color.blue,
-    color: color.white,
+    backgroundColor: tokens.color.blue,
+    color: tokens.color.white,
   },
   header_side: {
     flex: 1,

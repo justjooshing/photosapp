@@ -1,22 +1,22 @@
-import { tokens } from "./tokens";
+import { tamaguiTokens } from "./tokens";
 
 const light = {
-  text: tokens.color.grey1,
-  primary: tokens.color.blue,
-  primaryHover: tokens.color.blue2,
-  primaryActive: tokens.color.blue3,
-  secondary: tokens.color.grey6,
-  secondaryHover: tokens.color.grey5,
-  secondaryActive: tokens.color.grey7,
-  danger: tokens.color.red2,
-  dangerHover: tokens.color.red3,
-  dangerActive: tokens.color.red4,
-  google: tokens.color.red2,
-  googleText: tokens.color.grey1,
-  googleHover: tokens.color.red3,
-  googleActive: tokens.color.red4,
-  success: tokens.color.green,
-  info: tokens.color.yellow,
+  text: tamaguiTokens.color.grey1,
+  primary: tamaguiTokens.color.blue,
+  primaryHover: tamaguiTokens.color.blue2,
+  primaryActive: tamaguiTokens.color.blue3,
+  secondary: tamaguiTokens.color.grey6,
+  secondaryHover: tamaguiTokens.color.grey5,
+  secondaryActive: tamaguiTokens.color.grey7,
+  danger: tamaguiTokens.color.red2,
+  dangerHover: tamaguiTokens.color.red3,
+  dangerActive: tamaguiTokens.color.red4,
+  google: tamaguiTokens.color.red2,
+  googleText: tamaguiTokens.color.grey1,
+  googleHover: tamaguiTokens.color.red3,
+  googleActive: tamaguiTokens.color.red4,
+  success: tamaguiTokens.color.green,
+  info: tamaguiTokens.color.yellow,
 };
 
 const dark = { ...light };

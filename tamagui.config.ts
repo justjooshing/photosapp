@@ -2,13 +2,13 @@ import { config } from "@tamagui/config/v3";
 import { createTamagui } from "tamagui";
 
 import { allThemes } from "./config/tamagui/themes";
-import { tokens } from "./config/tamagui/tokens";
+import { tamaguiTokens } from "./config/tamagui/tokens";
 
 const tamaguiConfig = createTamagui({
   ...config,
   themes: allThemes,
   defaultTheme: "light",
-  tokens,
+  tokens: tamaguiTokens,
 });
 
 export default tamaguiConfig;

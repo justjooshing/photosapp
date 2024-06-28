@@ -6,7 +6,7 @@ import Button from "./button";
 
 import { ApiImage } from "@/api/types";
 import ImageTile from "@/components/image_tile";
-import { color } from "@/config/tamagui/tokens";
+import { tokens } from "@/config/tamagui/tokens";
 import { useImageContext } from "@/context/image";
 
 type Props = { image: ApiImage };
@@ -29,7 +29,7 @@ const Image = ({ image }: Props) => {
           <AntDesign
             name="google"
             size={20}
-            color={color.black}
+            color={tokens.color.black}
             style={styles.button_google}
           />
         </Pressable>

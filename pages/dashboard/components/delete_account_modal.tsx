@@ -3,7 +3,7 @@ import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
 import { H1 } from "tamagui";
 
 import { useDeleteUser } from "@/api/queries/users";
-import { color } from "@/config/tamagui/tokens";
+import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 type Props = {
   modalOpen: boolean;
@@ -54,7 +54,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
             </View>
             <TextInput
               placeholder="Input text here"
-              placeholderTextColor={color.grey3}
+              placeholderTextColor={tokens.color.grey3}
               inputMode="text"
               onChangeText={setDeleteTextValue}
               style={styles.input}
@@ -105,13 +105,13 @@ const styles = StyleSheet.create({
   },
   content_wrapper: {
     justifyContent: "space-between",
-    backgroundColor: color.white,
+    backgroundColor: tokens.color.white,
     borderRadius: 20,
     padding: 20,
     height: "auto",
     width: "100%",
     maxWidth: "80%",
-    borderColor: color.black,
+    borderColor: tokens.color.black,
     borderStyle: "solid",
     borderWidth: 1,
   },
@@ -120,12 +120,12 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   input: {
-    borderColor: color.black,
+    borderColor: tokens.color.black,
     borderStyle: "solid",
     borderWidth: 1,
     padding: 10,
   },
-  input_error: { color: color.red, fontWeight: "600" },
+  input_error: { color: tokens.color.red, fontWeight: "600" },
   // Set MQ for smaller screens with flexDir column
   buttons: { flexDirection: "column", gap: 10 },
 });

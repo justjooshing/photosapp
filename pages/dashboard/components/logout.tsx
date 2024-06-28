@@ -3,7 +3,7 @@ import { Modal, StyleSheet, Text, View } from "react-native";
 import { Spinner } from "tamagui";
 
 import { useLogout } from "@/api/queries/auth";
-import { color, radius, space } from "@/config/tamagui/tokens";
+import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 
 const Logout = () => {
@@ -52,15 +52,15 @@ const styles = StyleSheet.create({
   modal_inner: {
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: radius[2],
-    backgroundColor: color.grey7,
+    borderRadius: tokens.radius[2],
+    backgroundColor: tokens.color.grey7,
     opacity: 0.8,
     width: "80%",
     maxWidth: 400,
     height: "30%",
   },
   modal_text: {
-    paddingTop: space[2],
-    color: color.grey1,
+    paddingTop: tokens.space[2],
+    color: tokens.color.grey1,
   },
 });

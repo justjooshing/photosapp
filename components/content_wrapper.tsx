@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { color } from "@/config/tamagui/tokens";
+import { tokens } from "@/config/tamagui/tokens";
 
 type Props = {
   children: ReactNode;
@@ -21,13 +21,13 @@ const styles = StyleSheet.create({
   appWrapper: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: color.grey2,
+    backgroundColor: tokens.color.grey2,
   },
   contentWrapper: {
     flex: 1,
     width: "100%",
     minHeight: "100%",
     maxWidth: 700,
-    backgroundColor: color.white,
+    backgroundColor: tokens.color.white,
   },
 });
