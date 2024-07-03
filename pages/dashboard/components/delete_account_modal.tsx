@@ -67,6 +67,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
           <View style={styles.buttons}>
             <Button
               variant="danger"
+              full
               disabled={buttonDisabled}
               size="$1"
               radius="$1"
@@ -78,6 +79,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
             </Button>
             <Button
               variant="secondary"
+              full
               size="$1"
               radius="$1"
               onPress={() => {
@@ -126,6 +128,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   input_error: { color: tokens.color.red, fontWeight: "600" },
-  // Set MQ for smaller screens with flexDir column
-  buttons: { flexDirection: "column", gap: 10 },
+  buttons: {
+    paddingTop: 10,
+    flexDirection: "column",
+    gap: 10,
+    alignItems: "center",
+  },
 });

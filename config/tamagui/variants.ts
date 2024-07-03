@@ -61,6 +61,11 @@ const buttonStyles: VariantDefinitions<typeof TamButton> &
       },
     },
   } as const,
+  full: {
+    true: {
+      width: "100%",
+    },
+  },
   radius: {
     "...size": (name: Sizes, { tokens }) => ({
       borderRadius: tokens.radius[name],
