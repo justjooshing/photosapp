@@ -15,6 +15,7 @@ import { TamaguiProvider } from "tamagui";
 import tamaguiConfig from "../tamagui.config";
 
 import { config } from "@/config/query";
+import { tokens } from "@/config/tamagui/tokens";
 import useDeeplink from "@/hooks/useDeeplink";
 import Storage from "@/utils/storage";
 
@@ -58,7 +59,15 @@ const Layout = () => {
             <SafeAreaProvider>
               <SafeAreaInsetsContext.Consumer>
                 {(insets) => (
-                  <View style={[{ paddingTop: insets.top }, styles.flex]}>
+                  <View
+                    style={[
+                      {
+                        paddingTop: insets.top,
+                        backgroundColor: tokens.color.blue2,
+                      },
+                      styles.flex,
+                    ]}
+                  >
                     <Slot />
                   </View>
                 )}
