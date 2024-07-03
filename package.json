@@ -11,6 +11,7 @@
     "configure": "eas build:configure",
     "build:android": "eas build -p android",
     "build:android:preview": "yarn build:android --profile preview",
+    "run:build:android": "eas build:run -p android",
     "lint": "eslint . --fix"
   },
   "dependencies": {

@@ -21,6 +21,7 @@
       "associatedDomains": ["applinks:www.picpurge.app"]
     },
     "android": {
+      "usesCleartextTraffic": true,
       "package": "com.justjooshing.picpurge",
       "intentFilters": [
         {
