@@ -83,21 +83,23 @@ const Header = () => {
 
     return path === "" ? (
       <View style={styles.mode_container}>
-        {icons.map(({ name, option }) => (
-          <Pressable
-            key={option}
-            onPress={() => updateImageType(option)}
-            disabled={imageType === option}
-          >
-            <AntDesign
-              name={name}
-              color={
-                imageType === option ? tokens.color.blue2 : tokens.color.blue4
-              }
-              size={24}
-            />
-          </Pressable>
-        ))}
+        <View style={styles.button_container}>
+          {icons.map(({ name, option }) => (
+            <Pressable
+              key={option}
+              onPress={() => updateImageType(option)}
+              disabled={imageType === option}
+            >
+              <AntDesign
+                name={name}
+                color={
+                  imageType === option ? tokens.color.blue2 : tokens.color.blue4
+                }
+                size={24}
+              />
+            </Pressable>
+          ))}
+        </View>
       </View>
     ) : (
       <View style={styles.mode_placeholder} />
@@ -140,10 +142,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   mode_container: {
-    flexDirection: "row",
-    gap: 10,
     alignItems: "flex-end",
   },
+  button_container: { flexDirection: "row", gap: 10 },
   mode_placeholder: {
     width: 24,
   },
