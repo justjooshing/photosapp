@@ -11,11 +11,11 @@ const Dashboard = () => (
   <View style={styles.container}>
     <Stats />
     <View style={styles.another_round_container}>
-      <Link href="/">
-        <Button variant="primary" size="$2" radius="$2">
+      <Button variant="primary" size="$2" radius="$2">
+        <Link href="/">
           <Button.Text>Another round?</Button.Text>
-        </Button>
-      </Link>
+        </Link>
+      </Button>
     </View>
     <View style={styles.button_container}>
       <Logout />
