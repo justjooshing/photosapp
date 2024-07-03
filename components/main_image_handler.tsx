@@ -1,10 +1,5 @@
 import { router } from "expo-router";
-import {
-  ImageSourcePropType,
-  StyleSheet,
-  View,
-  useWindowDimensions,
-} from "react-native";
+import { StyleSheet, View, useWindowDimensions } from "react-native";
 import {
   Gesture,
   GestureDetector,
@@ -37,7 +32,7 @@ const MainImageHandler = ({
   updateCurrentIndex,
 }: Props) => {
   const { imageType } = useHeadingContext();
-  const { isLoading } = useGetImages(imageType);
+  const { isLoading, isFetching } = useGetImages(imageType);
   const { width, height } = useWindowDimensions();
 
   const offset = useSharedValue(0);
@@ -104,15 +99,9 @@ const MainImageHandler = ({
       offset.value = 0;
     });
 
-  const sourceImage: ImageSourcePropType = {
-    uri: mainImage?.baseUrl,
-    width: width - 10,
-    height,
-  };
-
   return (
     <View style={styles.container}>
-      {isLoading ? (
+      {!mainImage?.baseUrl && (isLoading || isFetching) ? (
         <View style={styles.skeleton_container}>
           <Skeleton />
         </View>
@@ -124,7 +113,11 @@ const MainImageHandler = ({
               <ImageWithError
                 imageProps={{
                   resizeMode: "contain",
-                  source: sourceImage,
+                  source: {
+                    uri: mainImage?.baseUrl,
+                    width: width - 10,
+                    height,
+                  },
                   style: styles.image,
                 }}
                 errorProps={{ size: width - 56 }}
