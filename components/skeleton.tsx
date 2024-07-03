@@ -6,6 +6,7 @@ import Animated, {
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
+import { Shadow } from "react-native-shadow-2";
 
 import { tokens } from "@/config/tamagui/tokens";
 
@@ -32,7 +33,15 @@ const Skeleton = () => {
       }}
     >
       <Animated.View style={[styles.shimmer, animatedStyles]}>
-        <View style={styles.bar} />
+        <View style={styles.bar}>
+          <Shadow
+            style={styles.shadow}
+            containerStyle={styles.shadow_container}
+            distance={50}
+            sides={{ start: false, bottom: false, top: false, end: true }}
+            startColor={tokens.color.grey1}
+          />
+        </View>
       </Animated.View>
     </View>
   );
@@ -54,9 +63,11 @@ const styles = StyleSheet.create({
   bar: {
     transform: "rotate(5deg)",
     height: "100%",
-    shadowOffset: { height: 0, width: -30 },
-    shadowColor: tokens.color.grey1,
-    shadowOpacity: 0.4,
-    shadowRadius: 30,
+  },
+  shadow_container: {
+    opacity: 0.4,
+  },
+  shadow: {
+    height: "100%",
   },
 });
