@@ -14,29 +14,34 @@ const imageWidth = { width: `${100 / numColumns}%` } as const;
 
 const AlbumsList = () => {
   const albums = useGetAlbums();
-  const [viewedTab, setViewedTab] = useState<number>(0);
+  const [viewedTab, setViewedTab] = useState<
+    "withDeletedCount" | "noDeletedCount"
+  >("withDeletedCount");
 
-  const tabCopy = [
-    {
+  const tabCopy = {
+    withDeletedCount: {
       heading: `Clean up (${albums.isLoading ? "?" : albums.data?.withDeletedCount.length || 0})`,
       copy: "Your goal is to have this list empty, it means you've deleted all the images that you decided you wanted to delete.",
     },
-    {
+    noDeletedCount: {
       heading: `All sorted (${albums.isLoading ? "?" : albums.data?.noDeletedCount.length || 0})`,
       copy: "These are the albums containing only images you've decided you want to keep.",
     },
-  ];
+  };
 
   return (
     <>
       <View style={styles.filters}>
-        {tabCopy.map(({ heading }, i) => (
+        {Object.entries(tabCopy).map(([key, { heading }]) => (
           <Button
-            variant="secondary"
+            variant={viewedTab === key ? "primary" : "secondary"}
             size="$1"
             radius="$1"
             key={heading}
-            onPress={() => setViewedTab(i)}
+            onPress={() =>
+              // type coercion bad
+              setViewedTab(key as "withDeletedCount" | "noDeletedCount")
+            }
           >
             <Button.Text>{heading}</Button.Text>
           </Button>
@@ -62,7 +67,7 @@ const AlbumsList = () => {
       )}
 
       {/* No data */}
-      {!albums.isLoading && !albums.data?.albums.length && (
+      {!albums.isLoading && !albums.data?.[viewedTab].length && (
         <View>
           <Text style={styles.empty}>No data</Text>
           <Text>
@@ -73,13 +78,9 @@ const AlbumsList = () => {
       )}
 
       {/* With data */}
-      {!albums.isLoading && !!albums.data?.albums.length && (
+      {!albums.isLoading && !!albums.data?.[viewedTab].length && (
         <FlatList
-          data={
-            viewedTab === 0
-              ? albums.data?.withDeletedCount
-              : albums.data?.noDeletedCount
-          }
+          data={albums.data?.[viewedTab]}
           numColumns={numColumns}
           columnWrapperStyle={styles.column}
           keyExtractor={({ id }) => id.toString()}
