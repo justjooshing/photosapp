@@ -32,7 +32,7 @@ const MainImageHandler = ({
   updateCurrentIndex,
 }: Props) => {
   const { imageType } = useHeadingContext();
-  const { isLoading, isFetching } = useGetImages(imageType);
+  const { isLoading } = useGetImages(imageType);
   const { width, height } = useWindowDimensions();
 
   const offset = useSharedValue(0);
@@ -101,7 +101,7 @@ const MainImageHandler = ({
 
   return (
     <View style={styles.container}>
-      {!mainImage?.baseUrl && (isLoading || isFetching) ? (
+      {!mainImage?.baseUrl && isLoading ? (
         <View style={styles.skeleton_container}>
           <Skeleton />
         </View>
