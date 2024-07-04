@@ -1,9 +1,8 @@
-import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useFonts } from "expo-font";
-import { Slot, useGlobalSearchParams } from "expo-router";
-import React, { useMemo } from "react";
-import { StyleSheet, View, useColorScheme } from "react-native";
+import { ThemeProvider } from "@react-navigation/native";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Slot } from "expo-router";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { RootSiblingParent as ToastWrapper } from "react-native-root-siblings";
 import "setimmediate";
 import {
@@ -14,10 +13,11 @@ import { TamaguiProvider } from "tamagui";
 
 import tamaguiConfig from "../tamagui.config";
 
-import { config } from "@/config/query";
 import { tokens } from "@/config/tamagui/tokens";
 import useDeeplink from "@/hooks/useDeeplink";
-import Storage from "@/utils/storage";
+import useFonts from "@/hooks/useFonts";
+import useGenerateQueryClient from "@/hooks/useGenerateQueryClient";
+import useTheme from "@/hooks/useTheme";
 
 if (!global.setImmediate) {
   //@ts-expect-error
@@ -25,27 +25,10 @@ if (!global.setImmediate) {
 }
 
 const Layout = () => {
-  const { jwt }: { jwt?: string } = useGlobalSearchParams();
-  if (jwt) {
-    Storage.set("jwt", jwt);
-  }
   useDeeplink();
-
-  // Create new queryCLient if jwt exists
-  const authToken = Storage.getString("jwt");
-  const queryClient = useMemo(
-    () => new QueryClient(config(authToken)),
-    [authToken],
-  );
-
-  const colourScheme = useColorScheme();
-  // Update after checking over dark mode themes
-  const theme = colourScheme === "dark" ? DefaultTheme : DefaultTheme;
-
-  const [loaded] = useFonts({
-    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
-    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
-  });
+  const queryClient = useGenerateQueryClient();
+  const loaded = useFonts();
+  const theme = useTheme();
 
   if (!loaded) {
     return null;
