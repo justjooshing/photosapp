@@ -6,9 +6,11 @@ import { H1, Spinner } from "tamagui";
 import { useGetLoginLink } from "@/api/queries/auth";
 import { tokens } from "@/config/tamagui/tokens";
 import { Anchor, Button } from "@/config/tamagui/variants";
+import useHideSplashScreen from "@/hooks/useHideSplashScreen";
 
 const Login = () => {
   const loginLink = useGetLoginLink();
+  useHideSplashScreen({ loaded: !!loginLink.data });
 
   return (
     <View style={styles.container}>
