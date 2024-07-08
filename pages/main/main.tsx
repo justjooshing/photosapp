@@ -13,7 +13,7 @@ const Images = () => {
   const { imageType, currentImageIndex, setCurrentImageIndex } =
     useHeadingContext();
   const images = useGetImages(imageType);
-  useHideSplashScreen({ loaded: !!images.data });
+  useHideSplashScreen({ loaded: !!images.data || images.isError });
 
   if (images.isError) return <Text>{images.error.message}</Text>;
   /**

@@ -10,7 +10,7 @@ import useHideSplashScreen from "@/hooks/useHideSplashScreen";
 
 const Login = () => {
   const loginLink = useGetLoginLink();
-  useHideSplashScreen({ loaded: !!loginLink.data });
+  useHideSplashScreen({ loaded: !!loginLink.data || loginLink.isError });
 
   return (
     <View style={styles.container}>
