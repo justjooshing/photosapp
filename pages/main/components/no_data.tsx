@@ -6,26 +6,32 @@ import { Button } from "@/config/tamagui/variants";
 import { useHeadingContext } from "@/context/header";
 
 const NoData = () => {
-  const { setImageType, imageType } = useHeadingContext();
+  const { setImageType, imageType, currentImageIndex, setCurrentImageIndex } =
+    useHeadingContext();
   const router = useRouter();
 
-  const { copy, cta, handlePress } = {
+  const { copy, cta, ctaFn } = {
     similar: {
       copy: "No more similar image sets needing to be sorted.",
       cta: "View images from prior years",
-      handlePress: () => setImageType("today"),
+      ctaFn: () => setImageType("today"),
     },
     today: {
       copy: "No more images from this date over the years needing to be sorted.",
       cta: "View oldest images",
-      handlePress: () => setImageType("oldest"),
+      ctaFn: () => setImageType("oldest"),
     },
     oldest: {
       copy: "Wow, no more images to sort through at all!",
       cta: "View images to be deleted",
-      handlePress: () => router.push("/albums"),
+      ctaFn: () => router.push("/albums"),
     },
   }[imageType];
+
+  const handlePress = () => {
+    if (currentImageIndex) setCurrentImageIndex(0);
+    ctaFn();
+  };
 
   return (
     <View style={styles.wrapper}>

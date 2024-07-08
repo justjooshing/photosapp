@@ -7,7 +7,6 @@ import { H1 } from "tamagui";
 import { useGetSingleAlbum } from "@/api/queries/albums";
 import { tokens } from "@/config/tamagui/tokens";
 import { useHeadingContext } from "@/context/header";
-import { ImagesType } from "@/context/header/types";
 import usePathname from "@/hooks/usePathname";
 
 const BackButton = () => {
@@ -35,14 +34,7 @@ const BackButton = () => {
 };
 
 const Header = () => {
-  const {
-    pageTitle,
-    setPageTitle,
-    imageType,
-    setImageType,
-    currentImageIndex,
-    setCurrentImageIndex,
-  } = useHeadingContext();
+  const { pageTitle, setPageTitle, imageType } = useHeadingContext();
   const { path, slug } = usePathname();
   const singleAlbum = useGetSingleAlbum(slug);
 
@@ -67,45 +59,6 @@ const Header = () => {
     );
   };
 
-  const Mode = () => {
-    const icons: {
-      name: keyof typeof AntDesign.glyphMap;
-      option: ImagesType;
-    }[] = [
-      { name: "picture", option: "similar" },
-      { name: "calendar", option: "today" },
-      { name: "clockcircleo", option: "oldest" },
-    ];
-    const updateImageType = (option: ImagesType) => {
-      if (currentImageIndex) setCurrentImageIndex(0);
-      setImageType(option);
-    };
-
-    return path === "" ? (
-      <View style={styles.mode_container}>
-        <View style={styles.button_container}>
-          {icons.map(({ name, option }) => (
-            <Pressable
-              key={option}
-              onPress={() => updateImageType(option)}
-              disabled={imageType === option}
-            >
-              <AntDesign
-                name={name}
-                color={
-                  imageType === option ? tokens.color.blue2 : tokens.color.blue4
-                }
-                size={24}
-              />
-            </Pressable>
-          ))}
-        </View>
-      </View>
-    ) : (
-      <View style={styles.mode_placeholder} />
-    );
-  };
-
   return (
     <View style={styles.header}>
       <View style={styles.header_side}>
@@ -114,9 +67,7 @@ const Header = () => {
       <View style={styles.header_center}>
         <Title />
       </View>
-      <View style={styles.header_side}>
-        <Mode />
-      </View>
+      <View style={styles.header_side} />
     </View>
   );
 };
@@ -140,12 +91,5 @@ const styles = StyleSheet.create({
   header_center: {
     flex: 2,
     alignItems: "center",
-  },
-  mode_container: {
-    alignItems: "flex-end",
-  },
-  button_container: { flexDirection: "row", gap: 10 },
-  mode_placeholder: {
-    width: 24,
   },
 });
