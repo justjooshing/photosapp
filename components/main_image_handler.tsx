@@ -17,22 +17,17 @@ import Skeleton from "./skeleton";
 import SwipeConfirmation from "./swipe_confirmation";
 
 import { useGetImages, useSortImage } from "@/api/queries/images";
-import { ApiImage, SortOptions } from "@/api/types";
+import { SortOptions } from "@/api/types";
 import { useHeadingContext } from "@/context/header";
 
 interface Props {
-  mainImage: ApiImage;
-  isLastImage: boolean;
+  currentIndex: number;
   updateCurrentIndex: () => void;
 }
 
-const MainImageHandler = ({
-  mainImage,
-  isLastImage,
-  updateCurrentIndex,
-}: Props) => {
+const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
   const { imageType } = useHeadingContext();
-  const { isLoading } = useGetImages(imageType);
+  const { isLoading, data, isFetching } = useGetImages(imageType);
   const { width, height } = useWindowDimensions();
 
   const offset = useSharedValue(0);
@@ -63,8 +58,8 @@ const MainImageHandler = ({
   });
 
   const updateImage = async (sorted_status: SortOptions) => {
-    sortImage({ image: mainImage, body: { sorted_status } });
-    if (isLastImage) {
+    sortImage({ image: data?.[currentIndex], body: { sorted_status } });
+    if (data?.length === 1) {
       router.push("/dashboard");
     } else {
       updateCurrentIndex();
@@ -101,7 +96,7 @@ const MainImageHandler = ({
 
   return (
     <View style={styles.container}>
-      {!mainImage?.baseUrl && isLoading ? (
+      {!data?.length && (isLoading || isFetching) ? (
         <View style={styles.skeleton_container}>
           <Skeleton />
         </View>
@@ -114,7 +109,7 @@ const MainImageHandler = ({
                 imageProps={{
                   resizeMode: "contain",
                   source: {
-                    uri: mainImage?.baseUrl,
+                    uri: data[currentIndex]?.baseUrl,
                     width: width - 10,
                     height,
                   },

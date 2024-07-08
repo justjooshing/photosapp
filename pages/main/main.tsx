@@ -28,17 +28,16 @@ const Images = () => {
 
   return (
     <View style={styles.wrapper}>
-      {!images.data?.length && !images.isLoading ? (
+      {!images.data?.length && !(images.isLoading || images.isFetching) ? (
         <NoData />
       ) : (
         <>
           <MainImageHandler
-            mainImage={images.data?.[currentImageIndex]}
-            isLastImage={images.data?.length === 1}
+            currentIndex={currentImageIndex}
             updateCurrentIndex={decreaseCurrentIndexIfFinalIndex}
           />
           <View>
-            {images.isLoading ? (
+            {!images.data?.length && (images.isLoading || images.isFetching) ? (
               <FlatList
                 horizontal
                 data={Array(5)}
