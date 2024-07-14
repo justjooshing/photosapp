@@ -4,10 +4,10 @@ import CarouselImage from "./components/carousel_image";
 import NoData from "./components/no_data";
 
 import { useGetImages } from "@/api/queries/images";
-import MainImageHandler from "@/components/main_image_handler";
 import Skeleton from "@/components/skeleton";
 import { useImageContext } from "@/context/image";
 import useHideSplashScreen from "@/hooks/useHideSplashScreen";
+import MainImageHandler from "@/pages/main/components/main_image_handler";
 
 const Images = () => {
   const { currentImageIndex, setCurrentImageIndex } = useImageContext();

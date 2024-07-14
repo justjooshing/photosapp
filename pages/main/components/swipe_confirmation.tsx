@@ -10,7 +10,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
-import Icons from "./icons";
+import Icons from "@/components/icons";
 
 interface Props {
   type: "keep" | "delete";
@@ -30,7 +30,7 @@ const SwipeConfirmation = ({
 
   useEffect(() => {
     iconTranslateX.value = withDelay(
-      1000,
+      2000,
       withSpring(initialPosition, { duration: 5000 }),
     );
   }, [initialPosition]);

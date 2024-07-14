@@ -14,12 +14,12 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
-import ImageWithError from "./image_with_error_handler";
-import Skeleton from "./skeleton";
 import SwipeConfirmation from "./swipe_confirmation";
 
 import { useGetImages, useSortImage } from "@/api/queries/images";
 import { SortOptions } from "@/api/types";
+import ImageWithError from "@/components/image_with_error_handler";
+import Skeleton from "@/components/skeleton";
 
 interface Props {
   currentIndex: number;

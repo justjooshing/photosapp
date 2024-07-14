@@ -2,10 +2,9 @@ import { Link } from "expo-router";
 import { useState } from "react";
 import { FlatList, Pressable, Text, StyleSheet, View } from "react-native";
 
-import ImageTile from "./image_tile";
-import Skeleton from "./skeleton";
-
 import { useGetAlbums } from "@/api/queries/albums";
+import ImageTile from "@/components/image_tile";
+import Skeleton from "@/components/skeleton";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 
