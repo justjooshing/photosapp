@@ -1,27 +1,73 @@
-import { ImageStyle, StyleSheet } from "react-native";
-import Animated from "react-native-reanimated";
+import { useEffect } from "react";
+import { StyleSheet } from "react-native";
+import Animated, {
+  Extrapolation,
+  interpolate,
+  SharedValue,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withSpring,
+} from "react-native-reanimated";
 
-import { tokens } from "@/config/tamagui/tokens";
+import Icons from "./icons";
 
 interface Props {
   type: "keep" | "delete";
-  style: ImageStyle;
+  offset: SharedValue<number>;
+  threshold: number;
+  containerWidth: number;
 }
 
-const SwipeConfirmation = ({ type, style }: Props) => {
-  const colour = type === "keep" ? tokens.color.green : tokens.color.red;
+const SwipeConfirmation = ({
+  type,
+  offset,
+  threshold,
+  containerWidth,
+}: Props) => {
+  const initialPosition = type === "keep" ? 35 : -35;
+  const iconTranslateX = useSharedValue(-initialPosition);
+
+  useEffect(() => {
+    iconTranslateX.value = withDelay(
+      1000,
+      withSpring(initialPosition, { duration: 5000 }),
+    );
+  }, [initialPosition]);
+
+  const initialStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: iconTranslateX.value }],
+  }));
+
+  const style = useAnimatedStyle(() => {
+    const positionX = interpolate(
+      offset.value,
+      [threshold, -threshold],
+      [-containerWidth / 2, containerWidth / 2],
+      Extrapolation.CLAMP,
+    );
+
+    return {
+      transform: [{ translateX: positionX }],
+    };
+  });
 
   return (
-    <Animated.View style={[styles.bar, style, { backgroundColor: colour }]} />
+    <Animated.View style={[styles.container, initialStyle]}>
+      <Animated.View style={style}>
+        <Icons isSelected={false} size={54} choice={type} />
+      </Animated.View>
+    </Animated.View>
   );
 };
 
 export default SwipeConfirmation;
 
 const styles = StyleSheet.create({
-  bar: {
-    width: 10,
-    height: "100%",
+  container: {
     zIndex: 2,
+    justifyContent: "center",
+    width: 10,
+    alignItems: "center",
   },
 });

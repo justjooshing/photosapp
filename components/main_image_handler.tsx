@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { useRef } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
 import {
   Gesture,
@@ -7,6 +8,7 @@ import {
   PanGestureHandlerEventPayload,
 } from "react-native-gesture-handler";
 import Animated, {
+  interpolate,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -25,33 +27,47 @@ interface Props {
 }
 
 const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
-  const { isLoading, data, isFetching } = useGetImages();
   const { width, height } = useWindowDimensions();
-
   const offset = useSharedValue(0);
+  const containerWidthRef = useRef(0);
+
+  const { isLoading, data, isFetching } = useGetImages();
   const { mutate: sortImage } = useSortImage();
 
-  const animatedStyles = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: offset.value },
-      {
-        rotate:
-          offset.value === 0 ? "0deg" : `${0 + (offset.value / width) * 80}deg`,
-      },
-    ] as const,
-  }));
+  const onLayout = ({ nativeEvent: { layout } }) => {
+    containerWidthRef.current = layout.width;
+  };
 
   const threshold = 100;
 
-  // Condense down into customHook
-  const delBarStyles = useAnimatedStyle(() => {
+  const animatedStyles = useAnimatedStyle(() => {
+    const scale = interpolate(Math.abs(offset.value), [0, threshold], [1, 0.8]);
+
+    const opacity = interpolate(
+      Math.abs(offset.value),
+      [0, threshold],
+      [1, 0.7],
+    );
+
+    // Not using Math.abs here because we want it to
+    // rotate in a different direction based on which side its on
+    const rotate = interpolate(
+      offset.value,
+      [-threshold, threshold],
+      [-10, 10],
+    );
+
     return {
-      opacity: offset.value < -threshold ? 1 : 0,
-    };
-  });
-  const keepBarStyles = useAnimatedStyle(() => {
-    return {
-      opacity: offset.value > threshold ? 1 : 0,
+      opacity,
+      transform: [
+        { translateX: offset.value },
+        {
+          rotate: `${rotate}deg`,
+        },
+        {
+          scale,
+        },
+      ] as const,
     };
   });
 
@@ -93,14 +109,19 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
     });
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayout}>
       {!data?.length && (isLoading || isFetching) ? (
         <View style={styles.skeleton_container}>
           <Skeleton />
         </View>
       ) : (
         <>
-          <SwipeConfirmation type="delete" style={delBarStyles} />
+          <SwipeConfirmation
+            type="delete"
+            offset={offset}
+            threshold={threshold}
+            containerWidth={containerWidthRef.current}
+          />
           <GestureDetector gesture={pan}>
             <Animated.View style={[animatedStyles, styles.animated_container]}>
               <ImageWithError
@@ -117,7 +138,12 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
               />
             </Animated.View>
           </GestureDetector>
-          <SwipeConfirmation type="keep" style={keepBarStyles} />
+          <SwipeConfirmation
+            type="keep"
+            offset={offset}
+            threshold={threshold}
+            containerWidth={containerWidthRef.current}
+          />
         </>
       )}
     </View>
