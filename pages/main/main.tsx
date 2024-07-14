@@ -6,13 +6,12 @@ import NoData from "./components/no_data";
 import { useGetImages } from "@/api/queries/images";
 import MainImageHandler from "@/components/main_image_handler";
 import Skeleton from "@/components/skeleton";
-import { useHeadingContext } from "@/context/header";
+import { useImageContext } from "@/context/image";
 import useHideSplashScreen from "@/hooks/useHideSplashScreen";
 
 const Images = () => {
-  const { imageType, currentImageIndex, setCurrentImageIndex } =
-    useHeadingContext();
-  const images = useGetImages(imageType);
+  const { currentImageIndex, setCurrentImageIndex } = useImageContext();
+  const images = useGetImages();
   useHideSplashScreen({ loaded: !!images.data || images.isError });
 
   if (images.isError) return <Text>{images.error.message}</Text>;

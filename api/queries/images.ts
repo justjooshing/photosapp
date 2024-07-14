@@ -16,7 +16,7 @@ import {
   ApiCount,
 } from "../types";
 
-import { ImagesType } from "@/context/header/types";
+import { useImageContext } from "@/context/image";
 import { renderToast } from "@/utils/toast";
 
 const getImages = async ({
@@ -30,8 +30,10 @@ const getImages = async ({
   return data;
 };
 
-export const useGetImages = (imageType: ImagesType) =>
-  useQuery({
+export const useGetImages = () => {
+  const { imageType } = useImageContext();
+
+  return useQuery({
     queryKey: Keys.images(imageType),
     queryFn: getImages,
     // ensure order is kept after refetching
@@ -43,6 +45,7 @@ export const useGetImages = (imageType: ImagesType) =>
         ? false
         : 1000,
   });
+};
 
 interface SortImageProps {
   image: ApiImage;
@@ -54,7 +57,9 @@ const updateSingleImage = async ({ image, body }: SortImageProps) =>
     body,
   );
 
-export const useSortImage = (imageType: ImagesType) => {
+export const useSortImage = () => {
+  const { imageType } = useImageContext();
+
   const queryClient = useQueryClient();
   const dataKey = Keys.images(imageType);
   return useMutation({

@@ -3,11 +3,11 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { Button } from "@/config/tamagui/variants";
-import { useHeadingContext } from "@/context/header";
+import { useImageContext } from "@/context/image";
 
 const NoData = () => {
   const { setImageType, imageType, currentImageIndex, setCurrentImageIndex } =
-    useHeadingContext();
+    useImageContext();
   const router = useRouter();
 
   const { copy, cta, ctaFn } = {

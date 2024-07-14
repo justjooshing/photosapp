@@ -18,7 +18,6 @@ import SwipeConfirmation from "./swipe_confirmation";
 
 import { useGetImages, useSortImage } from "@/api/queries/images";
 import { SortOptions } from "@/api/types";
-import { useHeadingContext } from "@/context/header";
 
 interface Props {
   currentIndex: number;
@@ -26,12 +25,11 @@ interface Props {
 }
 
 const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
-  const { imageType } = useHeadingContext();
-  const { isLoading, data, isFetching } = useGetImages(imageType);
+  const { isLoading, data, isFetching } = useGetImages();
   const { width, height } = useWindowDimensions();
 
   const offset = useSharedValue(0);
-  const { mutate: sortImage } = useSortImage(imageType);
+  const { mutate: sortImage } = useSortImage();
 
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [

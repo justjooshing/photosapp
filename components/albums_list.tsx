@@ -60,7 +60,6 @@ const AlbumsList = () => {
               <View style={styles.skeleton_container}>
                 <Skeleton />
               </View>
-              <Text>Loading</Text>
             </View>
           )}
         />
@@ -104,7 +103,6 @@ const AlbumsList = () => {
                 ) : (
                   <Text>Where's the image?</Text>
                 )}
-                <Text>{album.title}</Text>
               </Pressable>
             </Link>
           )}

@@ -1,4 +1,4 @@
-import { ImagesType } from "@/context/header/types";
+import { ImagesType } from "@/context/image/types";
 
 const baseKeys = {
   loginLink: "login-link",
