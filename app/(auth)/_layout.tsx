@@ -18,7 +18,7 @@ const Layout = () => {
   const activeTabs = [
     { name: "index", label: "Sort", icon: "swap" },
     { name: "dashboard", label: "Dashboard", icon: "home" },
-    { name: "albums", label: "Albums", icon: "picture" },
+    { name: "albums", label: "Image Sets", icon: "picture" },
   ] as const;
 
   return !token ? (

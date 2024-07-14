@@ -25,7 +25,7 @@ const AlbumsList = () => {
     },
     noDeletedCount: {
       heading: `All sorted (${albums.isLoading ? "?" : albums.data?.noDeletedCount.length || 0})`,
-      copy: "These are the albums containing only images you've decided you want to keep.",
+      copy: "These are the image sets containing only images you've decided you want to keep.",
     },
   };
 
