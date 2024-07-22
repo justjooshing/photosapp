@@ -1,17 +1,15 @@
 {
   "name": "picpurge",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "android:release": "yarn android --variant release",
-    "configure": "eas build:configure",
     "build:android": "eas build -p android",
-    "build:android:preview": "yarn build:android --profile preview",
     "run:build:android": "eas build:run -p android",
+    "submit:android": "eas submit -p android --latest",
     "lint": "eslint . --fix"
   },
   "dependencies": {
