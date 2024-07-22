@@ -32,7 +32,6 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
             <View style={styles.skeleton_container}>
               <Skeleton />
             </View>
-            <Text>Loading</Text>
           </View>
         )}
       />
