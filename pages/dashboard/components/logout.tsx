@@ -17,7 +17,7 @@ const Logout = () => {
         logout.mutate();
       }, 1000);
     }
-  }, [showModal]);
+  }, [showModal, logout]);
 
   return (
     <>

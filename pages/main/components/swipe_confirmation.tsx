@@ -25,6 +25,7 @@ const SwipeConfirmation = ({
   threshold,
   containerWidth,
 }: Props) => {
+  // These aren't showing on native, how come?
   const initialPosition = type === "keep" ? 35 : -35;
   const iconTranslateX = useSharedValue(-initialPosition);
 
@@ -33,7 +34,7 @@ const SwipeConfirmation = ({
       2000,
       withSpring(initialPosition, { duration: 5000 }),
     );
-  }, [initialPosition]);
+  }, [initialPosition, iconTranslateX]);
 
   const initialStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: iconTranslateX.value }],

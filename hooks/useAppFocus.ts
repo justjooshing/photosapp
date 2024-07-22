@@ -58,7 +58,7 @@ const useAppFocus = ({ targetImage, setTargetImage }: Props) => {
         };
       }
     }
-  }, [targetImage]);
+  }, [targetImage, setTargetImage, updateImage, queryClient]);
 
   return [targetImage, setTargetImage];
 };
