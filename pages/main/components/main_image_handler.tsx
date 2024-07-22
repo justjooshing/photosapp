@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
     overflow: "hidden",
   },
   animated_container: {

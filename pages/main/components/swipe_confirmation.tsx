@@ -1,3 +1,4 @@
+import { LinearGradient } from "expo-linear-gradient";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import Animated, {
@@ -11,6 +12,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import Icons from "@/components/icons";
+import { tokens } from "@/config/tamagui/tokens";
 
 interface Props {
   type: "keep" | "delete";
@@ -25,14 +27,13 @@ const SwipeConfirmation = ({
   threshold,
   containerWidth,
 }: Props) => {
-  // These aren't showing on native, how come?
-  const initialPosition = type === "keep" ? 35 : -35;
-  const iconTranslateX = useSharedValue(-initialPosition);
+  const initialPosition = type === "keep" ? -60 : 60;
+  const iconTranslateX = useSharedValue(initialPosition);
 
   useEffect(() => {
     iconTranslateX.value = withDelay(
       2000,
-      withSpring(initialPosition, { duration: 5000 }),
+      withSpring(-initialPosition, { duration: 5000 }),
     );
   }, [initialPosition, iconTranslateX]);
 
@@ -44,7 +45,10 @@ const SwipeConfirmation = ({
     const positionX = interpolate(
       offset.value,
       [threshold, -threshold],
-      [-containerWidth / 2, containerWidth / 2],
+      [
+        (-containerWidth + initialPosition) / 2,
+        (containerWidth + initialPosition) / 2,
+      ],
       Extrapolation.CLAMP,
     );
 
@@ -56,7 +60,12 @@ const SwipeConfirmation = ({
   return (
     <Animated.View style={[styles.container, initialStyle]}>
       <Animated.View style={style}>
-        <Icons isSelected={false} size={54} choice={type} />
+        <LinearGradient
+          style={styles.icon}
+          colors={[tokens.color.grey1, tokens.color.grey4]}
+        >
+          <Icons isSelected={false} size={56} choice={type} />
+        </LinearGradient>
       </Animated.View>
     </Animated.View>
   );
@@ -68,7 +77,13 @@ const styles = StyleSheet.create({
   container: {
     zIndex: 2,
     justifyContent: "center",
-    width: 10,
+    width: 100,
+    height: 100,
     alignItems: "center",
+  },
+  icon: {
+    borderColor: tokens.color.grey4,
+    borderWidth: 3,
+    padding: tokens.space[1],
   },
 });
