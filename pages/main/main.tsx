@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import { View, Text, StyleSheet } from "react-native";
 
 import CarouselImage from "./components/carousel_image";
 import NoData from "./components/no_data";
@@ -33,34 +34,34 @@ const Images = () => {
             currentIndex={currentImageIndex}
             updateCurrentIndex={decreaseCurrentIndexIfFinalIndex}
           />
-          <View>
-            {!images.data?.length && (images.isLoading || images.isFetching) ? (
-              <FlatList
-                horizontal
-                data={Array(5)}
-                contentContainerStyle={styles.item_container}
-                renderItem={() => (
-                  <View style={styles.skeleton_container}>
-                    <Skeleton />
-                  </View>
-                )}
-              />
-            ) : (
-              <FlatList
-                horizontal
-                data={images.data}
-                keyExtractor={({ id }) => id.toString()}
-                contentContainerStyle={styles.item_container}
-                renderItem={({ item, index }) => (
+          {!images.data?.length && (images.isLoading || images.isFetching) ? (
+            <FlashList
+              horizontal
+              data={Array(5)}
+              estimatedItemSize={5}
+              renderItem={() => (
+                <View style={[styles.item, styles.skeleton]}>
+                  <Skeleton />
+                </View>
+              )}
+            />
+          ) : (
+            <FlashList
+              horizontal
+              data={images.data}
+              estimatedItemSize={5}
+              keyExtractor={({ id }) => id.toString()}
+              renderItem={({ item, index }) => (
+                <View style={styles.item}>
                   <CarouselImage
                     image={item}
                     position={index}
                     setCurrentImageIndex={setCurrentImageIndex}
                   />
-                )}
-              />
-            )}
-          </View>
+                </View>
+              )}
+            />
+          )}
         </>
       )}
     </View>
@@ -70,11 +71,14 @@ const Images = () => {
 export default Images;
 
 const styles = StyleSheet.create({
-  skeleton_container: { width: 100, aspectRatio: 1 },
   wrapper: {
     flex: 1,
   },
-  item_container: {
-    gap: 1,
+  skeleton: {
+    aspectRatio: 1,
+  },
+  item: {
+    height: 100,
+    paddingHorizontal: 2,
   },
 });

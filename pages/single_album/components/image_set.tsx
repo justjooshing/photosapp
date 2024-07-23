@@ -1,6 +1,6 @@
+import { FlashList } from "@shopify/flash-list";
 import React, { Dispatch, SetStateAction } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
 
 import Image from "./image";
 import { FilterOptions } from "../types";
@@ -10,7 +10,6 @@ import Skeleton from "@/components/skeleton";
 import { Button } from "@/config/tamagui/variants";
 
 const numColumns = 2;
-const imageWidth = { width: `${100 / numColumns}%` } as const;
 
 type Props = {
   albumId: string;
@@ -23,12 +22,12 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
   if (singleAlbum.isError) return <Text>{singleAlbum.error.message}</Text>;
   if (singleAlbum.isLoading)
     return (
-      <FlatList
+      <FlashList
         data={Array(6)}
-        numColumns={2}
-        contentContainerStyle={styles.album_container}
+        estimatedItemSize={6}
+        numColumns={numColumns}
         renderItem={() => (
-          <View style={[imageWidth, styles.image]}>
+          <View style={styles.image}>
             <View style={styles.skeleton_container}>
               <Skeleton />
             </View>
@@ -59,13 +58,13 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
           </Button>
         </View>
       ) : (
-        <FlatList
+        <FlashList
           data={images}
+          estimatedItemSize={8}
           keyExtractor={({ id }) => id.toString()}
           numColumns={numColumns}
-          contentContainerStyle={styles.album_container}
           renderItem={({ item }) => (
-            <View style={imageWidth} key={item.id}>
+            <View style={styles.image}>
               <Image image={item} />
             </View>
           )}
@@ -89,9 +88,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
   },
-  album_container: { gap: 20 },
   image: {
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 20,
+    width: "100%",
   },
 });

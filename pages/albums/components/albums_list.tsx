@@ -1,6 +1,7 @@
+import { FlashList } from "@shopify/flash-list";
 import { Link } from "expo-router";
 import { useState } from "react";
-import { FlatList, Pressable, Text, StyleSheet, View } from "react-native";
+import { Pressable, Text, StyleSheet, View } from "react-native";
 
 import { useGetAlbums } from "@/api/queries/albums";
 import ImageTile from "@/components/image_tile";
@@ -9,7 +10,6 @@ import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 
 const numColumns = 2;
-const imageWidth = { width: `${100 / numColumns}%` } as const;
 
 const AlbumsList = () => {
   const albums = useGetAlbums();
@@ -50,12 +50,12 @@ const AlbumsList = () => {
 
       {/* Is loading */}
       {albums.isLoading && (
-        <FlatList
+        <FlashList
           data={Array(6)}
           numColumns={numColumns}
-          columnWrapperStyle={styles.column}
+          estimatedItemSize={6}
           renderItem={() => (
-            <View style={[imageWidth, styles.image, styles.loading_container]}>
+            <View style={styles.image}>
               <View style={styles.skeleton_container}>
                 <Skeleton />
               </View>
@@ -77,19 +77,19 @@ const AlbumsList = () => {
 
       {/* With data */}
       {!albums.isLoading && !!albums.data?.[viewedTab].length && (
-        <FlatList
+        <FlashList
           data={albums.data?.[viewedTab]}
           numColumns={numColumns}
-          columnWrapperStyle={styles.column}
+          estimatedItemSize={100}
           keyExtractor={({ id }) => id.toString()}
           renderItem={({ item: album }) => (
             <Link
               key={album.id}
               href={`/albums/${album.id}`}
+              style={styles.image}
               asChild
-              style={imageWidth}
             >
-              <Pressable style={styles.image}>
+              <Pressable>
                 {!!album.deleteCount && (
                   <View style={styles.notification_dot}>
                     <Text style={styles.notification_dot_text}>
@@ -123,10 +123,12 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 20,
   },
-  column: {
-    paddingBottom: 10,
+  image: {
+    alignItems: "center",
+    position: "relative",
+    width: "100%",
+    paddingVertical: 10,
   },
-  image: { alignItems: "center", position: "relative" },
   notification_dot: {
     position: "absolute",
     top: 0,
@@ -148,6 +150,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
-  loading_container: { paddingVertical: 10 },
   empty: { fontSize: 20 },
 });
