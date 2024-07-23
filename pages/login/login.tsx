@@ -1,11 +1,11 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { H1, Spinner } from "tamagui";
 
 import { useGetLoginLink } from "@/api/queries/auth";
 import { tokens } from "@/config/tamagui/tokens";
-import { Anchor, Button } from "@/config/tamagui/variants";
+import { Button } from "@/config/tamagui/variants";
 import useHideSplashScreen from "@/hooks/useHideSplashScreen";
 
 const Login = () => {
@@ -25,18 +25,21 @@ const Login = () => {
             <Spinner color="$color.grey1" />
           </Button>
         ) : (
-          <Anchor
+          <Button
             variant="google"
             size="$1"
             radius="$1"
-            href={loginLink.data}
             disabled={loginLink.isError}
           >
-            <View style={styles.login_button}>
-              <AntDesign name="google" size={24} style={styles.icon} />
-              <Text style={styles.button_text}>Login with Google</Text>
-            </View>
-          </Anchor>
+            <Link href={loginLink.data}>
+              <View style={styles.login_button}>
+                <AntDesign name="google" size={24} style={styles.icon} />
+                <Button.Text style={styles.button_text}>
+                  Login with Google
+                </Button.Text>
+              </View>
+            </Link>
+          </Button>
         )}
         {loginLink.isError && (
           <Text style={styles.error}>
@@ -63,10 +66,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   login_button: {
-    paddingTop: Platform.OS !== "web" ? tokens.space[1] : 0,
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
   },
   icon: {
     color: tokens.color.grey1,
