@@ -27,7 +27,7 @@ interface Props {
 }
 
 const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const offset = useSharedValue(0);
   const containerWidthRef = useRef(0);
 
@@ -125,15 +125,9 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
           <GestureDetector gesture={pan}>
             <Animated.View style={[animatedStyles, styles.animated_container]}>
               <ImageWithError
-                imageProps={{
-                  resizeMode: "contain",
-                  source: {
-                    uri: data[currentIndex]?.baseUrl,
-                    width: width - 10,
-                    height,
-                  },
-                  style: styles.image,
-                }}
+                contentFit="contain"
+                source={data[currentIndex]?.baseUrl}
+                style={styles.image}
                 errorProps={{ size: width - 56 }}
               />
             </Animated.View>

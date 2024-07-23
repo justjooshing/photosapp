@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Pressable } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 import { ApiImage } from "@/api/types";
 import ImageWithError from "@/components/image_with_error_handler";
@@ -15,25 +15,22 @@ const CarouselImage = ({
   position,
   setCurrentImageIndex,
 }: CarouselImageProps) => {
-  const imageSrc = {
-    height: 100,
-    width: 100,
-    uri: image.baseUrl,
-  };
-
   const handleClick = () => {
     setCurrentImageIndex(position);
   };
 
   return (
     <Pressable onPress={handleClick}>
-      <ImageWithError
-        imageProps={{
-          source: imageSrc,
-        }}
-      />
+      <ImageWithError source={image.baseUrl} style={styles.image} />
     </Pressable>
   );
 };
 
 export default CarouselImage;
+
+const styles = StyleSheet.create({
+  image: {
+    height: 100,
+    width: 100,
+  },
+});

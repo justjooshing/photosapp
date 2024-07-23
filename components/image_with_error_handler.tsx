@@ -1,22 +1,35 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { Image, ImageContentFit, ImageStyle } from "expo-image";
 import React, { useState } from "react";
-import { Image, ImageProps, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { tokens } from "@/config/tamagui/tokens";
 
 type Props = {
-  imageProps: ImageProps;
+  source: string;
+  style?: ImageStyle;
+  contentFit?: ImageContentFit;
   errorProps?: {
     size: number;
   };
 };
 
-const ImageWithError = ({ imageProps, errorProps = { size: 96 } }: Props) => {
-  const [error, setError] = useState();
-  return !error ? (
+const ImageWithError = ({
+  source,
+  style,
+  contentFit,
+  errorProps = { size: 96 },
+}: Props) => {
+  const [isErrored, setIsErrored] = useState(false);
+  return !isErrored ? (
     <Image
-      onError={({ nativeEvent: { error } }) => setError(error)}
-      {...imageProps}
+      source={source}
+      transition={300}
+      {...(contentFit && { contentFit })}
+      {...(style && { style })}
+      onError={() => {
+        setIsErrored(true);
+      }}
     />
   ) : (
     <MaterialIcons
