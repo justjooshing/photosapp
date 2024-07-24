@@ -110,7 +110,7 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
 
   return (
     <View style={styles.container} onLayout={onLayout}>
-      {!data?.length && (isLoading || isFetching) ? (
+      {!data?.[currentIndex] || isLoading || isFetching ? (
         <View style={styles.skeleton_container}>
           <Skeleton />
         </View>
