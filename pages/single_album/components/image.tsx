@@ -42,8 +42,9 @@ export default Image;
 
 const styles = StyleSheet.create({
   button_wrapper: {
+    width: "60%",
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     alignItems: "center",
     paddingTop: 10,
   },

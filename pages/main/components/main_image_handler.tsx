@@ -58,7 +58,6 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
     );
 
     return {
-      height: height * 0.9,
       opacity,
       transform: [
         { translateX: offset.value },
@@ -126,9 +125,15 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
           <GestureDetector gesture={pan}>
             <Animated.View style={[animatedStyles, styles.animated_container]}>
               <ImageWithError
-                contentFit="contain"
-                source={data[currentIndex]?.baseUrl}
-                style={styles.image}
+                imageProps={{
+                  resizeMode: "contain",
+                  source: {
+                    uri: data[currentIndex]?.baseUrl,
+                    width: width - 10,
+                    height,
+                  },
+                  style: styles.image,
+                }}
                 errorProps={{ size: width - 56 }}
               />
             </Animated.View>
@@ -158,7 +163,7 @@ const styles = StyleSheet.create({
   },
   animated_container: {
     minWidth: "90%",
-    justifyContent: "center",
+    height: "100%",
   },
   skeleton_container: {
     width: "100%",
@@ -168,6 +173,6 @@ const styles = StyleSheet.create({
   image: {
     alignSelf: "center",
     width: "100%",
-    height: "90%",
+    height: "100%",
   },
 });

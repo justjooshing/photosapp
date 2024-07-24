@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { ImageSourcePropType, StyleSheet } from "react-native";
 
 import ImageWithError from "./image_with_error_handler";
 
@@ -9,14 +9,22 @@ type Props = {
   image: ApiImage;
 };
 
-const ImageTile = ({ image }: Props) => (
-  <ImageWithError
-    source={image.baseUrl}
-    style={styles.image}
-    contentFit="contain"
-    errorProps={{ size: 72 }}
-  />
-);
+function ImageTile({ image }: Props) {
+  const imageSource: ImageSourcePropType = {
+    uri: image.baseUrl,
+  };
+
+  return (
+    <ImageWithError
+      imageProps={{
+        source: imageSource,
+        resizeMode: "contain",
+        style: styles.image,
+      }}
+      errorProps={{ size: 72 }}
+    />
+  );
+}
 
 export default ImageTile;
 
