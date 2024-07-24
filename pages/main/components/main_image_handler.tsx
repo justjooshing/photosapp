@@ -27,7 +27,7 @@ interface Props {
 }
 
 const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const offset = useSharedValue(0);
   const containerWidthRef = useRef(0);
 
@@ -58,6 +58,7 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
     );
 
     return {
+      height: height * 0.9,
       opacity,
       transform: [
         { translateX: offset.value },
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
   },
   animated_container: {
     minWidth: "90%",
-    height: "100%",
+    justifyContent: "center",
   },
   skeleton_container: {
     width: "100%",
@@ -167,6 +168,6 @@ const styles = StyleSheet.create({
   image: {
     alignSelf: "center",
     width: "100%",
-    height: "100%",
+    height: "90%",
   },
 });
