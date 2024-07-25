@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@react-navigation/native";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { Slot } from "expo-router";
+import { Slot, SplashScreen } from "expo-router";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { RootSiblingParent as ToastWrapper } from "react-native-root-siblings";
@@ -23,6 +23,8 @@ if (!global.setImmediate) {
   //@ts-expect-error
   global.setImmediate = setTimeout;
 }
+
+SplashScreen.preventAutoHideAsync();
 
 const Layout = () => {
   useDeeplink();
