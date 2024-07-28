@@ -31,7 +31,7 @@ const Login = () => {
             radius="$1"
             disabled={loginLink.isError}
           >
-            <Link href={loginLink.data}>
+            <Link href={loginLink.data || "/"}>
               <View style={styles.login_button}>
                 <AntDesign name="google" size={24} style={styles.icon} />
                 <Button.Text style={styles.button_text}>
