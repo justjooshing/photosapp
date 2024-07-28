@@ -5,12 +5,14 @@ export interface ApiUser {
   id: number;
 }
 
+type CountStatistics = { count: number; size: string };
 export interface ApiCount {
   counts: {
-    numMarkDelete: number;
-    numMarkKeep: number;
-    numMarkDeleteLaterDeleted: number;
-    numMarkKeepLaterDeleted: number;
+    markDeleteNotDeleted: CountStatistics;
+    totalImages: CountStatistics;
+    totalSorted: CountStatistics;
+    totalDeleted: CountStatistics;
+    albumsToDelete: CountStatistics;
   };
 }
 

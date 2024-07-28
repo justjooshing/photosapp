@@ -38,7 +38,7 @@ export const useGetImages = () => {
     queryFn: getImages,
     // ensure order is kept after refetching
     select: (images) => images?.sort((a, b) => (a.id > b.id ? -1 : 1)),
-    // Kick off with a refetch interval since we're still pulling their images from Google
+    // Kick off with a refetch interval since we might still be pulling their images from Google
     refetchInterval: (query) =>
       query &&
       (query.state.data?.length > 10 || query.state.dataUpdateCount > 4)
@@ -190,14 +190,4 @@ export const useGetCount = () =>
   useQuery({
     queryKey: Keys.count,
     queryFn: getCount,
-    select: (data) => ({
-      ...data,
-      counts: {
-        ...data.counts,
-        totalSorted: data.counts.numMarkDelete + data.counts.numMarkKeep,
-        totalDeleted:
-          data.counts.numMarkDeleteLaterDeleted +
-          data.counts.numMarkKeepLaterDeleted,
-      },
-    }),
   });
