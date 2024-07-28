@@ -34,7 +34,7 @@ const Stats = () => {
         <SingleStat
           copy="Space saved"
           stat={formatBytes({
-            bytes: Number(count.data.totalDeleted.size) || 0,
+            bytes: Number(count.data?.totalDeleted.size) || 0,
           })}
           variant="primary"
         />
