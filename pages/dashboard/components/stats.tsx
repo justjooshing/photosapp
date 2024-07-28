@@ -14,28 +14,27 @@ const Stats = () => {
   if (count.isError) return <Text>{count.error.message}</Text>;
 
   const fractionDeleted =
-    (count.data?.counts.totalDeleted.count +
-      count.data?.counts.markDeleteNotDeleted.count) /
-      count.data?.counts.totalSorted.count || 0;
+    (count.data?.totalDeleted.count + count.data?.markDeleteNotDeleted.count) /
+      count.data?.totalSorted.count || 0;
 
   const averageSizePerImage =
-    (Number(count.data?.counts.totalImages.size) || 0) /
-    (count.data?.counts.totalImages.count || 0);
+    (Number(count.data?.totalImages.size) || 0) /
+    (count.data?.totalImages.count || 0);
 
-  const notYetDeletedCount = count.data?.counts.markDeleteNotDeleted.count;
+  const notYetDeletedCount = count.data?.markDeleteNotDeleted.count;
 
   return (
     <View style={styles.stats}>
       <View style={styles.section}>
         <SingleStat
           copy="Images deleted"
-          stat={count.data?.counts.totalDeleted.count}
+          stat={count.data?.totalDeleted.count}
           variant="primary"
         />
         <SingleStat
           copy="Space saved"
           stat={formatBytes({
-            bytes: Number(count.data.counts.totalDeleted.size) || 0,
+            bytes: Number(count.data.totalDeleted.size) || 0,
           })}
           variant="primary"
         />
@@ -69,7 +68,7 @@ const Stats = () => {
         <SingleStat
           variant="secondary"
           stat={formatBytes({
-            bytes: Number(count.data?.counts.totalImages.size) || 0,
+            bytes: Number(count.data?.totalImages.size) || 0,
           })}
           copy="Total size of images on Google"
         />
@@ -79,8 +78,7 @@ const Stats = () => {
           variant="secondary"
           stat={formatBytes({
             bytes:
-              (Number(count.data?.counts.totalImages.size) || 0) *
-              fractionDeleted,
+              (Number(count.data?.totalImages.size) || 0) * fractionDeleted,
           })}
           copy="Overall potential space saving based on keep/delete rate"
         />

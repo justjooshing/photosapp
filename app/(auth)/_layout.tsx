@@ -55,8 +55,8 @@ const Layout = () => {
                   }}
                   options={{
                     tabBarBadge:
-                      name === "albums" && count.data?.counts.albumsToDelete
-                        ? count.data?.counts.albumsToDelete.count
+                      name === "albums" && count.data?.albumsToDelete
+                        ? count.data?.albumsToDelete.count
                         : null,
                     tabBarIcon: ({ focused }) => (
                       <AntDesign

@@ -7,13 +7,11 @@ export interface ApiUser {
 
 type CountStatistics = { count: number; size: string };
 export interface ApiCount {
-  counts: {
-    markDeleteNotDeleted: CountStatistics;
-    totalImages: CountStatistics;
-    totalSorted: CountStatistics;
-    totalDeleted: CountStatistics;
-    albumsToDelete: CountStatistics;
-  };
+  markDeleteNotDeleted: CountStatistics;
+  totalImages: CountStatistics;
+  totalSorted: CountStatistics;
+  totalDeleted: CountStatistics;
+  albumsToDelete: CountStatistics;
 }
 
 export interface ApiAlbums {
