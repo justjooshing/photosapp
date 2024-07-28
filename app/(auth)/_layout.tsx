@@ -3,8 +3,8 @@ import { Redirect, Tabs, router } from "expo-router";
 import { View, StyleSheet, Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { useGetAlbums } from "@/api/queries/albums";
 import { useGetAuthToken } from "@/api/queries/auth";
+import { useGetCount } from "@/api/queries/images";
 import ContentWrapper from "@/components/content_wrapper";
 import { tokens } from "@/config/tamagui/tokens";
 import { ImageProvider } from "@/context/image";
@@ -12,7 +12,7 @@ import usePathname from "@/hooks/usePathname";
 
 const Layout = () => {
   const token = useGetAuthToken();
-  const albums = useGetAlbums();
+  const count = useGetCount();
   const { slug } = usePathname();
 
   const activeTabs = [
@@ -55,8 +55,8 @@ const Layout = () => {
                   }}
                   options={{
                     tabBarBadge:
-                      name === "albums" && albums.data?.withDeletedCount.length
-                        ? albums.data?.withDeletedCount.length
+                      name === "albums" && count.data?.counts.albumsToDelete
+                        ? count.data?.counts.albumsToDelete.count
                         : null,
                     tabBarIcon: ({ focused }) => (
                       <AntDesign
