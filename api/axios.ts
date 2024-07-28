@@ -1,4 +1,5 @@
 import axios from "axios";
+import { nativeBuildVersion } from "expo-application";
 import { Platform } from "react-native";
 
 import Storage from "@/utils/storage";
@@ -15,6 +16,9 @@ const baseURL =
 
 export const client = axios.create({
   baseURL,
+  headers: {
+    "app-version": Platform.OS === "web" ? "web" : nativeBuildVersion,
+  },
 });
 
 client.interceptors.response.use((res) => {
