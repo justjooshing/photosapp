@@ -1,10 +1,11 @@
 import { FlashList } from "@shopify/flash-list";
 import { Link } from "expo-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Pressable, Text, StyleSheet, View } from "react-native";
 
-import { useGetAlbums } from "@/api/queries/albums";
+import { useGetInfiniteAlbums } from "@/api/queries/albums";
 import { useGetCount } from "@/api/queries/images";
+import { SortOptions } from "@/api/types";
 import ImageTile from "@/components/image_tile";
 import Skeleton from "@/components/skeleton";
 import { tokens } from "@/config/tamagui/tokens";
@@ -13,22 +14,31 @@ import { Button } from "@/config/tamagui/variants";
 const numColumns = 2;
 
 const AlbumsList = () => {
-  const albums = useGetAlbums();
   const counts = useGetCount();
-
-  const [viewedTab, setViewedTab] = useState<
-    "withDeletedCount" | "noDeletedCount"
-  >("withDeletedCount");
+  // add a type here to control which pages we are fetching
+  const [viewedTab, setViewedTab] = useState<SortOptions>("delete");
+  const infiniteAlbums = useGetInfiniteAlbums(viewedTab);
 
   const tabCopy = {
-    withDeletedCount: {
+    delete: {
       heading: `Clean up (${counts.isLoading ? "?" : counts.data?.albumsToDelete.count || 0})`,
       copy: "Your goal is to have this list empty, it means you've deleted all the images that you decided you wanted to delete.",
     },
-    noDeletedCount: {
+    keep: {
       heading: `All sorted (${counts.isLoading ? "?" : counts.data?.albumsKept.count || 0})`,
       copy: "These are the image sets containing only images you've decided you want to keep.",
     },
+  };
+
+  const data = useMemo(
+    () => infiniteAlbums.data?.pages.flatMap(({ albums }) => albums),
+    [infiniteAlbums],
+  );
+
+  const handleEndReached = () => {
+    if (infiniteAlbums.hasNextPage && !infiniteAlbums.isFetching) {
+      infiniteAlbums.fetchNextPage();
+    }
   };
 
   return (
@@ -42,7 +52,7 @@ const AlbumsList = () => {
             key={heading}
             onPress={() =>
               // type coercion bad
-              setViewedTab(key as "withDeletedCount" | "noDeletedCount")
+              setViewedTab(key as SortOptions)
             }
           >
             <Button.Text>{heading}</Button.Text>
@@ -52,7 +62,7 @@ const AlbumsList = () => {
       <Text style={styles.filter_text}>{tabCopy[viewedTab].copy}</Text>
 
       {/* Is loading */}
-      {albums.isLoading && (
+      {infiniteAlbums.isLoading && (
         <FlashList
           data={Array(6)}
           numColumns={numColumns}
@@ -68,7 +78,7 @@ const AlbumsList = () => {
       )}
 
       {/* No data */}
-      {!albums.isLoading && !albums.data?.[viewedTab].length && (
+      {!infiniteAlbums.isLoading && !data?.length && (
         <View>
           <Text style={styles.empty}>No data</Text>
           <Text>
@@ -79,36 +89,46 @@ const AlbumsList = () => {
       )}
 
       {/* With data */}
-      {!albums.isLoading && !!albums.data?.[viewedTab].length && (
-        <FlashList
-          data={albums.data?.[viewedTab]}
-          numColumns={numColumns}
-          estimatedItemSize={100}
-          keyExtractor={({ id }) => id.toString()}
-          renderItem={({ item: album }) => (
-            <Link
-              key={album.id}
-              href={`/albums/${album.id}`}
-              style={styles.image}
-              asChild
-            >
-              <Pressable>
-                {!!album.deleteCount && (
-                  <View style={styles.notification_dot}>
-                    <Text style={styles.notification_dot_text}>
-                      {album.deleteCount}
-                    </Text>
-                  </View>
-                )}
-                {album.firstImage?.baseUrl ? (
-                  <ImageTile image={album.firstImage} />
-                ) : (
-                  <Text>Where's the image?</Text>
-                )}
-              </Pressable>
-            </Link>
+      {!infiniteAlbums.isLoading && !!data.length && (
+        <>
+          <FlashList
+            data={data}
+            numColumns={numColumns}
+            estimatedItemSize={data?.length || 10}
+            keyExtractor={({ id }) => id.toString()}
+            onEndReached={handleEndReached}
+            renderItem={({ item: album }) => (
+              <Link
+                key={album.id}
+                href={`/albums/${album.id}`}
+                style={styles.image}
+                asChild
+              >
+                <Pressable>
+                  {!!album.deleteCount && (
+                    <View style={styles.notification_dot}>
+                      <Text style={styles.notification_dot_text}>
+                        {album.deleteCount}
+                      </Text>
+                    </View>
+                  )}
+                  {album.firstImage?.baseUrl ? (
+                    <ImageTile image={album.firstImage} />
+                  ) : (
+                    <Text>Where's the image?</Text>
+                  )}
+                </Pressable>
+              </Link>
+            )}
+          />
+          {infiniteAlbums.hasNextPage && infiniteAlbums.isFetching && (
+            <View style={styles.infinite_fetching_container}>
+              <Text style={styles.infinite_fetching_text}>
+                Loading more albums...
+              </Text>
+            </View>
           )}
-        />
+        </>
       )}
     </>
   );
@@ -154,4 +174,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   empty: { fontSize: 20 },
+  infinite_fetching_container: {
+    padding: tokens.space[2],
+    width: "100%",
+  },
+  infinite_fetching_text: { textAlign: "center", fontSize: tokens.fontSize[2] },
 });

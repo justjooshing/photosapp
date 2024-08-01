@@ -1,3 +1,5 @@
+import { SortOptions } from "./types";
+
 import { ImagesType } from "@/context/image/types";
 
 const baseKeys = {
@@ -15,4 +17,6 @@ export const Keys = {
   albums: [baseKeys.albums] as const,
   images: (type: ImagesType) => [baseKeys.images, type] as const,
   albumImages: (albumId: string) => [baseKeys.albums, albumId] as const,
+  infiniteAlbums: (sorted_status: SortOptions) =>
+    [baseKeys.albums, sorted_status] as const,
 };

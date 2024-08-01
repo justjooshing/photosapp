@@ -1,43 +1,33 @@
-import { useQuery, QueryFunctionContext } from "@tanstack/react-query";
+import {
+  useQuery,
+  QueryFunctionContext,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
 
 import { client } from "../axios";
 import { ENDPOINTS } from "../endpoints";
 import { Keys } from "../keys";
-import { ApiAlbums, ApiSingleAlbum } from "../types";
+import { ApiAlbums, ApiSingleAlbum, SortOptions } from "../types";
 
 import Storage from "@/utils/storage";
 
-const getAlbums = async () => {
-  const { data } = await client.get<ApiAlbums>(ENDPOINTS.get("albums"));
+const getInfiniteAlbums = async ({
+  pageParam,
+  queryKey: [_, sorted_status],
+}: QueryFunctionContext<ReturnType<(typeof Keys)["infiniteAlbums"]>>) => {
+  const params = { lastAlbumId: pageParam, sorted_status };
+  const { data } = await client.get<ApiAlbums>(ENDPOINTS.get("albums"), {
+    params,
+  });
   return data;
 };
 
-const organiseAlbums = ({
-  albums,
-}: ApiAlbums): {
-  withDeletedCount: ApiAlbums["albums"];
-  noDeletedCount: ApiAlbums["albums"];
-  albums: ApiAlbums["albums"];
-} => {
-  const { withDeletedCount, noDeletedCount } = albums.reduce(
-    (acc, album) => {
-      if (album.deleteCount) {
-        acc.withDeletedCount.push(album);
-      } else {
-        acc.noDeletedCount.push(album);
-      }
-      return acc;
-    },
-    { withDeletedCount: [], noDeletedCount: [] },
-  );
-  return { withDeletedCount, noDeletedCount, albums };
-};
-
-export const useGetAlbums = () =>
-  useQuery({
-    queryKey: Keys.albums,
-    queryFn: getAlbums,
-    select: organiseAlbums,
+export const useGetInfiniteAlbums = (sorted_status: SortOptions) =>
+  useInfiniteQuery({
+    queryKey: Keys.infiniteAlbums(sorted_status),
+    queryFn: getInfiniteAlbums,
+    initialPageParam: undefined,
+    getNextPageParam: (lastPage) => lastPage?.albums.at(-1)?.id,
   });
 
 const getSingleAlbum = async ({
