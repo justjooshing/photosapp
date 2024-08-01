@@ -13,6 +13,9 @@ export function formatBytes({
   if (decimals < 0) {
     throw new Error(`Invalid decimals ${decimals}`);
   }
+  if (bytes === 0) {
+    return `0 bytes`;
+  }
 
   const i = Math.floor(Math.log(bytes) / Math.log(base));
 
