@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Pressable, Text, StyleSheet, View } from "react-native";
 
 import { useGetAlbums } from "@/api/queries/albums";
+import { useGetCount } from "@/api/queries/images";
 import ImageTile from "@/components/image_tile";
 import Skeleton from "@/components/skeleton";
 import { tokens } from "@/config/tamagui/tokens";
@@ -13,17 +14,19 @@ const numColumns = 2;
 
 const AlbumsList = () => {
   const albums = useGetAlbums();
+  const counts = useGetCount();
+
   const [viewedTab, setViewedTab] = useState<
     "withDeletedCount" | "noDeletedCount"
   >("withDeletedCount");
 
   const tabCopy = {
     withDeletedCount: {
-      heading: `Clean up (${albums.isLoading ? "?" : albums.data?.withDeletedCount.length || 0})`,
+      heading: `Clean up (${counts.isLoading ? "?" : counts.data?.albumsToDelete.count || 0})`,
       copy: "Your goal is to have this list empty, it means you've deleted all the images that you decided you wanted to delete.",
     },
     noDeletedCount: {
-      heading: `All sorted (${albums.isLoading ? "?" : albums.data?.noDeletedCount.length || 0})`,
+      heading: `All sorted (${counts.isLoading ? "?" : counts.data?.albumsKept.count || 0})`,
       copy: "These are the image sets containing only images you've decided you want to keep.",
     },
   };

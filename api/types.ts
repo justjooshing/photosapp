@@ -5,14 +5,16 @@ export interface ApiUser {
   id: number;
 }
 
+type StatisticKeys =
+  | "markDeleteNotDeleted"
+  | "totalImages"
+  | "totalSorted"
+  | "totalDeleted"
+  | "albumsToDelete"
+  | "albumsKept";
 type CountStatistics = { count: number; size: string };
-export interface ApiCount {
-  markDeleteNotDeleted: CountStatistics;
-  totalImages: CountStatistics;
-  totalSorted: CountStatistics;
-  totalDeleted: CountStatistics;
-  albumsToDelete: CountStatistics;
-}
+
+export type ApiCount = Record<StatisticKeys, CountStatistics>;
 
 export interface ApiAlbums {
   albums: {
