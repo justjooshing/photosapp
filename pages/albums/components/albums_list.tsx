@@ -2,6 +2,7 @@ import { FlashList } from "@shopify/flash-list";
 import { Link } from "expo-router";
 import { useMemo, useState } from "react";
 import { Pressable, Text, StyleSheet, View } from "react-native";
+import { Spinner } from "tamagui";
 
 import { useGetInfiniteAlbums } from "@/api/queries/albums";
 import { useGetCount } from "@/api/queries/images";
@@ -89,7 +90,7 @@ const AlbumsList = () => {
       )}
 
       {/* With data */}
-      {!infiniteAlbums.isLoading && !!data.length && (
+      {!infiniteAlbums.isLoading && !!data?.length && (
         <>
           <FlashList
             data={data}
@@ -123,9 +124,7 @@ const AlbumsList = () => {
           />
           {infiniteAlbums.hasNextPage && infiniteAlbums.isFetching && (
             <View style={styles.infinite_fetching_container}>
-              <Text style={styles.infinite_fetching_text}>
-                Loading more albums...
-              </Text>
+              <Spinner />
             </View>
           )}
         </>
@@ -178,5 +177,4 @@ const styles = StyleSheet.create({
     padding: tokens.space[2],
     width: "100%",
   },
-  infinite_fetching_text: { textAlign: "center", fontSize: tokens.fontSize[2] },
 });
