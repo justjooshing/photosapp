@@ -4,7 +4,7 @@ import { View, Pressable, StyleSheet } from "react-native";
 
 import Button from "./button";
 
-import { ApiImage } from "@/api/types";
+import { ApiImage, SortOptions } from "@/api/types";
 import ImageTile from "@/components/image_tile";
 import { tokens } from "@/config/tamagui/tokens";
 import { useImageContext } from "@/context/image";
@@ -23,8 +23,9 @@ const Image = ({ image }: Props) => {
     <>
       <ImageTile image={image} />
       <View style={styles.button_wrapper}>
-        <Button image={image} choice="keep" />
-        <Button image={image} choice="delete" />
+        {Object.values(SortOptions).map((val) => (
+          <Button image={image} choice={val} />
+        ))}
         <Pressable onPress={handleButtonClick}>
           <AntDesign
             name="google"

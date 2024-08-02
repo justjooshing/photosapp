@@ -84,9 +84,9 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
     translationX,
   }: GestureStateChangeEvent<PanGestureHandlerEventPayload>) => {
     if (translationX < -Number(threshold)) {
-      updateImage("delete");
+      updateImage(SortOptions.DELETE);
     } else if (translationX > threshold) {
-      updateImage("keep");
+      updateImage(SortOptions.KEEP);
     } else {
       offset.value = withSpring(0);
     }
@@ -117,7 +117,7 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
       ) : (
         <>
           <SwipeConfirmation
-            type="delete"
+            type={SortOptions.DELETE}
             offset={offset}
             threshold={threshold}
             containerWidth={containerWidthRef.current}
@@ -139,7 +139,7 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
             </Animated.View>
           </GestureDetector>
           <SwipeConfirmation
-            type="keep"
+            type={SortOptions.KEEP}
             offset={offset}
             threshold={threshold}
             containerWidth={containerWidthRef.current}

@@ -52,7 +52,8 @@ const organiseSingleAlbum = (data: ApiSingleAlbum) => {
       if (!curr) {
         return acc;
       }
-      const sortBy = curr.sorted_status === "delete" ? "deleted" : "kept";
+      const sortBy =
+        curr.sorted_status === SortOptions.DELETE ? "deleted" : "kept";
       acc[sortBy].push(curr);
       return acc;
     },

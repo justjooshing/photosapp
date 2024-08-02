@@ -5,11 +5,12 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import FilterButton from "./components/filter_button";
 import ImageSet from "./components/image_set";
 
+import { SortOptions } from "@/api/types";
 import { FilterOptions } from "@/pages/single_album/types";
 
 const SingleAlbum = () => {
   const { albumId } = useLocalSearchParams();
-  const [filter, setFilter] = useState<FilterOptions>("delete");
+  const [filter, setFilter] = useState<FilterOptions>(SortOptions.DELETE);
 
   const opacityStyle = { opacity: filter === "all" ? 0.5 : 1 };
 
@@ -25,8 +26,9 @@ const SingleAlbum = () => {
     <View style={styles.container}>
       <View style={styles.filter_header}>
         <View style={styles.filter_buttons_wrapper}>
-          <FilterButton choice="keep" filter={filter} setFilter={setFilter} />
-          <FilterButton choice="delete" filter={filter} setFilter={setFilter} />
+          {Object.values(SortOptions).map((val) => (
+            <FilterButton choice={val} filter={filter} setFilter={setFilter} />
+          ))}
           <Pressable onPress={() => setFilter("all")}>
             <Text style={opacityStyle}>All</Text>
           </Pressable>

@@ -1,4 +1,7 @@
-export type SortOptions = "keep" | "delete";
+export enum SortOptions {
+  KEEP = "keep",
+  DELETE = "delete",
+}
 
 export interface ApiUser {
   profilePicture: string;

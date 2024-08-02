@@ -14,6 +14,7 @@ import {
   ApiSortImage,
   ApiSingleAlbum,
   ApiCount,
+  SortOptions,
 } from "../types";
 
 import { useImageContext } from "@/context/image";
@@ -79,7 +80,8 @@ export const useSortImage = () => {
     },
     onSuccess: ({ data }, v, context) => {
       data.image.map(({ sorted_status }) => {
-        const conjugation = sorted_status === "delete" ? "deletion" : "keeping";
+        const conjugation =
+          sorted_status === SortOptions.DELETE ? "deletion" : "keeping";
 
         renderToast({
           type: "success",
@@ -140,7 +142,9 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
       // ...separate endpoint?
       data.image.forEach((singleImage) => {
         const conjugation =
-          singleImage?.sorted_status === "keep" ? "keeping" : "deletion";
+          singleImage?.sorted_status === SortOptions.KEEP
+            ? "keeping"
+            : "deletion";
 
         renderToast({
           type: "success",

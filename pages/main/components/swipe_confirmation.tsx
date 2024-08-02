@@ -11,11 +11,12 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
+import { SortOptions } from "@/api/types";
 import Icons from "@/components/icons";
 import { tokens } from "@/config/tamagui/tokens";
 
 interface Props {
-  type: "keep" | "delete";
+  type: SortOptions;
   offset: SharedValue<number>;
   threshold: number;
   containerWidth: number;
@@ -27,7 +28,7 @@ const SwipeConfirmation = ({
   threshold,
   containerWidth,
 }: Props) => {
-  const initialPosition = type === "keep" ? -60 : 60;
+  const initialPosition = type === SortOptions.KEEP ? -60 : 60;
   const iconTranslateX = useSharedValue(initialPosition);
 
   useEffect(() => {

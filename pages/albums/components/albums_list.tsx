@@ -17,7 +17,7 @@ const numColumns = 2;
 const AlbumsList = () => {
   const counts = useGetCount();
   // add a type here to control which pages we are fetching
-  const [viewedTab, setViewedTab] = useState<SortOptions>("delete");
+  const [viewedTab, setViewedTab] = useState<SortOptions>(SortOptions.DELETE);
   const infiniteAlbums = useGetInfiniteAlbums(viewedTab);
 
   const tabCopy = {

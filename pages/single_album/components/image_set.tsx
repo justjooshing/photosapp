@@ -6,6 +6,7 @@ import Image from "./image";
 import { FilterOptions } from "../types";
 
 import { useGetSingleAlbum } from "@/api/queries/albums";
+import { SortOptions } from "@/api/types";
 import Skeleton from "@/components/skeleton";
 import { Button } from "@/config/tamagui/variants";
 
@@ -38,8 +39,8 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
 
   const images = (() => {
     if (!singleAlbum.data?.images.length) return [];
-    if (filter === "keep") return singleAlbum.data?.kept;
-    if (filter === "delete") return singleAlbum.data?.deleted;
+    if (filter === SortOptions.KEEP) return singleAlbum.data?.kept;
+    if (filter === SortOptions.DELETE) return singleAlbum.data?.deleted;
     return singleAlbum.data?.images;
   })();
 
