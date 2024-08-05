@@ -7,10 +7,12 @@ import { useGetAuthToken } from "@/api/queries/auth";
 import { useGetCount } from "@/api/queries/images";
 import ContentWrapper from "@/components/content_wrapper";
 import { tokens } from "@/config/tamagui/tokens";
+import { useAppContext } from "@/context/app";
 import { ImageProvider } from "@/context/image";
 import usePathname from "@/hooks/usePathname";
 
 const Layout = () => {
+  const { setWindowWidth } = useAppContext();
   const token = useGetAuthToken();
   const count = useGetCount();
   const { slug } = usePathname();
@@ -21,11 +23,15 @@ const Layout = () => {
     { name: "albums", label: "Image Sets", icon: "picture" },
   ] as const;
 
+  const onLayout = ({ nativeEvent: { layout } }) => {
+    setWindowWidth(layout.width);
+  };
+
   return !token ? (
     <Redirect href="/login" />
   ) : (
     <ImageProvider>
-      <View style={styles.flex}>
+      <View style={styles.flex} onLayout={onLayout}>
         <GestureHandlerRootView style={styles.flex}>
           <ContentWrapper>
             <Tabs

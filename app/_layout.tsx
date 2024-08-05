@@ -14,6 +14,7 @@ import { TamaguiProvider } from "tamagui";
 import tamaguiConfig from "../tamagui.config";
 
 import { tokens } from "@/config/tamagui/tokens";
+import { AppProvider } from "@/context/app";
 import useDeeplink from "@/hooks/useDeeplink";
 import useFonts from "@/hooks/useFonts";
 import useGenerateQueryClient from "@/hooks/useGenerateQueryClient";
@@ -41,23 +42,25 @@ const Layout = () => {
       <QueryClientProvider client={queryClient}>
         <TamaguiProvider config={tamaguiConfig}>
           <ThemeProvider value={theme}>
-            <SafeAreaProvider>
-              <SafeAreaInsetsContext.Consumer>
-                {(insets) => (
-                  <View
-                    style={[
-                      {
-                        paddingTop: insets.top,
-                        backgroundColor: tokens.color.blue2,
-                      },
-                      styles.flex,
-                    ]}
-                  >
-                    <Slot />
-                  </View>
-                )}
-              </SafeAreaInsetsContext.Consumer>
-            </SafeAreaProvider>
+            <AppProvider>
+              <SafeAreaProvider>
+                <SafeAreaInsetsContext.Consumer>
+                  {(insets) => (
+                    <View
+                      style={[
+                        {
+                          paddingTop: insets.top,
+                          backgroundColor: tokens.color.blue2,
+                        },
+                        styles.flex,
+                      ]}
+                    >
+                      <Slot />
+                    </View>
+                  )}
+                </SafeAreaInsetsContext.Consumer>
+              </SafeAreaProvider>
+            </AppProvider>
           </ThemeProvider>
         </TamaguiProvider>
       </QueryClientProvider>

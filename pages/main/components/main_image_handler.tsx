@@ -120,7 +120,6 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
             type={SortOptions.DELETE}
             offset={offset}
             threshold={threshold}
-            containerWidth={containerWidthRef.current}
           />
           <GestureDetector gesture={pan}>
             <Animated.View style={[animatedStyles, styles.animated_container]}>
@@ -142,7 +141,6 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
             type={SortOptions.KEEP}
             offset={offset}
             threshold={threshold}
-            containerWidth={containerWidthRef.current}
           />
         </>
       )}

@@ -2,23 +2,23 @@ import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
-import { useSharedValue } from "react-native-reanimated";
 import { Spinner } from "tamagui";
 
-import SlideImage from "./components/slide_image";
+import SwipeAnimation from "./components/swipe_animation";
 
 import { useGetLoginLink } from "@/api/queries/auth";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
+import { useAppContext } from "@/context/app";
 import useHideSplashScreen from "@/hooks/useHideSplashScreen";
 
 const Login = () => {
-  const containerWidthRef = useSharedValue(0);
+  const { setWindowWidth } = useAppContext();
   const loginLink = useGetLoginLink();
   useHideSplashScreen({ loaded: !!loginLink.data || loginLink.isError });
 
   const onLayout = ({ nativeEvent: { layout } }) => {
-    containerWidthRef.value = layout.width;
+    setWindowWidth(layout.width);
   };
 
   return (
@@ -34,17 +34,7 @@ const Login = () => {
         </Text>
         <Text style={styles.tagline}>Save storage.</Text>
       </View>
-      <View style={styles.slide_image_container}>
-        {Array(4)
-          .fill(undefined)
-          .map((_, i) => (
-            <SlideImage
-              instance={i}
-              key={i}
-              containerWidthRef={containerWidthRef}
-            />
-          ))}
-      </View>
+      <SwipeAnimation />
       <View style={styles.buttons}>
         <Text style={styles.copy}>
           This wee app was built to help me sort through my loads of images on
@@ -100,11 +90,6 @@ const styles = StyleSheet.create({
   contents: {
     flex: 1,
     justifyContent: "space-evenly",
-  },
-  slide_image_container: {
-    position: "relative",
-    alignItems: "center",
-    paddingVertical: tokens.space[3] * 5,
   },
   tagline: {
     color: tokens.color.grey1,

@@ -14,20 +14,16 @@ import Animated, {
 import { SortOptions } from "@/api/types";
 import Icons from "@/components/icons";
 import { tokens } from "@/config/tamagui/tokens";
+import { useAppContext } from "@/context/app";
 
 interface Props {
   type: SortOptions;
   offset: SharedValue<number>;
   threshold: number;
-  containerWidth: number;
 }
 
-const SwipeConfirmation = ({
-  type,
-  offset,
-  threshold,
-  containerWidth,
-}: Props) => {
+const SwipeConfirmation = ({ type, offset, threshold }: Props) => {
+  const { windowWidth } = useAppContext();
   const initialPosition = type === SortOptions.KEEP ? -60 : 60;
   const iconTranslateX = useSharedValue(initialPosition);
 
@@ -47,8 +43,8 @@ const SwipeConfirmation = ({
       offset.value,
       [threshold, -threshold],
       [
-        (-containerWidth + initialPosition) / 2,
-        (containerWidth + initialPosition) / 2,
+        (-windowWidth + initialPosition) / 2,
+        (windowWidth + initialPosition) / 2,
       ],
       Extrapolation.CLAMP,
     );
