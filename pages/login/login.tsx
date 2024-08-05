@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   contents: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
   },
   slide_image_container: {
     position: "relative",

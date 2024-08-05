@@ -1,6 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -101,9 +102,23 @@ const SlideImage = ({
   });
 
   return (
-    <Animated.View style={[styles.image, animatedStyle]}>
-      <AntDesign name="picture" size={144} color={tokens.color.grey1} />
-    </Animated.View>
+    <View style={styles.image}>
+      <LinearGradient
+        style={styles.icon}
+        colors={[tokens.color.grey1, tokens.color.grey4]}
+      >
+        <AntDesign name="delete" size={24} color={tokens.color.red2} />
+      </LinearGradient>
+      <Animated.View style={animatedStyle}>
+        <AntDesign name="picture" size={144} color={tokens.color.grey1} />
+      </Animated.View>
+      <LinearGradient
+        style={styles.icon}
+        colors={[tokens.color.grey1, tokens.color.grey4]}
+      >
+        <AntDesign name="folder1" size={24} color={tokens.color.green} />
+      </LinearGradient>
+    </View>
   );
 };
 
@@ -113,5 +128,14 @@ const styles = StyleSheet.create({
   image: {
     top: 0,
     position: "absolute",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  icon: {
+    backgroundColor: tokens.color.grey2,
+    padding: tokens.space[1],
+    borderRadius: 50,
   },
 });

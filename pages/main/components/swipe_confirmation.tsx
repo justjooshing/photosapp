@@ -65,7 +65,7 @@ const SwipeConfirmation = ({
           style={styles.icon}
           colors={[tokens.color.grey1, tokens.color.grey4]}
         >
-          <Icons isSelected={false} size={56} choice={type} />
+          <Icons isSelected={false} size={36} choice={type} />
         </LinearGradient>
       </Animated.View>
     </Animated.View>
@@ -83,8 +83,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   icon: {
-    borderColor: tokens.color.grey4,
-    borderWidth: 3,
+    borderRadius: 50,
     padding: tokens.space[1],
   },
 });
