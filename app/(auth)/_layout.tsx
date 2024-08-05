@@ -35,6 +35,7 @@ const Layout = () => {
         <GestureHandlerRootView style={styles.flex}>
           <ContentWrapper>
             <Tabs
+              sceneContainerStyle={styles.main}
               screenOptions={{
                 tabBarLabelPosition: "below-icon",
                 tabBarActiveBackgroundColor: tokens.color.grey1,
@@ -60,6 +61,7 @@ const Layout = () => {
                     },
                   }}
                   options={{
+                    tabBarItemStyle: { paddingVertical: 5 },
                     tabBarBadge:
                       name === "albums" && count.data?.albumsToDelete
                         ? count.data?.albumsToDelete.count
@@ -101,6 +103,9 @@ const Layout = () => {
 export default Layout;
 
 const styles = StyleSheet.create({
+  main: {
+    paddingBottom: tokens.space[1] / 2,
+  },
   flex: {
     flex: 1,
   },
