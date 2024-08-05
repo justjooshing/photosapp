@@ -55,11 +55,7 @@ const Images = () => {
               keyExtractor={({ id }) => id.toString()}
               renderItem={({ item, index }) => (
                 <View style={styles.item}>
-                  <CarouselImage
-                    image={item}
-                    position={index}
-                    setCurrentImageIndex={setCurrentImageIndex}
-                  />
+                  <CarouselImage image={item} position={index} />
                 </View>
               )}
             />
@@ -78,9 +74,9 @@ const styles = StyleSheet.create({
   },
   skeleton: {
     aspectRatio: 1,
+    paddingHorizontal: 2,
   },
   item: {
     height: 100,
-    paddingHorizontal: 2,
   },
 });
