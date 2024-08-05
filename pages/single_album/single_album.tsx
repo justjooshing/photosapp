@@ -6,11 +6,14 @@ import FilterButton from "./components/filter_button";
 import ImageSet from "./components/image_set";
 
 import { SortOptions } from "@/api/types";
+import { useAlbumsContext } from "@/context/albums";
 import { FilterOptions } from "@/pages/single_album/types";
 
 const SingleAlbum = () => {
+  const { sortBy } = useAlbumsContext();
   const { albumId } = useLocalSearchParams();
-  const [filter, setFilter] = useState<FilterOptions>(SortOptions.DELETE);
+  // Initiate as sortBy tab they're on currently
+  const [filter, setFilter] = useState<FilterOptions>(sortBy);
 
   const opacityStyle = { opacity: filter === "all" ? 0.5 : 1 };
 
@@ -27,7 +30,12 @@ const SingleAlbum = () => {
       <View style={styles.filter_header}>
         <View style={styles.filter_buttons_wrapper}>
           {Object.values(SortOptions).map((val) => (
-            <FilterButton choice={val} filter={filter} setFilter={setFilter} />
+            <FilterButton
+              key={val}
+              choice={val}
+              filter={filter}
+              setFilter={setFilter}
+            />
           ))}
           <Pressable onPress={() => setFilter("all")}>
             <Text style={opacityStyle}>All</Text>

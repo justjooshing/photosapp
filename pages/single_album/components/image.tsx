@@ -24,7 +24,7 @@ const Image = ({ image }: Props) => {
       <ImageTile image={image} />
       <View style={styles.button_wrapper}>
         {Object.values(SortOptions).map((val) => (
-          <Button image={image} choice={val} />
+          <Button key={val} image={image} choice={val} />
         ))}
         <Pressable onPress={handleButtonClick}>
           <AntDesign
