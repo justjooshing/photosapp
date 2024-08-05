@@ -22,8 +22,7 @@ export const client = axios.create({
 });
 
 client.interceptors.response.use((res) => {
-  // @ts-expect-error - says we can't call .get()
-  const token = res.headers.get("Jwt");
+  const token = res.headers["Jwt"];
   if (token) {
     Storage.set("jwt", token);
   }
