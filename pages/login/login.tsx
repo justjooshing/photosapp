@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   copy: {
     paddingVertical: tokens.space[2] * 2,
     color: tokens.color.grey2,
+    fontSize: tokens.fontSize[2],
   },
   login_button: {
     flexDirection: "row",
