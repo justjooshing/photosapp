@@ -71,5 +71,5 @@ const Layout = () => {
 export default Layout;
 
 const styles = StyleSheet.create({
-  flex: { flex: 1 },
+  flex: { flex: 1, overflow: "hidden" },
 });
