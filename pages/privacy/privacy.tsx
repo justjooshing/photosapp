@@ -1,4 +1,4 @@
-import { useNavigation, useRouter } from "expo-router";
+import { Link, useNavigation, useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, SectionList, ScrollView } from "react-native";
 
@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
 
   const handleBack = () => {
     if (canGoBack()) goBack();
-    else push("/");
+    else push("/login");
   };
 
   const informationWeCollectSections = [
@@ -60,8 +60,17 @@ const PrivacyPolicy = () => {
         Welcome to PicPurge ("we," "our," or "us"). This Privacy Policy explains
         how we collect, use, disclose, and safeguard your information when you
         use our app to sort through your photos stored on your Google Photos
-        account. By using the app, you agree to the collection and use of
-        information in accordance with this policy.
+        account. PicPurge's use and transfer to any other app of information
+        received from Google APIs will adhere to{" "}
+        <Link
+          style={styles.link}
+          target="_blank"
+          href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes"
+        >
+          <LegalText>Google API Services User Data Policy</LegalText>
+        </Link>
+        , including the Limited Use requirements . By using the app, you agree
+        to the collection and use of information in accordance with this policy.
       </LegalText>
 
       <H2>Information We Collect</H2>
@@ -113,7 +122,10 @@ const PrivacyPolicy = () => {
       <LegalText>
         You can permanently delete your account at any time from within the app
         or by emailing us at{" "}
-        <LegalText style={styles.bold}>justjooshing@gmail.com</LegalText>.
+        <Link style={styles.link} href="mailto:justjooshing@gmail.com">
+          <LegalText>justjooshing@gmail.com</LegalText>
+        </Link>
+        .
       </LegalText>
 
       <H2>Your Consent</H2>
@@ -133,7 +145,10 @@ const PrivacyPolicy = () => {
       <H2>Contact Us</H2>
       <LegalText>
         If you have any questions about this Privacy Policy, please contact us
-        at <LegalText style={styles.bold}>justjooshing@gmail.com</LegalText>.
+        at{" "}
+        <Link style={styles.link} href="mailto:justjooshing@gmail.com">
+          <LegalText>justjooshing@gmail.com</LegalText>.
+        </Link>
       </LegalText>
 
       <LegalText>
@@ -151,6 +166,7 @@ const PrivacyPolicy = () => {
 export default PrivacyPolicy;
 
 const styles = StyleSheet.create({
+  link: { textDecorationLine: "underline" },
   container: { paddingHorizontal: 20, paddingBottom: 20 },
   bold: { fontWeight: "bold" },
 });
