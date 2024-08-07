@@ -42,7 +42,9 @@ export const useGetImages = () => {
     // Kick off with a refetch interval since we might still be pulling their images from Google
     refetchInterval: (query) =>
       query &&
-      (query.state.data?.length > 10 || query.state.dataUpdateCount > 4)
+      (query.state.data?.length > 10 ||
+        query.state.dataUpdateCount > 4 ||
+        query.state.error)
         ? false
         : 1000,
   });
