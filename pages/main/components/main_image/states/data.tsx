@@ -1,6 +1,6 @@
 import { router } from "expo-router";
-import { useRef } from "react";
-import { StyleSheet, View, useWindowDimensions } from "react-native";
+import React from "react";
+import { StyleSheet, useWindowDimensions } from "react-native";
 import {
   Gesture,
   GestureDetector,
@@ -8,35 +8,25 @@ import {
   PanGestureHandlerEventPayload,
 } from "react-native-gesture-handler";
 import Animated, {
-  interpolate,
-  useAnimatedStyle,
   useSharedValue,
+  useAnimatedStyle,
+  interpolate,
   withSpring,
 } from "react-native-reanimated";
 
-import SwipeConfirmation from "./swipe_confirmation";
+import SwipeConfirmation from "../components/swipe_confirmation";
 
 import { useGetImages, useSortImage } from "@/api/queries/images";
 import { SortOptions } from "@/api/types";
 import ImageWithError from "@/components/image_with_error_handler";
-import Skeleton from "@/components/skeleton";
+import { useImageContext } from "@/context/image";
 
-interface Props {
-  currentIndex: number;
-  updateCurrentIndex: () => void;
-}
-
-const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
+const Data = () => {
+  const { currentImageIndex, setCurrentImageIndex } = useImageContext();
   const { width, height } = useWindowDimensions();
   const offset = useSharedValue(0);
-  const containerWidthRef = useRef(0);
-
-  const { isLoading, data, isFetching } = useGetImages();
+  const { data } = useGetImages();
   const { mutate: sortImage } = useSortImage();
-
-  const onLayout = ({ nativeEvent: { layout } }) => {
-    containerWidthRef.current = layout.width;
-  };
 
   const threshold = 100;
 
@@ -72,11 +62,15 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
   });
 
   const updateImage = async (sorted_status: SortOptions) => {
-    sortImage({ image: data?.[currentIndex], body: { sorted_status } });
+    sortImage({ image: data?.[currentImageIndex], body: { sorted_status } });
     if (data?.length === 1) {
       router.push("/dashboard");
-    } else {
-      updateCurrentIndex();
+      /**
+       * Fixes issue where after sorting final index image
+       * we were still trying to access that index
+       */
+    } else if (data?.length - 1 === currentImageIndex) {
+      setCurrentImageIndex((curr) => curr - 1);
     }
   };
 
@@ -109,64 +103,43 @@ const MainImageHandler = ({ currentIndex, updateCurrentIndex }: Props) => {
     });
 
   return (
-    <View style={styles.container} onLayout={onLayout}>
-      {!data?.length && (isLoading || isFetching) ? (
-        <View style={styles.skeleton_container}>
-          <Skeleton />
-        </View>
-      ) : (
-        <>
-          <SwipeConfirmation
-            type={SortOptions.DELETE}
-            offset={offset}
-            threshold={threshold}
+    <>
+      <SwipeConfirmation
+        type={SortOptions.DELETE}
+        offset={offset}
+        threshold={threshold}
+      />
+      <GestureDetector gesture={pan}>
+        <Animated.View style={[animatedStyles, styles.animated_container]}>
+          <ImageWithError
+            imageProps={{
+              resizeMode: "contain",
+              source: {
+                uri: data?.[currentImageIndex]?.baseUrl,
+                width: width - 10,
+                height,
+              },
+              style: styles.image,
+            }}
+            errorProps={{ size: width - 56 }}
           />
-          <GestureDetector gesture={pan}>
-            <Animated.View style={[animatedStyles, styles.animated_container]}>
-              <ImageWithError
-                imageProps={{
-                  resizeMode: "contain",
-                  source: {
-                    uri: data?.[currentIndex]?.baseUrl,
-                    width: width - 10,
-                    height,
-                  },
-                  style: styles.image,
-                }}
-                errorProps={{ size: width - 56 }}
-              />
-            </Animated.View>
-          </GestureDetector>
-          <SwipeConfirmation
-            type={SortOptions.KEEP}
-            offset={offset}
-            threshold={threshold}
-          />
-        </>
-      )}
-    </View>
+        </Animated.View>
+      </GestureDetector>
+      <SwipeConfirmation
+        type={SortOptions.KEEP}
+        offset={offset}
+        threshold={threshold}
+      />
+    </>
   );
 };
 
-export default MainImageHandler;
+export default Data;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
-  },
   animated_container: {
     minWidth: "90%",
     height: "100%",
-  },
-  skeleton_container: {
-    width: "100%",
-    aspectRatio: 1,
-    padding: 20,
   },
   image: {
     alignSelf: "center",

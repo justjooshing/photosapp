@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Button } from "@/config/tamagui/variants";
 import { useImageContext } from "@/context/image";
 
-const NoData = () => {
+const Empty = () => {
   const { setImageType, imageType, currentImageIndex, setCurrentImageIndex } =
     useImageContext();
   const router = useRouter();
@@ -44,7 +44,7 @@ const NoData = () => {
   );
 };
 
-export default NoData;
+export default Empty;
 
 const styles = StyleSheet.create({
   wrapper: {
