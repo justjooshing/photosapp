@@ -3,6 +3,7 @@ import { nativeBuildVersion } from "expo-application";
 import { Platform } from "react-native";
 
 import Storage from "@/utils/storage";
+import { renderToast } from "@/utils/toast";
 
 const platformUrl = Platform.select({
   android: "192.168.1.117",
@@ -21,13 +22,21 @@ export const client = axios.create({
   },
 });
 
-client.interceptors.response.use((res) => {
-  const token = res.headers["Jwt"];
-  if (token) {
-    Storage.set("jwt", token);
-  }
-  return res;
-});
+client.interceptors.response.use(
+  (res) => {
+    const token = res.headers["Jwt"];
+    if (token) {
+      Storage.set("jwt", token);
+    }
+    return res;
+  },
+  (err) => {
+    if (err.code === "ERR_NETWORK") {
+      renderToast({ type: "error", message: "Cannot connect to the network" });
+    }
+    throw err;
+  },
+);
 
 client.interceptors.request.use((config) => {
   const token = Storage.getString("jwt");
