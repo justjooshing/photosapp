@@ -10,7 +10,7 @@ const Images = () => {
 
   return (
     <Container>
-      <States query={images} />
+      <States />
     </Container>
   );
 };

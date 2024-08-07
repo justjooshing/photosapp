@@ -1,20 +1,19 @@
-import { UseQueryResult } from "@tanstack/react-query";
 import React from "react";
 
 import Data from "./data";
 import Empty from "./empty";
 import Error from "./error";
 
-import { ApiImageUrls } from "@/api/types";
+import { useGetImages } from "@/api/queries/images";
 
-type Props = { query: UseQueryResult<ApiImageUrls> };
+const States = () => {
+  const images = useGetImages();
 
-const States = ({ query }: Props) => {
-  if (query.isError) {
+  if (images.isError) {
     return <Error />;
   }
 
-  if (!query.data?.length && !(query.isLoading || query.isFetching)) {
+  if (!images.data?.length && !(images.isLoading || images.isFetching)) {
     return <Empty />;
   }
 

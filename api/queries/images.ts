@@ -3,7 +3,9 @@ import {
   useQuery,
   useQueryClient,
   useMutation,
+  UseQueryResult,
 } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 import { client } from "../axios";
 import { ENDPOINTS } from "../endpoints";
@@ -31,7 +33,7 @@ const getImages = async ({
   return data;
 };
 
-export const useGetImages = () => {
+export const useGetImages = (): UseQueryResult<ApiImageUrls, AxiosError> => {
   const { imageType } = useImageContext();
 
   return useQuery({
