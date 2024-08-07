@@ -63,7 +63,7 @@ const Layout = () => {
                   options={{
                     tabBarItemStyle: { paddingVertical: 5 },
                     tabBarBadge:
-                      name === "albums" && count.data?.albumsToDelete
+                      name === "albums" && count.data?.albumsToDelete.count
                         ? count.data?.albumsToDelete.count
                         : null,
                     tabBarIcon: ({ focused }) => (
