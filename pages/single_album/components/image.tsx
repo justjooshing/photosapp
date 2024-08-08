@@ -21,7 +21,7 @@ const Image = ({ image }: Props) => {
 
   return (
     <>
-      <ImageTile image={image} />
+      <ImageTile baseUrl={image.baseUrl} />
       <View style={styles.button_wrapper}>
         {Object.values(SortOptions).map((val) => (
           <Button key={val} image={image} choice={val} />

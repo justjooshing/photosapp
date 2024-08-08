@@ -107,15 +107,25 @@ const Albums = () => {
                 asChild
               >
                 <Pressable>
-                  {!!album.deleteCount && (
-                    <View style={styles.notification_dot}>
+                  {!!album._count.images && (
+                    <View
+                      style={[
+                        styles.notification_dot,
+                        {
+                          backgroundColor:
+                            sortBy === SortOptions.DELETE
+                              ? tokens.color.red2
+                              : tokens.color.green2,
+                        },
+                      ]}
+                    >
                       <Text style={styles.notification_dot_text}>
-                        {album.deleteCount}
+                        {album._count.images}
                       </Text>
                     </View>
                   )}
-                  {album.firstImage?.baseUrl ? (
-                    <ImageTile image={album.firstImage} />
+                  {album.images.length && album.images[0].baseUrl ? (
+                    <ImageTile baseUrl={album.images[0].baseUrl} />
                   ) : (
                     <Text>Where's the image?</Text>
                   )}
@@ -163,7 +173,6 @@ const styles = StyleSheet.create({
     right: 20,
     margin: 2,
     zIndex: 1,
-    backgroundColor: tokens.color.red2,
     alignItems: "center",
     justifyContent: "center",
     height: 20,

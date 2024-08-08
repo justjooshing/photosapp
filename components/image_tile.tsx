@@ -2,16 +2,15 @@ import { ImageSourcePropType, StyleSheet } from "react-native";
 
 import ImageWithError from "./image_with_error_handler";
 
-import { ApiImage } from "@/api/types";
 import { tokens } from "@/config/tamagui/tokens";
 
 type Props = {
-  image: ApiImage;
+  baseUrl: string;
 };
 
-function ImageTile({ image }: Props) {
+function ImageTile({ baseUrl }: Props) {
   const imageSource: ImageSourcePropType = {
-    uri: image.baseUrl,
+    uri: baseUrl,
   };
 
   return (
