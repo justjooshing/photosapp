@@ -3,9 +3,10 @@ import {
   MutationCache,
   QueryClient,
 } from "@tanstack/react-query";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { router } from "expo-router";
 
+import { errorMessageLookup } from "@/api/errors";
 import Storage from "@/utils/storage";
 import { renderToast } from "@/utils/toast";
 
@@ -14,8 +15,11 @@ const token = Storage.getString("jwt");
 export const config = (jwt: string | null): QueryClientConfig => ({
   mutationCache: new MutationCache({
     onError: (err) => {
-      if (err instanceof AxiosError) {
-        renderToast({ type: "error", message: err.message });
+      if (axios.isAxiosError(err)) {
+        renderToast({
+          type: "error",
+          message: errorMessageLookup(err),
+        });
       }
       return false;
     },
