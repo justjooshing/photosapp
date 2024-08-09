@@ -7,6 +7,7 @@ import { FilterOptions } from "../types";
 
 import { useGetSingleAlbum } from "@/api/queries/albums";
 import { SortOptions } from "@/api/types";
+import ErrorHandler from "@/components/error_handler";
 import Skeleton from "@/components/skeleton";
 import { Button } from "@/config/tamagui/variants";
 
@@ -20,7 +21,7 @@ type Props = {
 const ImageSet = ({ albumId, filter, setFilter }: Props) => {
   const singleAlbum = useGetSingleAlbum(albumId);
 
-  if (singleAlbum.isError) return <Text>{singleAlbum.error.message}</Text>;
+  if (singleAlbum.isError) return <ErrorHandler error={singleAlbum.error} />;
   if (singleAlbum.isLoading)
     return (
       <FlashList

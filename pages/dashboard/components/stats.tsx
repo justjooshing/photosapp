@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import SingleStat from "./single_stat";
 
 import { useGetCount } from "@/api/queries/images";
+import ErrorHandler from "@/components/error_handler";
 import Skeleton from "@/components/skeleton";
 import { tokens } from "@/config/tamagui/tokens";
 import { formatBytes } from "@/utils/formatBytes";
@@ -11,7 +12,7 @@ import { formatBytes } from "@/utils/formatBytes";
 const Stats = () => {
   const count = useGetCount();
 
-  if (count.isError) return <Text>{count.error.message}</Text>;
+  if (count.isError) return <ErrorHandler error={count.error} />;
 
   const fractionDeleted =
     (count.data?.totalDeleted.count + count.data?.markDeleteNotDeleted.count) /

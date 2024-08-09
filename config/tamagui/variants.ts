@@ -53,6 +53,9 @@ const buttonStyles: VariantDefinitions<typeof TamButton> &
     google: {
       backgroundColor: "$google",
       color: "$googleText",
+      disabledStyle: {
+        backgroundColor: "$google",
+      },
       hoverStyle: {
         backgroundColor: "$googleHover",
       },

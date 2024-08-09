@@ -10,6 +10,6 @@ type STUB_KEYS = keyof typeof ENDPOINT_STUBS;
 
 export const ENDPOINTS = new Map<STUB_KEYS, string>();
 
-Object.keys(ENDPOINT_STUBS).forEach((key: STUB_KEYS) => {
-  ENDPOINTS.set(key, `/api${ENDPOINT_STUBS[key]}`);
+Object.entries(ENDPOINT_STUBS).forEach(([key, path]) => {
+  ENDPOINTS.set(key as STUB_KEYS, `/api${path}`);
 });

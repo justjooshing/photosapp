@@ -7,6 +7,7 @@ import { Spinner } from "tamagui";
 import SwipeAnimation from "./components/swipe_animation";
 
 import { useGetLoginLink } from "@/api/queries/auth";
+import ErrorHandler from "@/components/error_handler";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 import { useAppContext } from "@/context/app";
@@ -51,7 +52,10 @@ const Login = () => {
             radius="$1"
             disabled={loginLink.isError}
           >
-            <Link href={loginLink.data || "/"}>
+            <Link
+              disabled={loginLink.isError}
+              href={loginLink.data || "/login"}
+            >
               <View style={styles.login_button}>
                 <AntDesign name="google" size={24} style={styles.icon} />
                 <Button.Text style={styles.button_text}>
@@ -61,11 +65,7 @@ const Login = () => {
             </Link>
           </Button>
         )}
-        {loginLink.isError && (
-          <Text style={styles.error}>
-            Something's gone wrong. {loginLink.error.message}
-          </Text>
-        )}
+        {loginLink.isError && <ErrorHandler error={loginLink.error} />}
         <View style={styles.privacy_policy}>
           <Button variant="secondary" size="$1" radius="$1">
             <Link href="/privacy">
@@ -119,8 +119,5 @@ const styles = StyleSheet.create({
   },
   privacy_policy: {
     paddingVertical: 40,
-  },
-  error: {
-    paddingTop: tokens.space[1],
   },
 });

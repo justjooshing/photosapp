@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useRouter } from "expo-router";
 
 import { client } from "../axios";
@@ -10,15 +11,14 @@ import Storage from "@/utils/storage";
 
 const getLoginLink = async () => {
   const { data } = await client.get<ApiLoginLink>(ENDPOINTS.get("login"));
-  return data;
+  return data.loginLink;
 };
 
 export const useGetLoginLink = () =>
-  useQuery({
+  useQuery<ApiLoginLink["loginLink"], AxiosError>({
     enabled: true,
     queryKey: Keys.loginLink,
     queryFn: getLoginLink,
-    select: ({ loginLink }) => loginLink,
   });
 
 const logout = async () => client.delete(ENDPOINTS.get("login"));

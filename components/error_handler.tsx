@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     borderRadius: tokens.radius[1],
   },
   copy: {
+    textAlign: "center",
     color: tokens.color.grey1,
   },
 });

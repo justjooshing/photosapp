@@ -3,7 +3,6 @@ import {
   useQuery,
   useQueryClient,
   useMutation,
-  UseQueryResult,
 } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
@@ -33,10 +32,10 @@ const getImages = async ({
   return data;
 };
 
-export const useGetImages = (): UseQueryResult<ApiImageUrls, AxiosError> => {
+export const useGetImages = () => {
   const { imageType } = useImageContext();
 
-  return useQuery({
+  return useQuery<ApiImageUrls, AxiosError>({
     queryKey: Keys.images(imageType),
     queryFn: getImages,
     // ensure order is kept after refetching
@@ -72,13 +71,13 @@ export const useSortImage = () => {
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: dataKey });
       const prevImages: ApiImageUrls = queryClient.getQueryData(dataKey);
-      queryClient.setQueryData(dataKey, (images: ApiImageUrls) =>
-        images.filter((old) => old.id !== data.image.id),
-      );
+      queryClient.setQueryData(dataKey, (images: ApiImageUrls) => {
+        if (!images) return;
+        return images.filter((old) => old.id !== data.image.id);
+      });
       return { prevImages };
     },
     onError: (err, _, context) => {
-      console.error(err);
       queryClient.setQueryData(dataKey, context.prevImages);
       throw err;
     },
@@ -117,6 +116,7 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
       await queryClient.cancelQueries({ queryKey: dataKey });
       const prevSingleAlbum: ApiSingleAlbum = queryClient.getQueryData(dataKey);
       queryClient.setQueryData(dataKey, (response: ApiSingleAlbum) => {
+        if (!response) return;
         // From here we want to identify the album that we've updated
         // Update it with the new album details, and return the object
         const updatedImages = response.images.reduce((acc, oldImage) => {
@@ -137,7 +137,6 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
       return { prevSingleAlbum };
     },
     onError: (err, _, context) => {
-      console.error(err);
       queryClient.setQueryData(dataKey, context.prevSingleAlbum);
       throw err;
     },
@@ -195,7 +194,7 @@ const getCount = async () => {
 };
 
 export const useGetCount = () =>
-  useQuery({
+  useQuery<ApiCount, AxiosError>({
     queryKey: Keys.count,
     queryFn: getCount,
   });

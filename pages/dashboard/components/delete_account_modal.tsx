@@ -2,9 +2,11 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
 import { H1 } from "tamagui";
 
+import { errorMessageLookup } from "@/api/errors";
 import { useDeleteUser } from "@/api/queries/users";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
+
 type Props = {
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -60,7 +62,9 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
               style={styles.input}
             />
             {deleteUser.isError && (
-              <Text style={styles.input_error}>{deleteUser.error.message}</Text>
+              <Text style={styles.input_error}>
+                {errorMessageLookup(deleteUser.error)}
+              </Text>
             )}
             <Text>This cannot be undone</Text>
           </View>

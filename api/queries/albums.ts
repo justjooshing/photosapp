@@ -2,7 +2,9 @@ import {
   useQuery,
   QueryFunctionContext,
   useInfiniteQuery,
+  UseQueryResult,
 } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 import { client } from "../axios";
 import { ENDPOINTS } from "../endpoints";
@@ -66,7 +68,15 @@ const organiseSingleAlbum = (data: ApiSingleAlbum) => {
   return organisedSingleAlbum;
 };
 
-export const useGetSingleAlbum = (albumId: string) => {
+export const useGetSingleAlbum = (
+  albumId: string,
+): UseQueryResult<
+  ApiSingleAlbum & {
+    deleted: ApiSingleAlbum["images"];
+    kept: ApiSingleAlbum["images"];
+  },
+  AxiosError
+> => {
   const token = Storage.getString("jwt");
   const isNumberAsString = !isNaN(+albumId) && !Array.isArray(albumId);
 

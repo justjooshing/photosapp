@@ -14,7 +14,7 @@ const token = Storage.getString("jwt");
 
 export const config = (jwt: string | null): QueryClientConfig => ({
   mutationCache: new MutationCache({
-    onError: (err) => {
+    onError: (err: AxiosError) => {
       if (axios.isAxiosError(err)) {
         renderToast({
           type: "error",
@@ -41,7 +41,7 @@ export const config = (jwt: string | null): QueryClientConfig => ({
         }
       },
       throwOnError: (err: AxiosError) => {
-        if (err instanceof AxiosError) {
+        if (axios.isAxiosError(err)) {
           if (err.response?.status === 401) {
             // Logout after half a second
             Storage.delete("jwt");
