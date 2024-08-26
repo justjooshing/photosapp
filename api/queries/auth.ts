@@ -31,6 +31,7 @@ export const useLogout = () => {
     mutationFn: logout,
     onSuccess: () => {
       Storage.delete("jwt");
+      Storage.delete("rt");
       queryClient.clear();
       router.replace("/login");
     },

@@ -24,9 +24,14 @@ export const client = axios.create({
 
 client.interceptors.response.use(
   (res) => {
-    const token = res.headers["Jwt"];
+    const token = res.headers["jwt"];
     if (token) {
       Storage.set("jwt", token);
+    }
+
+    const reauth_token = res.headers["rt"];
+    if (reauth_token) {
+      Storage.set("rt", reauth_token);
     }
     return res;
   },
@@ -40,6 +45,13 @@ client.interceptors.response.use(
 
 client.interceptors.request.use((config) => {
   const token = Storage.getString("jwt");
-  config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  const reauth_token = Storage.getString("rt");
+  if (reauth_token) {
+    config.headers["rt"] = reauth_token;
+  }
   return config;
 });

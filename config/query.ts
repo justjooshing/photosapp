@@ -45,6 +45,8 @@ export const config = (jwt: string | null): QueryClientConfig => ({
           if (err.response?.status === 401) {
             // Logout after half a second
             Storage.delete("jwt");
+            Storage.delete("rt");
+
             setTimeout(() => {
               router.push("/login");
             }, 500);
