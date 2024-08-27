@@ -6,12 +6,9 @@ import { config } from "@/config/query";
 import Storage from "@/utils/storage";
 
 const useGenerateQueryClient = () => {
-  const { jwt, rt }: { jwt?: string; rt?: string } = useGlobalSearchParams();
+  const { jwt }: { jwt?: string } = useGlobalSearchParams();
   if (jwt) {
     Storage.set("jwt", jwt);
-  }
-  if (rt) {
-    Storage.set("rt", rt);
   }
 
   // Create new queryCLient if jwt exists
