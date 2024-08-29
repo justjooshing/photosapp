@@ -20,9 +20,9 @@ const Stats = () => {
 
   const averageSizePerImage =
     (Number(count.data?.totalImages.size) || 0) /
-    (count.data?.totalImages.count || 0);
+      (count.data?.totalImages.count || 0) || 0;
 
-  const notYetDeletedCount = count.data?.markDeleteNotDeleted.count;
+  const notYetDeletedCount = count.data?.markDeleteNotDeleted.count || 0;
 
   return (
     <View style={styles.stats}>
