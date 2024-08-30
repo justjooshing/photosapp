@@ -8,9 +8,12 @@ type Props = {
 const useHideSplashScreen = ({ loaded }: Props) => {
   useEffect(() => {
     if (loaded) {
-      setTimeout(() => {
+      const hideSplash = setTimeout(() => {
         SplashScreen.hideAsync();
       }, 200);
+      return () => {
+        clearTimeout(hideSplash);
+      };
     }
   }, [loaded]);
 };

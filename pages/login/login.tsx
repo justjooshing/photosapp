@@ -1,7 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Spinner } from "tamagui";
 
 import SwipeAnimation from "./components/swipe_animation";
@@ -23,72 +23,76 @@ const Login = () => {
   };
 
   return (
-    <LinearGradient
-      style={styles.container}
-      colors={[tokens.color.blue, tokens.color.blue2]}
-      onLayout={onLayout}
-    >
-      <View style={styles.contents}>
-        <Text style={styles.tagline}>Uncover memories.</Text>
-        <Text style={[styles.tagline, styles.offset_tagline]}>
-          Delete near duplicates.
-        </Text>
-        <Text style={styles.tagline}>Save storage.</Text>
-      </View>
-      <SwipeAnimation />
-      <View style={styles.buttons}>
-        <Text style={styles.copy}>
-          This wee app was built to help me sort through my loads of images on
-          Google Photos, so hopefully it helps you too!
-        </Text>
-        {loginLink.isLoading ? (
-          <Button variant="google" size="$1" radius="$1" disabled>
-            <Spinner color="$color.grey1" />
-          </Button>
-        ) : (
-          <Button
-            variant="google"
-            size="$1"
-            radius="$1"
-            disabled={loginLink.isError}
-          >
-            <Link
-              disabled={loginLink.isError}
-              href={loginLink.data || "/login"}
-            >
-              <View style={styles.login_button}>
-                <AntDesign name="google" size={24} style={styles.icon} />
-                <Button.Text style={styles.button_text}>
-                  Login with Google
-                </Button.Text>
-              </View>
-            </Link>
-          </Button>
-        )}
-        {loginLink.isError && <ErrorHandler error={loginLink.error} />}
-        <View style={styles.privacy_policy}>
-          <Button variant="secondary" size="$1" radius="$1">
-            <Link href="/privacy">
-              <Button.Text>Privacy Policy</Button.Text>
-            </Link>
-          </Button>
+    <ScrollView contentContainerStyle={styles.scroll_wrapper}>
+      <LinearGradient
+        style={styles.container}
+        colors={[tokens.color.blue, tokens.color.blue2]}
+        onLayout={onLayout}
+      >
+        <View style={styles.contents}>
+          <Text style={styles.tagline}>Uncover memories.</Text>
+          <Text style={[styles.tagline, styles.offset_tagline]}>
+            Delete near duplicates.
+          </Text>
+          <Text style={styles.tagline}>Save storage.</Text>
         </View>
-      </View>
-    </LinearGradient>
+        <SwipeAnimation />
+        <View style={styles.buttons}>
+          <Text style={styles.copy}>
+            This wee app was built to help me sort through my loads of images on
+            Google Photos, so hopefully it helps you too!
+          </Text>
+          {loginLink.isLoading ? (
+            <Button variant="google" size="$1" radius="$1" disabled>
+              <Spinner color="$color.grey1" />
+            </Button>
+          ) : (
+            <Button
+              variant="google"
+              size="$1"
+              radius="$1"
+              disabled={loginLink.isError}
+            >
+              <Link
+                disabled={loginLink.isError}
+                href={loginLink.data || "/login"}
+              >
+                <View style={styles.login_button}>
+                  <AntDesign name="google" size={24} style={styles.icon} />
+                  <Button.Text style={styles.button_text}>
+                    Login with Google
+                  </Button.Text>
+                </View>
+              </Link>
+            </Button>
+          )}
+          {loginLink.isError && <ErrorHandler error={loginLink.error} />}
+          <View style={styles.privacy_policy}>
+            <Button variant="secondary" size="$1" radius="$1">
+              <Link href="/privacy">
+                <Button.Text>Privacy Policy</Button.Text>
+              </Link>
+            </Button>
+          </View>
+        </View>
+      </LinearGradient>
+    </ScrollView>
   );
 };
 
 export default Login;
 
 const styles = StyleSheet.create({
+  scroll_wrapper: {
+    minHeight: "100%",
+  },
   container: {
     paddingHorizontal: 30,
     paddingVertical: 50,
-    height: "100%",
+    minHeight: "100%",
     justifyContent: "space-between",
   },
   contents: {
-    flex: 1,
     justifyContent: "space-evenly",
   },
   tagline: {

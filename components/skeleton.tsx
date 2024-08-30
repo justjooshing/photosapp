@@ -14,6 +14,9 @@ const Skeleton = () => {
 
   useEffect(() => {
     opacity.value = withRepeat(withTiming(0.3, { duration: 1000 }), -1, true);
+    return () => {
+      opacity.value = 1;
+    };
   }, [opacity]);
 
   const animatedStyles = useAnimatedStyle(() => ({

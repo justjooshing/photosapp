@@ -14,10 +14,14 @@ type Props = {
 const LoadingModal = ({ copy, callback, showModal, setShowModal }: Props) => {
   useEffect(() => {
     if (showModal) {
-      setTimeout(() => {
+      const animation = setTimeout(() => {
         setShowModal(false);
         callback();
       }, 1000);
+
+      return () => {
+        clearTimeout(animation);
+      };
     }
   }, [showModal, setShowModal, callback]);
 

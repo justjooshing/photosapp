@@ -73,6 +73,7 @@ export const useSwipeAnimation = ({
     );
 
     return () => {
+      translateX.value = 0;
       cancelAnimation(translateX);
     };
   }, [translateX, distance, reverse, instance]);

@@ -32,6 +32,9 @@ const SwipeConfirmation = ({ type, offset, threshold }: Props) => {
       2000,
       withSpring(-initialPosition, { duration: 5000 }),
     );
+    return () => {
+      iconTranslateX.value = initialPosition;
+    };
   }, [initialPosition, iconTranslateX]);
 
   const initialStyle = useAnimatedStyle(() => ({

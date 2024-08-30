@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
 import { H1 } from "tamagui";
 
@@ -21,16 +21,15 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
   const textToMatch = "delete";
   const buttonDisabled = deleteTextValue?.toLowerCase().trim() !== textToMatch;
 
-  useEffect(() => {
-    if (!modalOpen) {
-      setDeleteTextValue(undefined);
-    }
-  }, [modalOpen]);
-
   const handleDeleteAccount = async () => {
     if (!buttonDisabled) {
       setLoadingModalOpen(true);
     }
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setDeleteTextValue(undefined);
   };
 
   return (
@@ -39,7 +38,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
         visible={modalOpen}
         transparent
         animationType="slide"
-        onRequestClose={() => setModalOpen(false)}
+        onRequestClose={handleModalClose}
       >
         <View style={styles.modal_wrapper}>
           <View style={styles.content_wrapper}>
@@ -85,9 +84,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
                 full
                 size="$1"
                 radius="$1"
-                onPress={() => {
-                  setModalOpen(false);
-                }}
+                onPress={handleModalClose}
               >
                 <Button.Text>Close modal</Button.Text>
               </Button>
