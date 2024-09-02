@@ -31,7 +31,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
   },
-  button_container: { flexDirection: "row", gap: 20, justifyContent: "center" },
+  button_container: {
+    paddingVertical: 12,
+    flexDirection: "row",
+    gap: 20,
+    justifyContent: "center",
+  },
   another_round_container: {
     width: "100%",
     alignItems: "center",
