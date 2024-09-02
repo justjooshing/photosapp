@@ -40,14 +40,13 @@ export const useGetImages = () => {
     queryFn: getImages,
     // ensure order is kept after refetching
     select: (images) => images?.sort((a, b) => (a.id > b.id ? -1 : 1)),
-    // Kick off with a refetch interval since we might still be pulling their images from Google
+    // Kick off with multiple refetches since we might still be pulling their images from Google
     refetchInterval: (query) =>
-      query &&
-      (query.state.data?.length > 10 ||
-        query.state.dataUpdateCount > 4 ||
-        query.state.error)
+      query?.state.data?.length ||
+      query?.state.dataUpdateCount > 4 ||
+      query?.state.error
         ? false
-        : 1000,
+        : 1,
   });
 };
 

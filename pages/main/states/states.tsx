@@ -12,7 +12,7 @@ const States = () => {
   if (images.isError) {
     return <ErrorHandler error={images.error} />;
   }
-  if (!images.data?.length && images.isFetched) {
+  if (!images.data?.length && !(images.isLoading || images.isFetching)) {
     return <Empty />;
   }
 
