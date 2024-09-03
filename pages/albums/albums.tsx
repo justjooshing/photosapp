@@ -12,10 +12,12 @@ import Skeleton from "@/components/skeleton";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 import { useAlbumsContext } from "@/context/albums";
+import usePathname from "@/hooks/usePathname";
 
 const numColumns = 2;
 
 const Albums = () => {
+  const pathname = usePathname();
   const { sortBy, setSortBy } = useAlbumsContext();
 
   const counts = useGetCount();
@@ -38,7 +40,11 @@ const Albums = () => {
   );
 
   const handleEndReached = () => {
-    if (infiniteAlbums.hasNextPage && !infiniteAlbums.isFetching) {
+    if (
+      infiniteAlbums.hasNextPage &&
+      !infiniteAlbums.isFetching &&
+      pathname.path === "albums"
+    ) {
       infiniteAlbums.fetchNextPage();
     }
   };
