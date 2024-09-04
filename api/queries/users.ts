@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "expo-router";
 
 import { client } from "../axios";
@@ -20,14 +20,12 @@ export const useGetUser = () =>
     queryFn: getUser,
   });
 
-export const deleteUser = async () => {
-  client.delete(ENDPOINTS.get("user"));
-};
+export const deleteUser = async () => client.delete(ENDPOINTS.get("user"));
 
 export const useDeleteUser = () => {
   const router = useRouter();
 
-  return useMutation<void, AxiosError>({
+  return useMutation<AxiosResponse<void>, AxiosError>({
     mutationFn: deleteUser,
     onSuccess: () => {
       Storage.delete("jwt");

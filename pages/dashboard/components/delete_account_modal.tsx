@@ -15,7 +15,6 @@ type Props = {
 
 const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
   const [deleteTextValue, setDeleteTextValue] = useState("");
-  const [loadingModalOpen, setLoadingModalOpen] = useState(false);
   const deleteUser = useDeleteUser();
 
   const textToMatch = "delete";
@@ -23,7 +22,12 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
 
   const handleDeleteAccount = async () => {
     if (!buttonDisabled) {
-      setLoadingModalOpen(true);
+      // Undefined because we're not expecting an arg1 but still want to access the onSuccess callback
+      deleteUser.mutate(undefined, {
+        onSuccess: () => {
+          setDeleteTextValue("");
+        },
+      });
     }
   };
 
@@ -92,15 +96,7 @@ const DeleteAccountModal = ({ modalOpen, setModalOpen }: Props) => {
           </View>
         </View>
       </Modal>
-      <LoadingModal
-        copy="Deleting your account"
-        showModal={loadingModalOpen}
-        setShowModal={() => setLoadingModalOpen(false)}
-        callback={async () => {
-          await deleteUser.mutateAsync();
-          setDeleteTextValue("");
-        }}
-      />
+      {deleteUser.isPending && <LoadingModal copy="Deleting your account" />}
     </>
   );
 };
