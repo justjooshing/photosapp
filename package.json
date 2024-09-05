@@ -41,6 +41,7 @@
     "react-native-screens": "~3.29.0",
     "react-native-web": "~0.19.6",
     "setimmediate": "^1.0.5",
+    "socket.io-client": "^4.7.5",
     "tamagui": "^1.93.2"
   },
   "devDependencies": {

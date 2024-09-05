@@ -10,8 +10,10 @@ import { tokens } from "@/config/tamagui/tokens";
 import { useAppContext } from "@/context/app";
 import { ImageProvider } from "@/context/image";
 import usePathname from "@/hooks/usePathname";
+import { useSocketRQSubscription } from "@/hooks/useQuerySubscription";
 
 const Layout = () => {
+  useSocketRQSubscription();
   const { setWindowWidth } = useAppContext();
   const token = useGetAuthToken();
   const count = useGetCount();

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { nativeBuildVersion } from "expo-application";
 import { Platform } from "react-native";
+import { io } from "socket.io-client";
 
 import Storage from "@/utils/storage";
 import { renderToast } from "@/utils/toast";
@@ -45,3 +46,9 @@ client.interceptors.request.use((config) => {
   }
   return config;
 });
+
+export const createSocket = () =>
+  io(baseURL, {
+    transports: ["websocket"],
+    auth: (cb) => cb({ jwt: Storage.getString("jwt") }),
+  });
