@@ -48,14 +48,17 @@ const putSingleImageMessages = {
 const genericErrorMessage = "Something's gone wrong";
 
 const convertUrl = (url: string) => {
-  const matchingUrl = Array.from(ENDPOINTS.values()).find((endpoint) =>
-    url.startsWith(endpoint),
-  );
-  // For /images/:imageID and albums/:albumID
-  if (matchingUrl) {
-    return `${matchingUrl}/:id`;
+  let matchingUrl: string | undefined;
+
+  for (const endpoint of ENDPOINTS.values()) {
+    if (url.startsWith(endpoint)) {
+      matchingUrl = endpoint;
+      break;
+    }
   }
-  return undefined;
+
+  // For /images/:imageID and albums/:albumID
+  return matchingUrl ? `${matchingUrl}/:id` : undefined;
 };
 
 export const errorMessageLookup = (error: AxiosError) => {

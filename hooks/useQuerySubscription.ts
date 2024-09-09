@@ -13,7 +13,7 @@ export const useSocketRQSubscription = () => {
     const socket = createSocket();
 
     socket.on("connect_error", () => {
-      console.log("Socket connection error");
+      console.error("Socket connection error");
     });
 
     socket.onAny((event, data) => {
