@@ -122,6 +122,9 @@ export const useCheckImageStatus = (albumId: string) => {
       }),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: Keys.count });
+      queryClient.invalidateQueries({
+        queryKey: Keys.albums,
+      });
     },
   });
 };
