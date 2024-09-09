@@ -62,7 +62,7 @@ const Data = () => {
   });
 
   const updateImage = async (sorted_status: SortOptions) => {
-    sortImage({ image: data?.[currentImageIndex], body: { sorted_status } });
+    sortImage({ imageId: data?.[currentImageIndex].id, sorted_status });
     if (data?.length === 1) {
       router.push("/dashboard");
       /**

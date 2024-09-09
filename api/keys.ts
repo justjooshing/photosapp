@@ -16,7 +16,8 @@ export const Keys = {
   user: [baseKeys.user] as const,
   albums: [baseKeys.albums] as const,
   images: (type: ImagesType) => [baseKeys.images, type] as const,
-  albumImages: (albumId: string) => [baseKeys.albums, albumId] as const,
+  albumImages: (albumId: string) =>
+    [baseKeys.albums, albumId, baseKeys.count] as const,
   infiniteAlbums: (sorted_status: SortOptions) =>
     [baseKeys.albums, sorted_status] as const,
 };

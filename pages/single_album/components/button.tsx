@@ -16,7 +16,7 @@ const Button = ({ image, choice }: Props) => {
   const { mutate: updateImage } = useUpdateSingleAlbumImage(albumId.toString());
 
   const handleClick = () => {
-    updateImage({ image, body: { sorted_status: choice } });
+    updateImage({ imageId: image.id, sorted_status: choice });
   };
   const isSelected = image.sorted_status === choice;
 

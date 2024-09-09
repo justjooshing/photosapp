@@ -1,20 +1,15 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { Platform, AppState } from "react-native";
 
-import { Keys } from "@/api/keys";
-import { useUpdateSingleAlbumImage } from "@/api/queries/images";
+import { useCheckImageStatus } from "@/api/queries/images";
 import { InitialState } from "@/context/image";
-import { renderToast } from "@/utils/toast";
 
 interface Props {
   targetImage: InitialState["targetImage"];
   setTargetImage: InitialState["setTargetImage"];
 }
 const useAppFocus = ({ targetImage, setTargetImage }: Props) => {
-  const queryClient = useQueryClient();
-
-  const { mutate: updateImage } = useUpdateSingleAlbumImage(
+  const { mutate: updateImage } = useCheckImageStatus(
     targetImage?.sorted_album_id.toString(),
   );
   /**
@@ -24,20 +19,10 @@ const useAppFocus = ({ targetImage, setTargetImage }: Props) => {
    */
   useEffect(() => {
     const focusListener = () => {
-      renderToast({
-        type: "info",
-        message: "Checking image status against Google",
-      });
       updateImage(
-        { image: targetImage, body: { baseUrl: null } },
+        { imageId: targetImage.id },
         {
           onSettled: () => {
-            queryClient.invalidateQueries({
-              queryKey: [
-                ...Keys.albumImages(targetImage.sorted_album_id.toString()),
-                ...Keys.count,
-              ],
-            });
             setTargetImage(undefined);
           },
         },
@@ -58,7 +43,7 @@ const useAppFocus = ({ targetImage, setTargetImage }: Props) => {
         };
       }
     }
-  }, [targetImage, setTargetImage, updateImage, queryClient]);
+  }, [targetImage, setTargetImage, updateImage]);
 
   return [targetImage, setTargetImage];
 };

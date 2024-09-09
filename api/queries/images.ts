@@ -51,14 +51,13 @@ export const useGetImages = () => {
 };
 
 interface SortImageProps {
-  image: ApiImage;
-  body: Partial<ApiImage>;
+  imageId: number;
+  sorted_status: ApiImage["sorted_status"];
 }
-const updateSingleImage = async ({ image, body }: SortImageProps) =>
-  await client.put<ApiSortImage>(
-    `${ENDPOINTS.get("images")}/${image.id}`,
-    body,
-  );
+const updateSingleImage = async ({ imageId, sorted_status }: SortImageProps) =>
+  await client.put<ApiSortImage>(`${ENDPOINTS.get("images")}/${imageId}`, {
+    sorted_status,
+  });
 
 export const useSortImage = () => {
   const { imageType } = useImageContext();
@@ -67,28 +66,26 @@ export const useSortImage = () => {
   const dataKey = Keys.images(imageType);
   return useMutation({
     mutationFn: updateSingleImage,
-    onMutate: async (data) => {
+    onMutate: async ({ imageId }) => {
       await queryClient.cancelQueries({ queryKey: dataKey });
       const prevImages: ApiImageUrls = queryClient.getQueryData(dataKey);
-      queryClient.setQueryData(dataKey, (images: ApiImageUrls) => {
-        if (!images) return;
-        return images.filter((old) => old.id !== data.image.id);
-      });
+      // Optimistically remove image
+      queryClient.setQueryData(dataKey, (images: ApiImageUrls) =>
+        images.filter(({ id }) => id !== imageId),
+      );
       return { prevImages };
     },
     onError: (err, _, context) => {
       queryClient.setQueryData(dataKey, context.prevImages);
       throw err;
     },
-    onSuccess: ({ data }, v, context) => {
-      data.image.map(({ sorted_status }) => {
-        const conjugation =
-          sorted_status === SortOptions.DELETE ? "deletion" : "keeping";
+    onSuccess: (_, { sorted_status }, context) => {
+      const conjugation =
+        sorted_status === SortOptions.DELETE ? "deletion" : "keeping";
 
-        renderToast({
-          type: "success",
-          message: `Image marked for ${conjugation}`,
-        });
+      renderToast({
+        type: "success",
+        message: `Image marked for ${conjugation}`,
       });
       // Allow refetch if last image has been sorted successfully
       if (context.prevImages.length === 1) {
@@ -106,21 +103,43 @@ export const useSortImage = () => {
   });
 };
 
+const getSingleImage = async ({ imageId }: { imageId: number }) =>
+  await client.get<ApiSortImage>(`${ENDPOINTS.get("images")}/${imageId}`);
+
+export const useCheckImageStatus = (albumId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: getSingleImage,
+    onMutate: () => {
+      renderToast({
+        type: "info",
+        message: "Checking image status against Google",
+      });
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: Keys.albumImages(albumId),
+      }),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: Keys.count });
+    },
+  });
+};
+
 export const useUpdateSingleAlbumImage = (albumId: string) => {
   const queryClient = useQueryClient();
   const dataKey = Keys.albumImages(albumId);
   return useMutation({
     mutationFn: updateSingleImage,
-    onMutate: async ({ body, image }) => {
+    onMutate: async ({ sorted_status, imageId }) => {
       await queryClient.cancelQueries({ queryKey: dataKey });
       const prevSingleAlbum: ApiSingleAlbum = queryClient.getQueryData(dataKey);
       queryClient.setQueryData(dataKey, (response: ApiSingleAlbum) => {
         if (!response) return;
-        // From here we want to identify the album that we've updated
-        // Update it with the new album details, and return the object
+        // Optimistically update the album with the images update sorted_status
         const updatedImages = response.images.reduce((acc, oldImage) => {
           const updatedImage =
-            oldImage.id === image.id ? { ...oldImage, ...body } : oldImage;
+            oldImage.id === imageId ? { ...oldImage, sorted_status } : oldImage;
 
           acc.push(updatedImage);
           return acc;
@@ -139,7 +158,7 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
       queryClient.setQueryData(dataKey, context.prevSingleAlbum);
       throw err;
     },
-    onSuccess: ({ data }, requestData, ctx) => {
+    onSuccess: ({ data }, { imageId, sorted_status }, ctx) => {
       // Need to think about how to stop this appearing when checking against Google
       // ...separate endpoint?
       data.image.forEach((singleImage) => {
@@ -156,7 +175,7 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
 
       const returnedImage = data.image[0];
       const updatedImages = ctx.prevSingleAlbum.images.map((oldImage) =>
-        oldImage.id === requestData.image.id ? returnedImage : oldImage,
+        oldImage.id === imageId ? returnedImage : oldImage,
       );
 
       const updatedSingleAlbum = {
@@ -165,17 +184,15 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
       };
 
       queryClient.setQueryData(dataKey, updatedSingleAlbum);
+
+      const matchingImages = updatedSingleAlbum.images.filter(
+        (img) => img.sorted_status === sorted_status,
+      );
       if (
-        // if actually deleted
-        !returnedImage ||
-        // OR if all entries now match last update
-        updatedSingleAlbum.images.every(
-          (img) => img.sorted_status === requestData.image.sorted_status,
-        ) ||
+        // If all entries now match last update
+        matchingImages.length === updatedSingleAlbum.images.length ||
         // OR if last update means there's now one different to the rest
-        updatedSingleAlbum.images.filter(
-          (img) => img.sorted_status === requestData.image.sorted_status,
-        ).length === 1
+        matchingImages.length === 1
       ) {
         // refresh albums list
         queryClient.invalidateQueries({ queryKey: Keys.albums });
