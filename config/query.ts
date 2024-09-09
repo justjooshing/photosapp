@@ -12,6 +12,19 @@ import { renderToast } from "@/utils/toast";
 
 const token = Storage.getString("jwt");
 
+const handleError = (err: AxiosError) => {
+  if (axios.isAxiosError(err)) {
+    if (err.response?.status === 401) {
+      // Logout after half a second
+      Storage.delete("jwt");
+      setTimeout(() => {
+        router.replace("/login");
+      }, 500);
+    }
+  }
+  return false;
+};
+
 export const config = (jwt: string | null): QueryClientConfig => ({
   mutationCache: new MutationCache({
     onError: (err: AxiosError) => {
@@ -25,6 +38,9 @@ export const config = (jwt: string | null): QueryClientConfig => ({
     },
   }),
   defaultOptions: {
+    mutations: {
+      throwOnError: handleError,
+    },
     queries: {
       enabled: !!token || !!jwt,
       staleTime: 1000 * 60 * 10,
@@ -40,19 +56,7 @@ export const config = (jwt: string | null): QueryClientConfig => ({
           return shouldRetry;
         }
       },
-      throwOnError: (err: AxiosError) => {
-        if (axios.isAxiosError(err)) {
-          if (err.response?.status === 401) {
-            // Logout after half a second
-            Storage.delete("jwt");
-
-            setTimeout(() => {
-              router.push("/login");
-            }, 500);
-          }
-        }
-        return false;
-      },
+      throwOnError: handleError,
     },
   },
 });
