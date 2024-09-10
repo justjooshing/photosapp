@@ -1,7 +1,7 @@
 import Container from "./components/container";
 import States from "./states/states";
 
-import { useGetImages } from "@/api/queries/images";
+import { useGetImages } from "@/api/images/queries";
 import useHideSplashScreen from "@/hooks/useHideSplashScreen";
 
 const Images = () => {

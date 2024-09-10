@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 
 import CarouselImage from "./carousel_image";
 
-import { useGetImages } from "@/api/queries/images";
+import { useGetImages } from "@/api/images/queries";
 import Skeleton from "@/components/skeleton";
 
 const Carousel = () => {

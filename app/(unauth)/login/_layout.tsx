@@ -1,7 +1,7 @@
 import { Redirect, Slot } from "expo-router";
 import React from "react";
 
-import { useGetAuthToken } from "@/api/queries/auth";
+import { useGetAuthToken } from "@/api/auth/queries";
 
 const Layout = () => {
   const token = useGetAuthToken();

@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Image from "./image";
 import { FilterOptions } from "../types";
 
-import { useGetSingleAlbum } from "@/api/queries/albums";
+import { useGetSingleAlbum } from "@/api/albums/queries";
 import { SortOptions } from "@/api/types";
 import ErrorHandler from "@/components/error_handler";
 import Skeleton from "@/components/skeleton";

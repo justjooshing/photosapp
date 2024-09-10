@@ -3,7 +3,7 @@ import React from "react";
 import Data from "./data";
 import Empty from "./empty";
 
-import { useGetImages } from "@/api/queries/images";
+import { useGetImages } from "@/api/images/queries";
 import ErrorHandler from "@/components/error_handler";
 
 const States = () => {

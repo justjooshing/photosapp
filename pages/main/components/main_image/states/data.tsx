@@ -16,7 +16,8 @@ import Animated, {
 
 import SwipeConfirmation from "../components/swipe_confirmation";
 
-import { useGetImages, useSortImage } from "@/api/queries/images";
+import { useSortImage } from "@/api/images/mutations";
+import { useGetImages } from "@/api/images/queries";
 import { SortOptions } from "@/api/types";
 import ImageWithError from "@/components/image_with_error_handler";
 import { useImageContext } from "@/context/image";

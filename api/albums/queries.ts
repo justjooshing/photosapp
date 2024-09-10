@@ -15,7 +15,7 @@ import Storage from "@/utils/storage";
 
 const getInfiniteAlbums = async ({
   pageParam,
-  queryKey: [_, sorted_status],
+  queryKey: [{ sorted_status }],
 }: QueryFunctionContext<ReturnType<(typeof Keys)["infiniteAlbums"]>>) => {
   const params = { lastAlbumId: pageParam, sorted_status };
   const { data } = await client.get<ApiAlbums>(ENDPOINTS.get("albums"), {
@@ -33,7 +33,7 @@ export const useGetInfiniteAlbums = (sorted_status: SortOptions) =>
   });
 
 const getSingleAlbum = async ({
-  queryKey: [, albumId],
+  queryKey: [{ albumId }],
 }: QueryFunctionContext<ReturnType<(typeof Keys)["albumImages"]>>) => {
   const { data } = await client.get<ApiSingleAlbum>(
     `${ENDPOINTS.get("albums")}/${albumId}`,

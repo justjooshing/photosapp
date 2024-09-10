@@ -4,8 +4,8 @@ import { useMemo } from "react";
 import { Pressable, Text, StyleSheet, View } from "react-native";
 import { Spinner } from "tamagui";
 
-import { useGetInfiniteAlbums } from "@/api/queries/albums";
-import { useGetCount } from "@/api/queries/images";
+import { useGetInfiniteAlbums } from "@/api/albums/queries";
+import { useGetCount } from "@/api/images/queries";
 import { SortOptions } from "@/api/types";
 import ImageTile from "@/components/image_tile";
 import Skeleton from "@/components/skeleton";

@@ -3,7 +3,7 @@ import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
 import { H1 } from "tamagui";
 
 import { errorMessageLookup } from "@/api/errors";
-import { useDeleteUser } from "@/api/queries/users";
+import { useDeleteUser } from "@/api/users/mutations";
 import LoadingModal from "@/components/loading_modal";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";

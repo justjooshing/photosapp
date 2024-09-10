@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-import { useGetCount } from "@/api/queries/images";
+import { useGetCount } from "@/api/images/queries";
 import Skeleton from "@/components/skeleton";
 import { tokens } from "@/config/tamagui/tokens";
 
