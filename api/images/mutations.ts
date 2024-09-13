@@ -19,7 +19,7 @@ interface SortImageProps {
   sorted_status: ApiImage["sorted_status"];
 }
 const updateSingleImage = async ({ imageId, sorted_status }: SortImageProps) =>
-  await client.put<ApiSortImage>(`${ENDPOINTS.get("images")}/${imageId}`, {
+  client.put<ApiSortImage>(`${ENDPOINTS.get("images")}/${imageId}`, {
     sorted_status,
   });
 
