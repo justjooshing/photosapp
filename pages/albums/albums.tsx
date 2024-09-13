@@ -10,18 +10,17 @@ import { SortOptions } from "@/api/types";
 import ImageTile from "@/components/image_tile";
 import Skeleton from "@/components/skeleton";
 import { tokens } from "@/config/tamagui/tokens";
-import { Button } from "@/config/tamagui/variants";
 import { useAlbumsContext } from "@/context/albums";
 import usePathname from "@/hooks/usePathname";
 
 const numColumns = 2;
 
-const Albums = () => {
+const Albums = ({ sortOption }: { sortOption: SortOptions }) => {
+  const { sortBy } = useAlbumsContext();
   const pathname = usePathname();
-  const { sortBy, setSortBy } = useAlbumsContext();
 
   const counts = useGetCount();
-  const infiniteAlbums = useGetInfiniteAlbums(sortBy);
+  const infiniteAlbums = useGetInfiniteAlbums(sortOption);
 
   const tabCopy = {
     delete: {
@@ -43,7 +42,8 @@ const Albums = () => {
     if (
       infiniteAlbums.hasNextPage &&
       !infiniteAlbums.isFetching &&
-      pathname.path === "albums"
+      pathname.path === "albums" &&
+      sortBy === sortOption
     ) {
       infiniteAlbums.fetchNextPage();
     }
@@ -51,23 +51,7 @@ const Albums = () => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.filters}>
-        {Object.entries(tabCopy).map(([key, { heading }]) => (
-          <Button
-            variant={sortBy === key ? "primary" : "secondary"}
-            size="$1"
-            radius="$1"
-            key={heading}
-            onPress={() => {
-              // type coercion bad
-              setSortBy(key as SortOptions);
-            }}
-          >
-            <Button.Text>{heading}</Button.Text>
-          </Button>
-        ))}
-      </View>
-      <Text style={styles.filter_text}>{tabCopy[sortBy].copy}</Text>
+      <Text style={styles.filter_text}>{tabCopy[sortOption].copy}</Text>
 
       {/* Is loading */}
       {infiniteAlbums.isLoading && (
@@ -119,7 +103,7 @@ const Albums = () => {
                         styles.notification_dot,
                         {
                           backgroundColor:
-                            sortBy === SortOptions.DELETE
+                            sortOption === SortOptions.DELETE
                               ? tokens.color.red2
                               : tokens.color.green2,
                         },
@@ -154,14 +138,10 @@ export default Albums;
 
 const styles = StyleSheet.create({
   wrapper: {
+    paddingHorizontal: 20,
     flex: 1,
     width: "100%",
     minHeight: "100%",
-  },
-  filters: {
-    flexDirection: "row",
-    padding: 10,
-    gap: 10,
   },
   filter_text: {
     paddingTop: 10,

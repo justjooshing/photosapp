@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import Image from "./image";
-import { FilterOptions } from "../types";
+import { FilterOptionsType } from "../types";
 
 import { useGetSingleAlbum } from "@/api/albums/queries";
 import { SortOptions } from "@/api/types";
@@ -15,8 +15,8 @@ const numColumns = 2;
 
 type Props = {
   albumId: string;
-  filter: FilterOptions;
-  setFilter: Dispatch<SetStateAction<FilterOptions>>;
+  filter: FilterOptionsType;
+  setFilter: Dispatch<SetStateAction<FilterOptionsType>>;
 };
 const ImageSet = ({ albumId, filter, setFilter }: Props) => {
   const singleAlbum = useGetSingleAlbum(albumId);

@@ -1,3 +1,5 @@
 import { SortOptions } from "@/api/types";
 
-export type FilterOptions = SortOptions | "all";
+export const FilterOptions = { ...SortOptions, ALL: "all" } as const;
+export type FilterOptionsType =
+  (typeof FilterOptions)[keyof typeof FilterOptions];

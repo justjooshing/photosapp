@@ -1,6 +1,6 @@
 export enum SortOptions {
-  KEEP = "keep",
   DELETE = "delete",
+  KEEP = "keep",
 }
 
 export interface ApiUser {
