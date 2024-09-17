@@ -63,7 +63,7 @@ const convertUrl = (url: string) => {
 
 export const errorMessageLookup = (error: AxiosError) => {
   // Probably cannot hit server
-  if (!error.response?.status || !error.config?.url || !error.config?.method)
+  if (!error?.response?.status || !error?.config?.url || !error?.config?.method)
     return genericErrorMessage;
   const {
     response: { status },
