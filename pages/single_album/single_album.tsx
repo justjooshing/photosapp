@@ -11,19 +11,17 @@ interface SingleAlbumProps {
   setFilter: Dispatch<SetStateAction<FilterOptionsType>>;
 }
 const SingleAlbum = ({ filter, setFilter }: SingleAlbumProps) => {
-  const { albumId } = useLocalSearchParams();
+  const { albumId } = useLocalSearchParams<{ albumId: string }>();
 
   // AlbumId should be a number as a string
-  if (isNaN(+albumId) || Array.isArray(albumId)) {
+  if (isNaN(+albumId)) {
     router.back();
     return;
   }
 
-  const singleAlbumId = typeof albumId === "string" ? albumId : albumId[0];
-
   return (
     <View style={styles.container}>
-      <ImageSet albumId={singleAlbumId} setFilter={setFilter} filter={filter} />
+      <ImageSet albumId={albumId} setFilter={setFilter} filter={filter} />
     </View>
   );
 };
