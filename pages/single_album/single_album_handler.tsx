@@ -1,14 +1,12 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { TabBar, TabView } from "react-native-tab-view";
 
 import SingleAlbum from "./single_album";
 import { FilterOptions, FilterOptionsType } from "./types";
 
+import TabView from "@/components/tab_view";
 import { useAlbumsContext } from "@/context/albums";
 
-const options = ["Delete", "Keep", "All"];
-
-const routes = options.map((val) => ({
+const routes = Object.values(FilterOptions).map((val) => ({
   key: val,
   title: val,
   icon: val,
@@ -16,34 +14,30 @@ const routes = options.map((val) => ({
 
 const renderScene =
   (setFilter: Dispatch<SetStateAction<FilterOptionsType>>) =>
-  ({ route }) =>
+  ({ route: { key } }) =>
     ({
-      Delete: (
+      delete: (
         <SingleAlbum filter={FilterOptions.DELETE} setFilter={setFilter} />
       ),
-      Keep: <SingleAlbum filter={FilterOptions.KEEP} setFilter={setFilter} />,
-      All: <SingleAlbum filter={FilterOptions.ALL} setFilter={setFilter} />,
-    })[route.key];
+      keep: <SingleAlbum filter={FilterOptions.KEEP} setFilter={setFilter} />,
+      all: <SingleAlbum filter={FilterOptions.ALL} setFilter={setFilter} />,
+    })[key];
 
 const AlbumsHandler = () => {
   const { sortBy } = useAlbumsContext();
-
   // Initiate as sortBy tab they're on currently
   const [filter, setFilter] = useState<FilterOptionsType>(sortBy);
-
   const index = Object.values(FilterOptions).indexOf(filter);
 
-  const handleScreenChange = () => {
-    setFilter(Object.values(FilterOptions)[index]);
+  const handleScreenChange = (newTabIndex: number) => {
+    setFilter(Object.values(FilterOptions)[newTabIndex]);
   };
 
   return (
     <TabView
-      renderTabBar={(props) => <TabBar {...props} />}
       navigationState={{ index, routes }}
       renderScene={renderScene(setFilter)}
       onIndexChange={handleScreenChange}
-      initialLayout={{ height: 100 }}
     />
   );
 };
