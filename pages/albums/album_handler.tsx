@@ -1,8 +1,7 @@
-import { TabBar, TabView } from "react-native-tab-view";
-
 import Albums from "./albums";
 
 import { SortOptions } from "@/api/types";
+import TabView from "@/components/tab_view";
 import { useAlbumsContext } from "@/context/albums";
 
 const options = ["Clean up", "All Sorted"];
@@ -24,17 +23,15 @@ const AlbumsHandler = () => {
 
   const index = sortBy === SortOptions.KEEP ? 1 : 0;
 
-  const handleScreenChange = () => {
-    setSortBy(index ? SortOptions.DELETE : SortOptions.KEEP);
+  const handleScreenChange = (newTabIndex: number) => {
+    setSortBy(newTabIndex ? SortOptions.KEEP : SortOptions.DELETE);
   };
 
   return (
     <TabView
-      renderTabBar={(props) => <TabBar {...props} />}
       navigationState={{ index, routes }}
       renderScene={renderScene}
       onIndexChange={handleScreenChange}
-      initialLayout={{ height: 100 }}
     />
   );
 };
