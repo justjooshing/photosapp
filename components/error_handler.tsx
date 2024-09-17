@@ -8,15 +8,13 @@ interface ErrorHandlerProps {
   error: AxiosError;
 }
 
-const ErrorHandler = ({ error }: ErrorHandlerProps) => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.error}>
-        <Text style={styles.copy}>{errorMessageLookup(error)}</Text>
-      </View>
+const ErrorHandler = ({ error }: ErrorHandlerProps) => (
+  <View style={styles.container}>
+    <View style={styles.error}>
+      <Text style={styles.copy}>{errorMessageLookup(error)}</Text>
     </View>
-  );
-};
+  </View>
+);
 
 export default ErrorHandler;
 

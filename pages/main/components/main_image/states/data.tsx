@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";
 import {
@@ -23,6 +23,7 @@ import ImageWithError from "@/components/image_with_error_handler";
 import { useImageContext } from "@/context/image";
 
 const Data = () => {
+  const router = useRouter();
   const { currentImageIndex, setCurrentImageIndex } = useImageContext();
   const { width, height } = useWindowDimensions();
   const offset = useSharedValue(0);

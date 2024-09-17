@@ -1,5 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
-import { Redirect, Tabs, router } from "expo-router";
+import { Redirect, Tabs, useRouter } from "expo-router";
 import { View, StyleSheet, Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -18,6 +18,7 @@ const Layout = () => {
   const token = useGetAuthToken();
   const count = useGetCount();
   const { slug } = usePathname();
+  const router = useRouter();
 
   const activeTabs = [
     { name: "index", label: "Sort", icon: "swap" },
