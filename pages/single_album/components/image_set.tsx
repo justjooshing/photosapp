@@ -1,5 +1,7 @@
+import { AntDesign } from "@expo/vector-icons";
 import { FlashList } from "@shopify/flash-list";
-import React, { Dispatch, SetStateAction } from "react";
+import { useRouter } from "expo-router";
+import React, { Dispatch, SetStateAction, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import Image from "./image";
@@ -9,9 +11,16 @@ import { useGetSingleAlbum } from "@/api/albums/queries";
 import { SortOptions } from "@/api/types";
 import ErrorHandler from "@/components/error_handler";
 import Skeleton from "@/components/skeleton";
+import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 
 const numColumns = 2;
+const copy = {
+  text: (filter: FilterOptionsType) =>
+    `No images marked under ${filter}${filter === "all" ? "" : ", try setting to 'All'"}`,
+  cta: (filter: FilterOptionsType) =>
+    filter === "all" ? "Back to Albums" : "View All Images",
+};
 
 type Props = {
   albumId: string;
@@ -19,7 +28,20 @@ type Props = {
   setFilter: Dispatch<SetStateAction<FilterOptionsType>>;
 };
 const ImageSet = ({ albumId, filter, setFilter }: Props) => {
+  const router = useRouter();
   const singleAlbum = useGetSingleAlbum(albumId);
+
+  const images = useMemo(() => {
+    if (!singleAlbum.data?.images.length) return [];
+    if (filter === SortOptions.KEEP) return singleAlbum.data?.kept;
+    if (filter === SortOptions.DELETE) return singleAlbum.data?.deleted;
+    return singleAlbum.data?.images;
+  }, [filter, singleAlbum]);
+
+  const handleEmptyClick = () => {
+    if (filter !== "all") setFilter("all");
+    else router.push("/albums");
+  };
 
   if (singleAlbum.isError) return <ErrorHandler error={singleAlbum.error} />;
   if (singleAlbum.isLoading)
@@ -38,41 +60,38 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
       />
     );
 
-  const images = (() => {
-    if (!singleAlbum.data?.images.length) return [];
-    if (filter === SortOptions.KEEP) return singleAlbum.data?.kept;
-    if (filter === SortOptions.DELETE) return singleAlbum.data?.deleted;
-    return singleAlbum.data?.images;
-  })();
-
-  return (
-    <>
-      {!images.length ? (
-        <View style={styles.no_data}>
-          <Text> No images marked under {filter}, try setting to 'All'</Text>
+  if (!images.length)
+    return (
+      <View style={styles.empty_container}>
+        <View style={styles.empty_icon}>
+          <AntDesign name="folderopen" size={144} color={tokens.color.grey6} />
+          <Text style={styles.empty_copy}>{copy.text(filter)}</Text>
+        </View>
+        <View style={styles.empty_cta}>
           <Button
             variant="primary"
             size="$1"
             radius="$1"
-            onPress={() => setFilter("all")}
+            onPress={handleEmptyClick}
           >
-            <Button.Text>View All Images</Button.Text>
+            <Button.Text>{copy.cta(filter)}</Button.Text>
           </Button>
         </View>
-      ) : (
-        <FlashList
-          data={images}
-          estimatedItemSize={8}
-          keyExtractor={({ id }) => id.toString()}
-          numColumns={numColumns}
-          renderItem={({ item }) => (
-            <View style={styles.image}>
-              <Image image={item} />
-            </View>
-          )}
-        />
+      </View>
+    );
+
+  return (
+    <FlashList
+      data={images}
+      estimatedItemSize={8}
+      keyExtractor={({ id }) => id.toString()}
+      numColumns={numColumns}
+      renderItem={({ item }) => (
+        <View style={styles.image}>
+          <Image image={item} />
+        </View>
       )}
-    </>
+    />
   );
 };
 
@@ -85,7 +104,21 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     overflow: "hidden",
   },
-  no_data: {
+  empty_container: {
+    height: "100%",
+    display: "flex",
+    justifyContent: "flex-end",
+    paddingBottom: tokens.space[3],
+  },
+  empty_copy: {
+    color: tokens.color.grey7,
+  },
+  empty_icon: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  empty_cta: {
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
