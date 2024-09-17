@@ -5,7 +5,6 @@ import { Pressable, Text, StyleSheet, View } from "react-native";
 import { Spinner } from "tamagui";
 
 import { useGetInfiniteAlbums } from "@/api/albums/queries";
-import { useGetCount } from "@/api/images/queries";
 import { SortOptions } from "@/api/types";
 import ImageTile from "@/components/image_tile";
 import Skeleton from "@/components/skeleton";
@@ -19,18 +18,12 @@ const Albums = ({ sortOption }: { sortOption: SortOptions }) => {
   const { sortBy } = useAlbumsContext();
   const pathname = usePathname();
 
-  const counts = useGetCount();
   const infiniteAlbums = useGetInfiniteAlbums(sortOption);
 
   const tabCopy = {
-    delete: {
-      heading: `Clean up (${counts.isLoading ? "?" : counts.data?.albumsToDelete.count || 0})`,
-      copy: "Your goal is to have this list empty, it means you've deleted all the images that you decided you wanted to delete.",
-    },
-    keep: {
-      heading: `All sorted (${counts.isLoading ? "?" : counts.data?.albumsKept.count || 0})`,
-      copy: "These are the image sets containing only images you've decided you want to keep.",
-    },
+    delete:
+      "These image sets contain those that you've said you want to delete. Clean these up by deleting them from Google",
+    keep: "These image sets only contain images that you've decided you want to keep",
   };
 
   const data = useMemo(
@@ -51,7 +44,7 @@ const Albums = ({ sortOption }: { sortOption: SortOptions }) => {
 
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.filter_text}>{tabCopy[sortOption].copy}</Text>
+      <Text style={styles.filter_text}>{tabCopy[sortOption]}</Text>
 
       {/* Is loading */}
       {infiniteAlbums.isLoading && (
@@ -144,14 +137,22 @@ const styles = StyleSheet.create({
     minHeight: "100%",
   },
   filter_text: {
-    paddingTop: 10,
-    paddingBottom: 20,
+    display: "flex",
+    justifyContent: "center",
+    fontSize: tokens.fontSize[1],
+    borderColor: tokens.color.grey2,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderRadius: tokens.radius[3],
+    padding: tokens.space[3],
+    margin: tokens.space[1],
+    textAlign: "center",
   },
   image: {
     alignItems: "center",
     position: "relative",
     width: "100%",
-    paddingVertical: 10,
+    paddingVertical: tokens.space[2],
   },
   notification_dot: {
     position: "absolute",
@@ -163,17 +164,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 20,
     aspectRatio: 1,
-    borderRadius: 20,
+    borderRadius: tokens.radius[3],
   },
   notification_dot_text: { color: tokens.color.white, fontSize: 10 },
   skeleton_container: {
-    borderRadius: 20,
+    borderRadius: tokens.radius[3],
     width: "80%",
     aspectRatio: 1,
     alignItems: "center",
     overflow: "hidden",
   },
-  empty: { fontSize: 20 },
+  empty: { fontSize: tokens.fontSize[2] },
   infinite_fetching_container: {
     padding: tokens.space[2],
     width: "100%",
