@@ -1,5 +1,6 @@
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { FlashList } from "@shopify/flash-list";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import React, { useMemo } from "react";
 import { View, Pressable, Text, StyleSheet } from "react-native";
 import { Spinner } from "tamagui";
@@ -9,12 +10,28 @@ import { SortOptions } from "@/api/types";
 import ImageTile from "@/components/image_tile";
 import Skeleton from "@/components/skeleton";
 import { tokens } from "@/config/tamagui/tokens";
+import { Button } from "@/config/tamagui/variants";
 import { useAlbumsContext } from "@/context/albums";
 import usePathname from "@/hooks/usePathname";
 
 const numColumns = 2;
 
+const copy = {
+  empty: {
+    heading: (filter: SortOptions) =>
+      filter === SortOptions.DELETE
+        ? "Great job cleaning up!"
+        : "All sorted, nothing kept",
+    copy: (filter: SortOptions) =>
+      filter === SortOptions.DELETE
+        ? "You've successfully deleted marked images!"
+        : "Try sorting more images",
+    cta: "Sort images",
+  },
+};
+
 const AlbumSet = ({ sortOption }: { sortOption: SortOptions }) => {
+  const router = useRouter();
   const { sortBy } = useAlbumsContext();
   const pathname = usePathname();
 
@@ -33,6 +50,10 @@ const AlbumSet = ({ sortOption }: { sortOption: SortOptions }) => {
     ) {
       infiniteAlbums.fetchNextPage();
     }
+  };
+
+  const handleEmptyCta = () => {
+    router.push("/");
   };
 
   // Is loading
@@ -55,12 +76,46 @@ const AlbumSet = ({ sortOption }: { sortOption: SortOptions }) => {
   // No data
   if (!infiniteAlbums.isLoading && !data?.length)
     return (
-      <View>
-        <Text style={styles.empty}>No data</Text>
-        <Text>
-          If you were expecting something different please refresh or try again
-          later
+      <View style={styles.empty_container}>
+        <View style={styles.empty_icon_container}>
+          <View style={styles.empty_icon_group}>
+            {sortOption === SortOptions.DELETE && (
+              <MaterialIcons
+                name="auto-awesome"
+                size={64}
+                color={tokens.color.blue}
+              />
+            )}
+            <View style={styles.empty_icon}>
+              <AntDesign
+                name="folderopen"
+                size={144}
+                color={tokens.color.grey6}
+              />
+            </View>
+            {sortOption === SortOptions.DELETE && (
+              <MaterialIcons
+                name="auto-awesome"
+                size={64}
+                color={tokens.color.blue}
+              />
+            )}
+          </View>
+        </View>
+        <Text style={styles.empty_heading}>
+          {copy.empty.heading(sortOption)}
         </Text>
+        <Text style={styles.empty_copy}>{copy.empty.copy(sortOption)}</Text>
+        <View style={styles.empty_cta}>
+          <Button
+            variant="primary"
+            size="$1"
+            radius="$1"
+            onPress={handleEmptyCta}
+          >
+            <Button.Text>{copy.empty.cta}</Button.Text>
+          </Button>
+        </View>
       </View>
     );
 
@@ -148,7 +203,33 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
   },
-  empty: { fontSize: tokens.fontSize[2] },
+  empty_container: {
+    height: "100%",
+    justifyContent: "flex-end",
+    flexShrink: 1,
+    paddingBottom: tokens.space[3],
+  },
+  empty_icon_container: { height: "100%", justifyContent: "center" },
+  empty_icon_group: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  empty_icon: { paddingLeft: 20, paddingRight: 10 },
+  empty_heading: {
+    fontSize: tokens.fontSize[2],
+    fontWeight: "600",
+    paddingVertical: tokens.space[2],
+    color: tokens.color.grey7,
+  },
+  empty_copy: {
+    color: tokens.color.grey7,
+  },
+  empty_cta: {
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+    paddingTop: tokens.space[4],
+  },
   infinite_fetching_container: {
     padding: tokens.space[2],
     width: "100%",

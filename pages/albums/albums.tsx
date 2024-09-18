@@ -8,7 +8,7 @@ import { tokens } from "@/config/tamagui/tokens";
 const Albums = ({ sortOption }: { sortOption: SortOptions }) => {
   const tabCopy = {
     delete:
-      "These image sets contain those that you've said you want to delete. Clean these up by deleting them from Google",
+      "These image sets contain those that you've said you want to delete. Clean these up by deleting them from Google.",
     keep: "These image sets only contain images that you've decided you want to keep",
   };
 
@@ -25,7 +25,6 @@ export default Albums;
 const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 20,
-    flex: 1,
     width: "100%",
     minHeight: "100%",
   },

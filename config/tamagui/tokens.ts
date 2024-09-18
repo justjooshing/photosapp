@@ -29,6 +29,7 @@ export const tokens = {
     2: 12,
     true: 12,
     3: 16,
+    4: 24,
   },
   radius: {
     1: 5,
