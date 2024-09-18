@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import { FlashList } from "@shopify/flash-list";
-import { useRouter } from "expo-router";
+import { Link } from "expo-router";
 import React, { Dispatch, SetStateAction, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -28,7 +28,6 @@ type Props = {
   setFilter: Dispatch<SetStateAction<FilterOptionsType>>;
 };
 const ImageSet = ({ albumId, filter, setFilter }: Props) => {
-  const router = useRouter();
   const singleAlbum = useGetSingleAlbum(albumId);
 
   const images = useMemo(() => {
@@ -40,7 +39,6 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
 
   const handleEmptyClick = () => {
     if (filter !== "all") setFilter("all");
-    else router.push("/albums");
   };
 
   if (singleAlbum.isError) return <ErrorHandler error={singleAlbum.error} />;
@@ -74,7 +72,13 @@ const ImageSet = ({ albumId, filter, setFilter }: Props) => {
             radius="$1"
             onPress={handleEmptyClick}
           >
-            <Button.Text>{copy.cta(filter)}</Button.Text>
+            {filter === "all" ? (
+              <Link href="/albums">
+                <Button.Text>{copy.cta(filter)}</Button.Text>
+              </Link>
+            ) : (
+              <Button.Text>{copy.cta(filter)}</Button.Text>
+            )}
           </Button>
         </View>
       </View>

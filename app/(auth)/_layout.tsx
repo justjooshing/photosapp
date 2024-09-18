@@ -1,5 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
-import { Redirect, Tabs, useRouter } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { View, StyleSheet, Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -18,7 +18,6 @@ const Layout = () => {
   const token = useGetAuthToken();
   const count = useGetCount();
   const { slug } = usePathname();
-  const router = useRouter();
 
   const activeTabs = [
     { name: "index", label: "Sort", icon: "swap" },
@@ -56,19 +55,16 @@ const Layout = () => {
                 <Tabs.Screen
                   key={name}
                   name={name}
-                  listeners={{
-                    tabPress: () => {
-                      // override issue clicking album tab when in album/[albumId]
-                      // wouldn't navigate anywhere
-                      if (name === "albums" && slug) router.push(`/${name}`);
-                    },
-                  }}
                   options={{
+                    // override issue clicking album tab when in album/[albumId]
+                    // wouldn't navigate anywhere
+                    ...(name === "albums" && slug && { href: "/albums" }),
                     tabBarItemStyle: { paddingVertical: 5 },
                     tabBarBadge:
                       name === "albums" && count.data?.albumsToDelete.count
                         ? count.data?.albumsToDelete.count
                         : null,
+
                     tabBarIcon: ({ focused }) => (
                       <AntDesign
                         name={icon}

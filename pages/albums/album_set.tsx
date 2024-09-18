@@ -1,6 +1,6 @@
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { FlashList } from "@shopify/flash-list";
-import { Link, useRouter } from "expo-router";
+import { Link } from "expo-router";
 import React, { useMemo } from "react";
 import { View, Pressable, Text, StyleSheet } from "react-native";
 import { Spinner } from "tamagui";
@@ -31,7 +31,6 @@ const copy = {
 };
 
 const AlbumSet = ({ sortOption }: { sortOption: SortOptions }) => {
-  const router = useRouter();
   const { sortBy } = useAlbumsContext();
   const pathname = usePathname();
 
@@ -50,10 +49,6 @@ const AlbumSet = ({ sortOption }: { sortOption: SortOptions }) => {
     ) {
       infiniteAlbums.fetchNextPage();
     }
-  };
-
-  const handleEmptyCta = () => {
-    router.push("/");
   };
 
   // Is loading
@@ -107,13 +102,10 @@ const AlbumSet = ({ sortOption }: { sortOption: SortOptions }) => {
         </Text>
         <Text style={styles.empty_copy}>{copy.empty.copy(sortOption)}</Text>
         <View style={styles.empty_cta}>
-          <Button
-            variant="primary"
-            size="$1"
-            radius="$1"
-            onPress={handleEmptyCta}
-          >
-            <Button.Text>{copy.empty.cta}</Button.Text>
+          <Button variant="primary" size="$1" radius="$1">
+            <Link href="/">
+              <Button.Text>{copy.empty.cta}</Button.Text>
+            </Link>
           </Button>
         </View>
       </View>
