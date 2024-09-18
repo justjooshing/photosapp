@@ -32,6 +32,7 @@ const TabView = ({ navigationState, renderScene, onIndexChange }: Props) => {
       renderScene={renderScene}
       onIndexChange={onIndexChange}
       initialLayout={{ width }}
+      lazy
     />
   );
 };
