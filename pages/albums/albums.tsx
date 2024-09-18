@@ -25,6 +25,7 @@ export default Albums;
 const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 20,
+    flex: 1,
     width: "100%",
     minHeight: "100%",
   },
