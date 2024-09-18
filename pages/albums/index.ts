@@ -1,1 +1,1 @@
-export { default } from "./album_handler";
+export { default } from "./albums_tabs";

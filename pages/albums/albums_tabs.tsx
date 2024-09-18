@@ -1,26 +1,21 @@
-import Albums from "./albums";
+import AlbumsContainer from "./albums_container";
 
 import { useGetCount } from "@/api/images/queries";
 import { SortOptions } from "@/api/types";
 import TabView from "@/components/tab_view";
 import { useAlbumsContext } from "@/context/albums";
 
-const options = ["Clean up", "All Sorted"];
-
 const routes = (counts: (string | number)[]) =>
-  options.map((val, index) => ({
-    key: val,
+  ["Clean up", "All Sorted"].map((val, index) => ({
+    key: SortOptions[index],
     title: `${val} (${counts[index]})`,
   }));
 
-const renderScene = ({ route }) =>
-  route.key === options[0] ? (
-    <Albums sortOption={SortOptions.DELETE} />
-  ) : (
-    <Albums sortOption={SortOptions.KEEP} />
-  );
+const renderScene = ({ route: { key } }) => (
+  <AlbumsContainer sortOption={key} />
+);
 
-const AlbumsHandler = () => {
+const AlbumsTabs = () => {
   const { sortBy, setSortBy } = useAlbumsContext();
   const counts = useGetCount();
 
@@ -46,4 +41,4 @@ const AlbumsHandler = () => {
   );
 };
 
-export default AlbumsHandler;
+export default AlbumsTabs;

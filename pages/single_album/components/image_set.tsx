@@ -11,10 +11,10 @@ import { useGetSingleAlbum } from "@/api/albums/queries";
 import { SortOptions } from "@/api/types";
 import ErrorHandler from "@/components/error_handler";
 import Skeleton from "@/components/skeleton";
+import { numColumns } from "@/config/constants";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 
-const numColumns = 2;
 const copy = {
   text: (filter: FilterOptionsType) =>
     `No images marked under ${filter}${filter === "all" ? "" : ", try setting to 'All'"}`,
