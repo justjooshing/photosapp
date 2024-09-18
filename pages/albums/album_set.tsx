@@ -45,6 +45,7 @@ const AlbumSet = ({ sortOption }: { sortOption: SortOptions }) => {
       infiniteAlbums.hasNextPage &&
       !infiniteAlbums.isFetching &&
       pathname.path === "albums" &&
+      !pathname.slug &&
       sortBy === sortOption
     ) {
       infiniteAlbums.fetchNextPage();
