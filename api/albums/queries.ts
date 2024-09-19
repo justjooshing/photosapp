@@ -2,7 +2,7 @@ import {
   useQuery,
   QueryFunctionContext,
   useInfiniteQuery,
-  UseQueryResult,
+  InfiniteData,
 } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
@@ -11,6 +11,10 @@ import { ENDPOINTS } from "../endpoints";
 import { Keys } from "../keys";
 import { ApiAlbums, ApiSingleAlbum, SortOptions } from "../types";
 
+import {
+  FilterOptionsType,
+  useSingleAlbumContext,
+} from "@/context/single_album";
 import Storage from "@/utils/storage";
 
 const getInfiniteAlbums = async ({
@@ -25,7 +29,12 @@ const getInfiniteAlbums = async ({
 };
 
 export const useGetInfiniteAlbums = (sorted_status: SortOptions) =>
-  useInfiniteQuery({
+  useInfiniteQuery<
+    ApiAlbums,
+    AxiosError,
+    InfiniteData<ApiAlbums>,
+    ReturnType<typeof Keys.infiniteAlbums>
+  >({
     queryKey: Keys.infiniteAlbums(sorted_status),
     queryFn: getInfiniteAlbums,
     initialPageParam: undefined,
@@ -38,52 +47,31 @@ const getSingleAlbum = async ({
   const { data } = await client.get<ApiSingleAlbum>(
     `${ENDPOINTS.get("albums")}/${albumId}`,
   );
+
   return data;
 };
 
-const organiseSingleAlbum = (data: ApiSingleAlbum) => {
-  const organisedImages = data.images.reduce(
-    (
-      acc: {
-        deleted: ApiSingleAlbum["images"];
-        kept: ApiSingleAlbum["images"];
-      },
-      curr,
-    ) => {
-      // Something to do with optimistic updates or refetching causing curr to be undefined natively
-      if (!curr) {
-        return acc;
-      }
-      const sortBy =
-        curr.sorted_status === SortOptions.DELETE ? "deleted" : "kept";
-      acc[sortBy].push(curr);
-      return acc;
-    },
-    { deleted: [], kept: [] },
-  );
-  const organisedSingleAlbum = {
-    ...data,
-    ...organisedImages,
-  };
-  return organisedSingleAlbum;
-};
+const selectImages = (filter: FilterOptionsType) => (data: ApiSingleAlbum) => {
+  const images =
+    filter === "all"
+      ? data.images
+      : data?.images.filter(({ sorted_status }) => sorted_status === filter);
 
-export const useGetSingleAlbum = (
-  albumId: string,
-): UseQueryResult<
-  ApiSingleAlbum & {
-    deleted: ApiSingleAlbum["images"];
-    kept: ApiSingleAlbum["images"];
-  },
-  AxiosError
-> => {
+  return {
+    ...data,
+    images,
+  };
+};
+export const useGetSingleAlbum = () => {
+  const { filter, albumId } = useSingleAlbumContext();
+
   const token = Storage.getString("jwt");
   const isNumberAsString = !isNaN(+albumId) && !Array.isArray(albumId);
 
-  return useQuery({
+  return useQuery<ApiSingleAlbum, AxiosError>({
     enabled: !!token && isNumberAsString && !!albumId,
     queryKey: Keys.albumImages(albumId),
     queryFn: getSingleAlbum,
-    select: organiseSingleAlbum,
+    select: selectImages(filter),
   });
 };
