@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import SingleAlbumContainer from "./single_album_container";
 
@@ -12,14 +12,29 @@ const routes = filterValues.map((val) => ({
   title: val,
 }));
 
-const renderScene = ({ route: { key } }) =>
-  ({
-    [FilterOptions.DELETE]: (
-      <SingleAlbumContainer filter={FilterOptions.DELETE} />
-    ),
-    [FilterOptions.KEEP]: <SingleAlbumContainer filter={FilterOptions.KEEP} />,
-    [FilterOptions.ALL]: <SingleAlbumContainer filter={FilterOptions.ALL} />,
-  })[key];
+const renderScene =
+  (setFilter: Dispatch<SetStateAction<FilterOptionsType>>) =>
+  ({ route: { key } }) =>
+    ({
+      [FilterOptions.DELETE]: (
+        <SingleAlbumContainer
+          filter={FilterOptions.DELETE}
+          setFilter={setFilter}
+        />
+      ),
+      [FilterOptions.KEEP]: (
+        <SingleAlbumContainer
+          filter={FilterOptions.KEEP}
+          setFilter={setFilter}
+        />
+      ),
+      [FilterOptions.ALL]: (
+        <SingleAlbumContainer
+          filter={FilterOptions.ALL}
+          setFilter={setFilter}
+        />
+      ),
+    })[key];
 
 const SingleAlbumsTabs = () => {
   // Initiate as sortBy tab they're on currently
@@ -34,7 +49,7 @@ const SingleAlbumsTabs = () => {
   return (
     <TabView
       navigationState={{ index, routes }}
-      renderScene={renderScene}
+      renderScene={renderScene(setFilter)}
       onIndexChange={handleScreenChange}
     />
   );

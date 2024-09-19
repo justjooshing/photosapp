@@ -1,11 +1,20 @@
+import { Dispatch, SetStateAction } from "react";
 import { StyleSheet, View } from "react-native";
 
 import SingleAlbum from "./single_album";
 
 import { FilterOptionsType, SingleAlbumProvider } from "@/context/single_album";
 
-const SingleAlbumContainer = ({ filter }: { filter: FilterOptionsType }) => (
-  <SingleAlbumProvider initialState={{ filter }}>
+interface SingleAlbumContainerProps {
+  filter: FilterOptionsType;
+  setFilter: Dispatch<SetStateAction<SingleAlbumContainerProps["filter"]>>;
+}
+const SingleAlbumContainer = ({
+  filter,
+  setFilter,
+}: SingleAlbumContainerProps) => (
+  // Wrapping here rather than _tabs because filter needs to be set statically for each tab
+  <SingleAlbumProvider initialState={{ filter, setFilter }}>
     <View style={styles.container}>
       <SingleAlbum />
     </View>

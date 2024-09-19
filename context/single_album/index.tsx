@@ -1,5 +1,12 @@
 import { useLocalSearchParams, router } from "expo-router";
-import { createContext, ReactNode, useContext, useMemo } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useMemo,
+} from "react";
 
 import { SortOptions } from "@/api/types";
 
@@ -10,20 +17,22 @@ export type FilterOptionsType =
 export interface InitialState {
   albumId: string;
   filter: FilterOptionsType;
+  setFilter: Dispatch<SetStateAction<InitialState["filter"]>>;
 }
 
 const defaultState: InitialState = {
   albumId: "",
   filter: SortOptions.DELETE,
+  setFilter: () => {},
 };
 
 const SingleAlbumContext = createContext<InitialState>(defaultState);
 
 export const SingleAlbumProvider = ({
-  initialState: { filter },
+  initialState: { filter, setFilter },
   children,
 }: {
-  initialState: { filter: FilterOptionsType };
+  initialState: Omit<InitialState, "albumId">;
   children: ReactNode;
 }) => {
   const { albumId } = useLocalSearchParams<{ albumId: string }>();
@@ -32,8 +41,9 @@ export const SingleAlbumProvider = ({
     () => ({
       filter,
       albumId,
+      setFilter,
     }),
-    [filter, albumId],
+    [filter, setFilter, albumId],
   );
 
   // AlbumId should be a number as a string
