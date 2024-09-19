@@ -1,39 +1,19 @@
-import { router, useLocalSearchParams } from "expo-router";
-import { Dispatch, SetStateAction } from "react";
-import { StyleSheet, View } from "react-native";
+import React from "react";
 
-import ImageSet from "./components/image_set";
+import Data from "./states/data";
+import Empty from "./states/empty";
+import Loading from "./states/loading";
 
-import { FilterOptionsType } from "@/pages/single_album/types";
+import { useGetSingleAlbum } from "@/api/albums/queries";
+import ErrorHandler from "@/components/error_handler";
 
-interface SingleAlbumProps {
-  filter: FilterOptionsType;
-  setFilter: Dispatch<SetStateAction<FilterOptionsType>>;
-}
-const SingleAlbum = ({ filter, setFilter }: SingleAlbumProps) => {
-  const { albumId } = useLocalSearchParams<{ albumId: string }>();
+const SingleAlbum = () => {
+  const singleAlbum = useGetSingleAlbum();
 
-  // AlbumId should be a number as a string
-  if (isNaN(+albumId)) {
-    router.back();
-    return;
-  }
+  if (singleAlbum.isError) return <ErrorHandler error={singleAlbum.error} />;
+  if (singleAlbum.isLoading) return <Loading />;
 
-  return (
-    <View style={styles.container}>
-      <ImageSet albumId={albumId} setFilter={setFilter} filter={filter} />
-    </View>
-  );
+  return !singleAlbum.data.images.length ? <Empty /> : <Data />;
 };
 
 export default SingleAlbum;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "100%",
-    paddingHorizontal: 20,
-    gap: 30,
-    paddingTop: 10,
-  },
-});

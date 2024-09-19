@@ -1,1 +1,1 @@
-export { default } from "./single_album";
+export { default } from "./single_album_tabs";
