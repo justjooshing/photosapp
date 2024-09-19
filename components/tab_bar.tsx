@@ -19,10 +19,8 @@ const TabBar = (props: Props) => (
     {...props}
     activeColor={tokens.color.blue}
     inactiveColor={tokens.color.white}
-    style={styles.container}
     labelStyle={styles.labelStyle}
     indicatorContainerStyle={styles.indicatorContainerStyle}
-    contentContainerStyle={styles.contentContainerStyle}
     indicatorStyle={styles.indicatorStyle}
   />
 );
@@ -30,13 +28,6 @@ const TabBar = (props: Props) => (
 export default TabBar;
 
 const styles = StyleSheet.create({
-  container: {
-    height: 30,
-    justifyContent: "center",
-  },
-  contentContainerStyle: {
-    display: "flex",
-  },
   labelStyle: {
     fontSize: tokens.fontSize[1],
   },
