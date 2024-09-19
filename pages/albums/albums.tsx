@@ -6,14 +6,15 @@ import Loading from "./states/loading";
 
 import { useGetInfiniteAlbums } from "@/api/albums/queries";
 import { SortOptions } from "@/api/types";
+import ErrorHandler from "@/components/error_handler";
 
 const Albums = ({ sortOption }: { sortOption: SortOptions }) => {
-  const { isLoading, data } = useGetInfiniteAlbums(sortOption);
+  const albums = useGetInfiniteAlbums(sortOption);
 
-  // Is loading
-  if (isLoading) return <Loading />;
+  if (albums.isError) return <ErrorHandler error={albums.error} />;
+  if (albums.isLoading) return <Loading />;
 
-  return !data?.pages?.length ? (
+  return !albums.data?.pages?.length ? (
     <Empty sortOption={sortOption} />
   ) : (
     <Data sortOption={sortOption} />

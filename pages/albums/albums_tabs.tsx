@@ -6,14 +6,19 @@ import TabView from "@/components/tab_view";
 import { useAlbumsContext } from "@/context/albums";
 
 const routes = (counts: (string | number)[]) =>
-  ["Clean up", "All Sorted"].map((val, index) => ({
-    key: SortOptions[index],
-    title: `${val} (${counts[index]})`,
-  }));
+  ["Clean up", "All Sorted"].map(
+    (val, index) =>
+      ({
+        key: Object.keys(SortOptions)[index],
+        title: `${val} (${counts[index]})`,
+      }) as const,
+  );
 
-const renderScene = ({ route: { key } }) => (
-  <AlbumsContainer sortOption={key} />
-);
+const renderScene = ({ route: { key } }) =>
+  ({
+    DELETE: <AlbumsContainer sortOption={SortOptions.DELETE} />,
+    KEEP: <AlbumsContainer sortOption={SortOptions.KEEP} />,
+  })[key];
 
 const AlbumsTabs = () => {
   const { sortBy, setSortBy } = useAlbumsContext();
@@ -21,7 +26,7 @@ const AlbumsTabs = () => {
 
   type CountOptions = "albumsToDelete" | "albumsKept";
   const getCount = (opt: CountOptions) =>
-    counts.isLoading ? "?" : counts.data[opt].count || 0;
+    !counts.data ? "?" : counts.data[opt].count || 0;
 
   const index = sortBy === SortOptions.KEEP ? 1 : 0;
 
