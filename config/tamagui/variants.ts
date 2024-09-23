@@ -105,7 +105,7 @@ const ButtonText = styled(TamButtonText, {
   },
 });
 
-export const ButtonFrame: TamaguiComponent = styled(TamButton, {
+const ButtonFrame: TamaguiComponent = styled(TamButton, {
   name: "Button",
   ...baseButtonStyles,
   variants: buttonStyles,
@@ -114,13 +114,6 @@ export const ButtonFrame: TamaguiComponent = styled(TamButton, {
 export const Button = withStaticProperties(ButtonFrame, {
   Text: ButtonText,
 });
-
-export const Anchor: TamaguiComponent = styled(TamAnchor, {
-  name: "Anchor",
-  textDecorationLine: "none",
-  ...baseButtonStyles,
-  variants: buttonStyles,
-} as const);
 
 export const H1: TamaguiComponent = styled(TamH1, {
   name: "H1",
