@@ -50,13 +50,14 @@ const styles = StyleSheet.create({
   },
   headliner_copy: {
     fontSize: tokens.fontSize[2],
+    textAlign: "center",
   },
   headliner_stat: {
     fontSize: tokens.fontSize[3],
   },
-
   secondary_copy: {
     fontSize: tokens.fontSize[1],
+    textAlign: "center",
   },
   secondary_stat: {
     fontSize: tokens.fontSize[2],
