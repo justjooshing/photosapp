@@ -26,13 +26,14 @@ const Data = ({ sortOption }: Props) => {
     [infiniteAlbums],
   );
   const handleEndReached = () => {
-    if (
+    const canRefetch =
       infiniteAlbums.hasNextPage &&
       !infiniteAlbums.isFetching &&
       pathname.path === "albums" &&
       !pathname.slug &&
-      sortBy === sortOption
-    ) {
+      sortBy === sortOption;
+
+    if (canRefetch) {
       infiniteAlbums.fetchNextPage();
     }
   };
@@ -43,6 +44,7 @@ const Data = ({ sortOption }: Props) => {
         numColumns={numColumns}
         estimatedItemSize={data?.length || 10}
         keyExtractor={({ id }) => id.toString()}
+        onEndReachedThreshold={0.8}
         onEndReached={handleEndReached}
         renderItem={({ item: album }) => (
           <Link
