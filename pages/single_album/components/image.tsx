@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
-import { View, Pressable, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import { useUpdateSingleAlbumImage } from "@/api/images/mutations";
 import { ApiImage, SortOptions } from "@/api/types";
@@ -10,8 +10,8 @@ import { Button } from "@/config/tamagui/variants";
 import { useImageContext } from "@/context/image";
 
 const copy = {
-  markAs: (updatedChoice: string) => `Mark to be ${updatedChoice}`,
-  google: "Delete from Google Photos",
+  markAs: (updatedChoice: SortOptions) => `Move to ${updatedChoice}`,
+  google: "Delete from",
 };
 
 type Props = { image: ApiImage };
@@ -27,17 +27,15 @@ const Image = ({ image }: Props) => {
     setTargetImage(image);
   };
 
-  const { markAsLabel, updated_status, markAsBgColor, markAsColor } = {
+  const { markAsLabel, updated_status, variant } = {
     [SortOptions.KEEP]: {
-      markAsLabel: copy.markAs("deleted"),
-      markAsBgColor: tokens.color.red,
-      markAsColor: tokens.color.white,
+      markAsLabel: copy.markAs(SortOptions.DELETE),
+      variant: "primary",
       updated_status: SortOptions.DELETE,
     },
     [SortOptions.DELETE]: {
-      markAsLabel: copy.markAs("kept"),
-      markAsBgColor: tokens.color.green,
-      markAsColor: tokens.color.white,
+      markAsLabel: copy.markAs(SortOptions.KEEP),
+      variant: "secondary",
       updated_status: SortOptions.KEEP,
     },
   }[image.sorted_status];
@@ -53,27 +51,21 @@ const Image = ({ image }: Props) => {
     <View style={styles.image}>
       <ImageTile baseUrl={image.baseUrl} />
       <View style={styles.button_wrapper}>
-        <Pressable
-          onPress={handleClick}
-          style={[
-            styles.image_sort,
-            {
-              backgroundColor: markAsBgColor,
-            },
-          ]}
-        >
-          <Button.Text
-            style={{
-              color: markAsColor,
-            }}
-          >
+        <Button onPress={handleClick} variant={variant} full>
+          <Button.Text padding={4} fontSize={tokens.fontSize[1]}>
             {markAsLabel}
           </Button.Text>
-        </Pressable>
-        <Pressable onPress={handleButtonClick} style={styles.image_google}>
-          <AntDesign name="google" size={20} color={tokens.color.black} />
-          <Text>{copy.google}</Text>
-        </Pressable>
+        </Button>
+        <Button onPress={handleButtonClick} variant="google" full>
+          <Button.Text
+            color={tokens.color.white}
+            fontSize={tokens.fontSize[1]}
+            padding={4}
+          >
+            {copy.google}
+          </Button.Text>
+          <AntDesign name="google" size={20} color={tokens.color.white} />
+        </Button>
       </View>
     </View>
   );
@@ -88,28 +80,10 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   button_wrapper: {
-    maxWidth: "80%",
+    width: "80%",
     justifyContent: "space-between",
     alignItems: "center",
     paddingTop: tokens.space[1],
     gap: tokens.space[1],
-  },
-  image_sort: {
-    width: "100%",
-    textAlign: "center",
-    alignItems: "center",
-    padding: tokens.space[1],
-  },
-  image_google: {
-    userSelect: "none",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: tokens.color.grey2,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: tokens.space[1],
-    gap: tokens.space[1],
-    textAlign: "center",
   },
 });
