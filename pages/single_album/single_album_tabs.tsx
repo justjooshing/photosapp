@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import SingleAlbumContainer from "./single_album_container";
 
 import TabView from "@/components/tab_view";
+import { useAlbumsContext } from "@/context/albums";
 import { FilterOptions, FilterOptionsType } from "@/context/single_album";
 
 const filterValues = Object.values(FilterOptions);
@@ -38,7 +39,8 @@ const renderScene =
 
 const SingleAlbumsTabs = () => {
   // Initiate as sortBy tab they're on currently
-  const [filter, setFilter] = useState<FilterOptionsType>(FilterOptions.DELETE);
+  const { sortBy } = useAlbumsContext();
+  const [filter, setFilter] = useState<FilterOptionsType>(sortBy);
 
   const index = filterValues.indexOf(filter);
 
