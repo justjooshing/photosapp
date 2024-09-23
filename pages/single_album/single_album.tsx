@@ -13,7 +13,7 @@ const SingleAlbum = () => {
   if (singleAlbum.isError) return <ErrorHandler error={singleAlbum.error} />;
   if (singleAlbum.isLoading) return <Loading />;
 
-  return !singleAlbum.data.images.length ? <Empty /> : <Data />;
+  return !singleAlbum.data?.images.length ? <Empty /> : <Data />;
 };
 
 export default SingleAlbum;
