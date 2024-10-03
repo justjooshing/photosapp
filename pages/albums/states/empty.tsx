@@ -51,14 +51,16 @@ const Empty = ({ sortOption }: Props) => {
           )}
         </View>
       </View>
-      <Text style={styles.heading}>{copy.heading(sortOption)}</Text>
-      <Text style={styles.copy}>{copy.copy(sortOption)}</Text>
-      <View style={styles.cta}>
-        <Button variant="primary" size="$1" radius="$1">
-          <Link href="/">
-            <Button.Text>{copy.cta}</Button.Text>
-          </Link>
-        </Button>
+      <View>
+        <Text style={styles.heading}>{copy.heading(sortOption)}</Text>
+        <Text style={styles.copy}>{copy.copy(sortOption)}</Text>
+        <View style={styles.cta}>
+          <Button variant="primary" size="$1" radius="$1">
+            <Link href="/">
+              <Button.Text>{copy.cta}</Button.Text>
+            </Link>
+          </Button>
+        </View>
       </View>
     </View>
   );
@@ -68,12 +70,12 @@ export default Empty;
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
+    display: "flex",
+    flex: 1,
     justifyContent: "flex-end",
-    flexShrink: 1,
     paddingBottom: tokens.space[3],
   },
-  icon_container: { height: "100%", justifyContent: "center" },
+  icon_container: { justifyContent: "center", flex: 1 },
   icon_group: {
     flexDirection: "row",
     justifyContent: "center",

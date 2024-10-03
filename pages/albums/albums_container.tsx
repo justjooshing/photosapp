@@ -25,9 +25,8 @@ export default AlbumsContainer;
 const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 20,
-    flex: 1,
     width: "100%",
-    minHeight: "100%",
+    height: "100%",
   },
   filter_text: {
     display: "flex",
