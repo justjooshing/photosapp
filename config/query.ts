@@ -12,6 +12,18 @@ import { renderToast } from "@/utils/toast";
 
 const token = Storage.getString("jwt");
 
+const handleRetry = (failureCount: number, err: Error) => {
+  if (err instanceof AxiosError) {
+    const defaultRetry = new QueryClient().getDefaultOptions().queries?.retry;
+
+    const shouldRetry = Number.isSafeInteger(defaultRetry)
+      ? failureCount < (Number(defaultRetry) ?? 0)
+      : false;
+
+    return shouldRetry;
+  }
+};
+
 const handleError = (err: AxiosError) => {
   if (axios.isAxiosError(err)) {
     if (err.response?.status === 401) {
@@ -25,7 +37,7 @@ const handleError = (err: AxiosError) => {
   return false;
 };
 
-export const config = (jwt: string | null): QueryClientConfig => ({
+export const config = (hasAuthToken: boolean): QueryClientConfig => ({
   mutationCache: new MutationCache({
     onError: (err: AxiosError) => {
       if (axios.isAxiosError(err)) {
@@ -39,23 +51,13 @@ export const config = (jwt: string | null): QueryClientConfig => ({
   }),
   defaultOptions: {
     mutations: {
+      retry: handleRetry,
       throwOnError: handleError,
     },
     queries: {
-      enabled: !!token || !!jwt,
+      enabled: !!token || hasAuthToken,
       staleTime: 1000 * 60 * 10,
-      retry: (failureCount, err) => {
-        if (err instanceof AxiosError) {
-          const defaultRetry = new QueryClient().getDefaultOptions().queries
-            ?.retry;
-
-          const shouldRetry = Number.isSafeInteger(defaultRetry)
-            ? failureCount < (Number(defaultRetry) ?? 0)
-            : false;
-
-          return shouldRetry;
-        }
-      },
+      retry: handleRetry,
       throwOnError: handleError,
     },
   },

@@ -11,11 +11,11 @@ const useGenerateQueryClient = () => {
     Storage.set("jwt", jwt);
   }
 
-  // Create new queryCLient if jwt exists
-  const authToken = Storage.getString("jwt");
+  // Create new queryClient if jwt exists
+  const hasAuthToken = Boolean(Storage.getString("jwt"));
   const queryClient = useMemo(
-    () => new QueryClient(config(authToken)),
-    [authToken],
+    () => new QueryClient(config(hasAuthToken)),
+    [hasAuthToken],
   );
   return queryClient;
 };
