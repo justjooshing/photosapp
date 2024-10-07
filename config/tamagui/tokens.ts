@@ -54,6 +54,8 @@ export const tokens = {
     true: 16,
     3: 24,
   },
-};
+} as const;
+
+export type TokenColorValues = (typeof tokens.color)[keyof typeof tokens.color];
 
 export const tamaguiTokens = createTokens(tokens);

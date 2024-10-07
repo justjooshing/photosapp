@@ -24,6 +24,11 @@ const Stats = () => {
 
   const notYetDeletedCount = count.data?.markDeleteNotDeleted.count || 0;
 
+  const deleteStatColor = (() => {
+    if (notYetDeletedCount < 20) return tokens.color.green2;
+    return notYetDeletedCount < 50 ? tokens.color.yellow : tokens.color.red;
+  })();
+
   return (
     <View style={styles.stats}>
       <View style={styles.section}>
@@ -42,11 +47,13 @@ const Stats = () => {
       </View>
       <View style={styles.section}>
         <SingleStat
+          statColor={deleteStatColor}
           variant="secondary"
           copy="Marked to delete but not deleted"
           stat={notYetDeletedCount}
         />
         <SingleStat
+          statColor={deleteStatColor}
           variant="secondary"
           copy="Potential space saving"
           stat={formatBytes({
@@ -103,7 +110,8 @@ const styles = StyleSheet.create({
   summary: {
     textAlign: "center",
     fontSize: tokens.fontSize[2],
-    backgroundColor: tokens.color.grey4,
+    backgroundColor: tokens.color.grey2,
+    borderRadius: tokens.radius[2],
     padding: tokens.space[3],
   },
 });

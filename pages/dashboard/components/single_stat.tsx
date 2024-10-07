@@ -3,15 +3,21 @@ import { StyleSheet, View, Text } from "react-native";
 
 import { useGetCount } from "@/api/images/queries";
 import Skeleton from "@/components/skeleton";
-import { tokens } from "@/config/tamagui/tokens";
+import { TokenColorValues, tokens } from "@/config/tamagui/tokens";
 
 type Props = {
   variant: "primary" | "secondary";
   copy: string;
   stat: ReactNode;
+  statColor?: TokenColorValues;
 };
 
-const SingleStat = ({ variant, copy, stat }: Props) => {
+const SingleStat = ({
+  variant,
+  copy,
+  stat,
+  statColor = tokens.color.black,
+}: Props) => {
   const count = useGetCount();
 
   const { copy_style, stat_style } = {
@@ -32,7 +38,7 @@ const SingleStat = ({ variant, copy, stat }: Props) => {
           <Skeleton />
         </View>
       ) : (
-        <Text style={stat_style}>{stat}</Text>
+        <Text style={[{ color: statColor }, stat_style]}>{stat}</Text>
       )}
       <Text style={copy_style}>{copy}</Text>
     </View>
