@@ -1,6 +1,6 @@
 import { FlashList } from "@shopify/flash-list";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 import CarouselImage from "./carousel_image";
 
@@ -22,17 +22,23 @@ const Carousel = () => {
       )}
     />
   ) : (
-    <FlashList
+    <ScrollView
       horizontal
-      data={images.data}
-      estimatedItemSize={5}
-      keyExtractor={({ id }) => id.toString()}
-      renderItem={({ item, index }) => (
-        <View style={styles.item}>
-          <CarouselImage image={item} position={index} />
-        </View>
-      )}
-    />
+      style={styles.container}
+      contentContainerStyle={styles.item}
+    >
+      <FlashList
+        horizontal
+        data={images.data}
+        estimatedItemSize={5}
+        keyExtractor={({ id }) => id.toString()}
+        renderItem={({ item, index }) => (
+          <View>
+            <CarouselImage image={item} position={index} />
+          </View>
+        )}
+      />
+    </ScrollView>
   );
 };
 
@@ -43,7 +49,12 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     paddingHorizontal: 2,
   },
+  container: {
+    flexGrow: 0,
+    height: 100,
+  },
   item: {
+    minWidth: "100%",
     height: 100,
   },
 });
