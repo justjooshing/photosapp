@@ -149,3 +149,18 @@ export const useUpdateSingleAlbumImage = (albumId: string) => {
     },
   });
 };
+
+const postRefetchImages = async () =>
+  client.post<null>(`${ENDPOINTS.get("images")}/refetch-all`);
+
+export const useRefetchAllImages = () =>
+  useMutation({
+    mutationFn: postRefetchImages,
+    onMutate: () => {
+      renderToast({
+        type: "info",
+        message:
+          "Requesting images from Google in the background. Feel free to continue using the app",
+      });
+    },
+  });
