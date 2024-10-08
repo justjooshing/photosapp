@@ -43,6 +43,9 @@ client.interceptors.request.use((config) => {
   const token = Storage.getString("jwt");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+    if (config.baseURL === baseURL) {
+      config.headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+    }
   }
   return config;
 });
