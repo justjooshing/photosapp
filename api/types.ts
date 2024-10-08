@@ -3,6 +3,11 @@ export enum SortOptions {
   KEEP = "keep",
 }
 
+export enum SkipOptions {
+  SKIP = "skip",
+  INACCURATE = "inaccurate",
+}
+
 export interface ApiUser {
   profilePicture: string;
   id: number;
