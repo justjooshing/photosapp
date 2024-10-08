@@ -6,6 +6,7 @@ import CarouselImage from "./carousel_image";
 
 import { useGetImages } from "@/api/images/queries";
 import Skeleton from "@/components/skeleton";
+import { tokens } from "@/config/tamagui/tokens";
 
 const Carousel = () => {
   const images = useGetImages();
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexGrow: 0,
-    height: 100,
+    paddingTop: tokens.space[3],
   },
   item: {
     minWidth: "100%",
