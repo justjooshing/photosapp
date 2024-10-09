@@ -6,7 +6,7 @@ import {
 import axios, { AxiosError } from "axios";
 import { router } from "expo-router";
 
-import { errorMessageLookup } from "@/api/errors";
+import { errorMessageLookup } from "@/server/errors";
 import Storage from "@/utils/storage";
 import { renderToast } from "@/utils/toast";
 

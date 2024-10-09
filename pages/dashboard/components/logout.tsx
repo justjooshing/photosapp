@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useLogout } from "@/api/auth/mutations";
+import { useLogout } from "@/server/auth/mutations";
 import LoadingModal from "@/components/loading_modal";
 import { Button } from "@/config/tamagui/variants";
 

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import Albums from "./albums";
 
-import { SortOptions } from "@/api/types";
+import { SortOptions } from "@/server/types";
 import { tokens } from "@/config/tamagui/tokens";
 
 const AlbumsContainer = ({ sortOption }: { sortOption: SortOptions }) => {

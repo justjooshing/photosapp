@@ -8,7 +8,7 @@ import {
   useMemo,
 } from "react";
 
-import { SortOptions } from "@/api/types";
+import { SortOptions } from "@/server/types";
 
 export const FilterOptions = { ...SortOptions, ALL: "all" } as const;
 export type FilterOptionsType =

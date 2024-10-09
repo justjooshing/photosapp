@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import SingleStat from "./single_stat";
 
-import { useGetCount } from "@/api/images/queries";
+import { useGetCount } from "@/server/images/queries";
 import ErrorHandler from "@/components/error_handler";
 import Skeleton from "@/components/skeleton";
 import { tokens } from "@/config/tamagui/tokens";

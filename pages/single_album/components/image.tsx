@@ -2,8 +2,8 @@ import { AntDesign } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import { View, StyleSheet } from "react-native";
 
-import { useUpdateSingleAlbumImage } from "@/api/images/mutations";
-import { ApiImage, SortOptions } from "@/api/types";
+import { useUpdateSingleAlbumImage } from "@/server/images/mutations";
+import { ApiImage, SortOptions } from "@/server/types";
 import ImageTile from "@/components/image_tile";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";

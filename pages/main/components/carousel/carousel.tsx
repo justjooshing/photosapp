@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 
 import CarouselImage from "./carousel_image";
 
-import { useGetImages } from "@/api/images/queries";
+import { useGetImages } from "@/server/images/queries";
 import Skeleton from "@/components/skeleton";
 import { tokens } from "@/config/tamagui/tokens";
 

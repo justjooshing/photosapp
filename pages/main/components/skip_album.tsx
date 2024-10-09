@@ -2,9 +2,9 @@ import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { Spinner, View } from "tamagui";
 
-import { useSkipAlbum } from "@/api/albums/mutations";
-import { useGetImages } from "@/api/images/queries";
-import { SkipOptions } from "@/api/types";
+import { useSkipAlbum } from "@/server/albums/mutations";
+import { useGetImages } from "@/server/images/queries";
+import { SkipOptions } from "@/server/types";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 

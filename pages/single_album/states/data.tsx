@@ -3,7 +3,7 @@ import React from "react";
 
 import Image from "../components/image";
 
-import { useGetSingleAlbum } from "@/api/albums/queries";
+import { useGetSingleAlbum } from "@/server/albums/queries";
 import { numColumns } from "@/config/constants";
 
 const Data = () => {

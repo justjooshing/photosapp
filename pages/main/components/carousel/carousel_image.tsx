@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet } from "react-native";
 
-import { ApiImage } from "@/api/types";
+import { ApiImage } from "@/server/types";
 import ImageWithError from "@/components/image_with_error_handler";
 import { tokens } from "@/config/tamagui/tokens";
 import { useImageContext } from "@/context/image";

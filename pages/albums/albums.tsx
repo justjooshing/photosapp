@@ -4,8 +4,8 @@ import Data from "./states/data";
 import Empty from "./states/empty";
 import Loading from "./states/loading";
 
-import { useGetInfiniteAlbums } from "@/api/albums/queries";
-import { SortOptions } from "@/api/types";
+import { useGetInfiniteAlbums } from "@/server/albums/queries";
+import { SortOptions } from "@/server/types";
 import ErrorHandler from "@/components/error_handler";
 
 const Albums = ({ sortOption }: { sortOption: SortOptions }) => {

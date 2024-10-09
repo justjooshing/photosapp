@@ -3,7 +3,7 @@ import { Link } from "expo-router";
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
-import { SortOptions } from "@/api/types";
+import { SortOptions } from "@/server/types";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 

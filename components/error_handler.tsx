@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { StyleSheet, Text, View } from "react-native";
 
-import { errorMessageLookup } from "@/api/errors";
+import { errorMessageLookup } from "@/server/errors";
 import { tokens } from "@/config/tamagui/tokens";
 
 interface ErrorHandlerProps {

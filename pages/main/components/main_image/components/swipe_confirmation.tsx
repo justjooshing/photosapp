@@ -11,7 +11,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
-import { SortOptions } from "@/api/types";
+import { SortOptions } from "@/server/types";
 import Icons from "@/components/icons";
 import { tokens } from "@/config/tamagui/tokens";
 import { useAppContext } from "@/context/app";

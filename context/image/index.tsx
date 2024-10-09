@@ -9,7 +9,7 @@ import {
 
 import { ImagesType } from "./types";
 
-import { ApiImage } from "@/api/types";
+import { ApiImage } from "@/server/types";
 import useAppFocus from "@/hooks/useAppFocus";
 
 export interface InitialState {

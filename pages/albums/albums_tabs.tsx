@@ -1,7 +1,7 @@
 import AlbumsContainer from "./albums_container";
 
-import { useGetCount } from "@/api/images/queries";
-import { SortOptions } from "@/api/types";
+import { useGetCount } from "@/server/images/queries";
+import { SortOptions } from "@/server/types";
 import TabView from "@/components/tab_view";
 import { useAlbumsContext } from "@/context/albums";
 

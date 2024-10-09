@@ -3,8 +3,8 @@ import { Redirect, Tabs } from "expo-router";
 import { View, StyleSheet, Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { useGetAuthToken } from "@/api/auth/queries";
-import { useGetCount } from "@/api/images/queries";
+import { useGetAuthToken } from "@/server/auth/queries";
+import { useGetCount } from "@/server/images/queries";
 import ContentWrapper from "@/components/content_wrapper";
 import { tokens } from "@/config/tamagui/tokens";
 import { useAppContext } from "@/context/app";

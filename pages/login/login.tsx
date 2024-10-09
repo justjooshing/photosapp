@@ -6,7 +6,7 @@ import { Spinner } from "tamagui";
 
 import SwipeAnimation from "./components/swipe_animation";
 
-import { useGetLoginLink } from "@/api/auth/queries";
+import { useGetLoginLink } from "@/server/auth/queries";
 import ErrorHandler from "@/components/error_handler";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";

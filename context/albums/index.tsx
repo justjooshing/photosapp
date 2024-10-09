@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 
-import { SortOptions } from "@/api/types";
+import { SortOptions } from "@/server/types";
 
 export interface InitialState {
   sortBy: SortOptions;

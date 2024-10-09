@@ -1,8 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-import { createSocket } from "@/api/axios";
-import { Keys } from "@/api/keys";
+import { createSocket } from "@/server/axios";
+import { Keys } from "@/server/keys";
 
 /**
  * Connect to Socket.io

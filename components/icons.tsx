@@ -2,7 +2,7 @@ import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet } from "react-native";
 
-import { SortOptions } from "@/api/types";
+import { SortOptions } from "@/server/types";
 import { tokens } from "@/config/tamagui/tokens";
 
 type Props = {
