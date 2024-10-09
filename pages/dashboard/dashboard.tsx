@@ -5,9 +5,9 @@ import DeleteAccount from "./components/delete_account";
 import Logout from "./components/logout";
 import Stats from "./components/stats";
 
-import { useRefetchAllImages } from "@/server/images/mutations";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
+import { useRefetchAllImages } from "@/server/images/mutations";
 
 const copy = {
   sort: "Another round?",

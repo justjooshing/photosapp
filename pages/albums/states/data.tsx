@@ -4,13 +4,13 @@ import React, { useMemo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Spinner } from "tamagui";
 
-import { useGetInfiniteAlbums } from "@/server/albums/queries";
-import { SortOptions } from "@/server/types";
 import ImageTile from "@/components/image_tile";
 import { numColumns } from "@/config/constants";
 import { tokens } from "@/config/tamagui/tokens";
 import { useAlbumsContext } from "@/context/albums";
 import usePathname from "@/hooks/usePathname";
+import { useGetInfiniteAlbums } from "@/server/albums/queries";
+import { SortOptions } from "@/server/types";
 
 type Props = {
   sortOption: SortOptions;

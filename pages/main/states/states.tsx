@@ -3,8 +3,8 @@ import React from "react";
 import Data from "./data";
 import Empty from "./empty";
 
-import { useGetImages } from "@/server/images/queries";
 import ErrorHandler from "@/components/error_handler";
+import { useGetImages } from "@/server/images/queries";
 
 const States = () => {
   const images = useGetImages();

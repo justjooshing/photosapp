@@ -2,12 +2,12 @@ import { AntDesign } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import { View, StyleSheet } from "react-native";
 
-import { useUpdateSingleAlbumImage } from "@/server/images/mutations";
-import { ApiImage, SortOptions } from "@/server/types";
 import ImageTile from "@/components/image_tile";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 import { useImageContext } from "@/context/image";
+import { useUpdateSingleAlbumImage } from "@/server/images/mutations";
+import { ApiImage, SortOptions } from "@/server/types";
 
 const copy = {
   markAs: (updatedChoice: SortOptions) => `Move to ${updatedChoice}`,

@@ -2,8 +2,8 @@ import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet } from "react-native";
 
-import { SortOptions } from "@/server/types";
 import { tokens } from "@/config/tamagui/tokens";
+import { SortOptions } from "@/server/types";
 
 type Props = {
   choice: SortOptions;

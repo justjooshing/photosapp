@@ -9,8 +9,8 @@ import {
 
 import { ImagesType } from "./types";
 
-import { ApiImage } from "@/server/types";
 import useAppFocus from "@/hooks/useAppFocus";
+import { ApiImage } from "@/server/types";
 
 export interface InitialState {
   targetImage: ApiImage;

@@ -4,8 +4,8 @@ import Data from "./states/data";
 import Empty from "./states/empty";
 import Loading from "./states/loading";
 
-import { useGetSingleAlbum } from "@/server/albums/queries";
 import ErrorHandler from "@/components/error_handler";
+import { useGetSingleAlbum } from "@/server/albums/queries";
 
 const SingleAlbum = () => {
   const singleAlbum = useGetSingleAlbum();

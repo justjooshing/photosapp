@@ -2,8 +2,8 @@ import { StyleSheet, Text, View } from "react-native";
 
 import Albums from "./albums";
 
-import { SortOptions } from "@/server/types";
 import { tokens } from "@/config/tamagui/tokens";
+import { SortOptions } from "@/server/types";
 
 const AlbumsContainer = ({ sortOption }: { sortOption: SortOptions }) => {
   const tabCopy = {

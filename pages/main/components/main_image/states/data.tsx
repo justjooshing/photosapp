@@ -16,11 +16,11 @@ import Animated, {
 
 import SwipeConfirmation from "../components/swipe_confirmation";
 
+import ImageWithError from "@/components/image_with_error_handler";
+import { useImageContext } from "@/context/image";
 import { useSortImage } from "@/server/images/mutations";
 import { useGetImages } from "@/server/images/queries";
 import { SortOptions } from "@/server/types";
-import ImageWithError from "@/components/image_with_error_handler";
-import { useImageContext } from "@/context/image";
 
 const Data = () => {
   const router = useRouter();

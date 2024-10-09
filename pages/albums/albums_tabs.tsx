@@ -1,9 +1,9 @@
 import AlbumsContainer from "./albums_container";
 
-import { useGetCount } from "@/server/images/queries";
-import { SortOptions } from "@/server/types";
 import TabView from "@/components/tab_view";
 import { useAlbumsContext } from "@/context/albums";
+import { useGetCount } from "@/server/images/queries";
+import { SortOptions } from "@/server/types";
 
 const routes = (counts: (string | number)[]) =>
   ["Clean up", "All Sorted"].map(

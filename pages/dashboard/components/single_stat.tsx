@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-import { useGetCount } from "@/server/images/queries";
 import Skeleton from "@/components/skeleton";
 import { TokenColorValues, tokens } from "@/config/tamagui/tokens";
+import { useGetCount } from "@/server/images/queries";
 
 type Props = {
   variant: "primary" | "secondary";

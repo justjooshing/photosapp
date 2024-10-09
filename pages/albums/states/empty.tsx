@@ -3,9 +3,9 @@ import { Link } from "expo-router";
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
-import { SortOptions } from "@/server/types";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
+import { SortOptions } from "@/server/types";
 
 const copy = {
   heading: (filter: SortOptions) =>

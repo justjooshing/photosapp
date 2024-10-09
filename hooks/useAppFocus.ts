@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Platform, AppState } from "react-native";
 
-import { useCheckImageStatus } from "@/server/images/mutations";
 import { InitialState } from "@/context/image";
+import { useCheckImageStatus } from "@/server/images/mutations";
 
 interface Props {
   targetImage: InitialState["targetImage"];
