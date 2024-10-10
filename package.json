@@ -63,5 +63,6 @@
     "cookie": "^0.7.0",
     "send": "^0.19.0"
   },
-  "private": true
+  "private": true,
+  "packageManager": "yarn@4.5.0"
 }
