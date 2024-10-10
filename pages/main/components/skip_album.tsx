@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
-import { Spinner, View } from "tamagui";
+import { StyleSheet, Text, View } from "react-native";
+import { Spinner } from "tamagui";
 
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
