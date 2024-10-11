@@ -2,17 +2,14 @@ import { AntDesign } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import { View, StyleSheet } from "react-native";
 
-import ImageTile from "@/components/image_tile";
+import { imageDetails, copy } from "./constants";
+
+import ImageModal from "@/components/image_modal";
 import { tokens } from "@/config/tamagui/tokens";
 import { Button } from "@/config/tamagui/variants";
 import { useImageContext } from "@/context/image";
 import { useUpdateSingleAlbumImage } from "@/server/images/mutations";
-import { ApiImage, SortOptions } from "@/server/types";
-
-const copy = {
-  markAs: (updatedChoice: SortOptions) => `Move to ${updatedChoice}`,
-  google: "Delete from",
-};
+import { ApiImage } from "@/server/types";
 
 type Props = { image: ApiImage };
 const Image = ({ image }: Props) => {
@@ -20,25 +17,15 @@ const Image = ({ image }: Props) => {
     image.sorted_album_id.toString(),
   );
   const { setTargetImage } = useImageContext();
+  const { markAsLabel, updated_status, variant } = imageDetails(
+    image.sorted_status,
+  );
 
   const handleButtonClick = () => {
     WebBrowser.openBrowserAsync(image.productUrl);
     // Keep track of which image we've just viewed to refetch baseUrl
     setTargetImage(image);
   };
-
-  const { markAsLabel, updated_status, variant } = {
-    [SortOptions.KEEP]: {
-      markAsLabel: copy.markAs(SortOptions.DELETE),
-      variant: "primary",
-      updated_status: SortOptions.DELETE,
-    },
-    [SortOptions.DELETE]: {
-      markAsLabel: copy.markAs(SortOptions.KEEP),
-      variant: "secondary",
-      updated_status: SortOptions.KEEP,
-    },
-  }[image.sorted_status];
 
   const handleClick = () => {
     updateImage({
@@ -48,8 +35,8 @@ const Image = ({ image }: Props) => {
   };
 
   return (
-    <View style={styles.image}>
-      <ImageTile baseUrl={image.baseUrl} />
+    <View style={styles.container}>
+      <ImageModal baseUrl={image.baseUrl} style={styles.image} errorSize={72} />
       <View style={styles.button_wrapper}>
         <Button onPress={handleClick} variant={variant} full>
           <Button.Text padding={4} fontSize={tokens.fontSize[1]}>
@@ -74,10 +61,14 @@ const Image = ({ image }: Props) => {
 export default Image;
 
 const styles = StyleSheet.create({
-  image: {
+  container: {
     alignItems: "center",
     paddingVertical: 20,
     width: "100%",
+  },
+  image: {
+    borderColor: tokens.color.grey2,
+    borderWidth: 1,
   },
   button_wrapper: {
     width: "80%",

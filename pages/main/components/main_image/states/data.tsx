@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import React from "react";
-import { StyleSheet, useWindowDimensions } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   Gesture,
   GestureDetector,
@@ -16,7 +16,7 @@ import Animated, {
 
 import SwipeConfirmation from "../components/swipe_confirmation";
 
-import ImageWithError from "@/components/image_with_error_handler";
+import ImageModal from "@/components/image_modal";
 import { useImageContext } from "@/context/image";
 import { useSortImage } from "@/server/images/mutations";
 import { useGetImages } from "@/server/images/queries";
@@ -25,7 +25,6 @@ import { SortOptions } from "@/server/types";
 const Data = () => {
   const router = useRouter();
   const { currentImageIndex, setCurrentImageIndex } = useImageContext();
-  const { width, height } = useWindowDimensions();
   const offset = useSharedValue(0);
   const { data } = useGetImages();
   const { mutate: sortImage } = useSortImage();
@@ -113,17 +112,9 @@ const Data = () => {
       />
       <GestureDetector gesture={pan}>
         <Animated.View style={[animatedStyles, styles.animated_container]}>
-          <ImageWithError
-            imageProps={{
-              resizeMode: "contain",
-              source: {
-                uri: data?.[currentImageIndex]?.baseUrl,
-                width: width - 10,
-                height,
-              },
-              style: styles.image,
-            }}
-            errorProps={{ size: width - 56 }}
+          <ImageModal
+            baseUrl={data?.[currentImageIndex]?.baseUrl}
+            errorSize={-56}
           />
         </Animated.View>
       </GestureDetector>
@@ -140,12 +131,8 @@ export default Data;
 
 const styles = StyleSheet.create({
   animated_container: {
-    minWidth: "90%",
+    width: "90%",
     height: "100%",
-  },
-  image: {
-    alignSelf: "center",
-    width: "100%",
-    height: "100%",
+    justifyContent: "center",
   },
 });
