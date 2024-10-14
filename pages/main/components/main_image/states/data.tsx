@@ -114,6 +114,7 @@ const Data = () => {
         <Animated.View style={[animatedStyles, styles.animated_container]}>
           <ImageModal
             baseUrl={data?.[currentImageIndex]?.baseUrl}
+            full
             errorSize={-56}
           />
         </Animated.View>

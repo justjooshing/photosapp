@@ -12,11 +12,12 @@ import ImageWithError from "./image_with_error_handler";
 
 type Props = {
   baseUrl: string;
+  full?: boolean;
   errorSize: number;
   style?: ImageStyle;
 };
 
-const ImageModal = ({ baseUrl, errorSize, style }: Props) => {
+const ImageModal = ({ baseUrl, full = false, errorSize, style }: Props) => {
   const [containerDimensions, setContainerDimensions] = useState({
     height: 0,
     width: 0,
@@ -32,8 +33,13 @@ const ImageModal = ({ baseUrl, errorSize, style }: Props) => {
     setContainerDimensions({ height, width: width * 0.9 });
   };
 
+  const parentStyle = full ? ({ height: "100%" } as const) : { aspectRatio: 1 };
+
   return (
-    <View onLayout={handleSetDimensions} style={styles.container}>
+    <View
+      onLayout={handleSetDimensions}
+      style={[styles.container, parentStyle]}
+    >
       <View>
         <RNImageModal
           style={{
