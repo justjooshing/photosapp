@@ -14,7 +14,7 @@ const Albums = ({ sortOption }: { sortOption: SortOptions }) => {
   if (albums.isError) return <ErrorHandler error={albums.error} />;
   if (albums.isLoading) return <Loading />;
 
-  return !albums.data?.pages?.length ? (
+  return !albums.data?.pages?.[0].albums.length ? (
     <Empty sortOption={sortOption} />
   ) : (
     <Data sortOption={sortOption} />
