@@ -71,7 +71,6 @@ export default ImageModal;
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    aspectRatio: 1,
     alignItems: "center",
     justifyContent: "center",
   },
