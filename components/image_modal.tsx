@@ -23,7 +23,8 @@ const ImageModal = ({ baseUrl, errorSize, style }: Props) => {
   });
 
   const imageSource: ImageSourcePropType = {
-    uri: baseUrl,
+    // =d gets download quality which we want since we can pinch to zoom
+    uri: `${baseUrl}=d`,
   };
 
   const handleSetDimensions = (e: LayoutChangeEvent) => {
