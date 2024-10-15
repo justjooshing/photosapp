@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
-  ImageSourcePropType,
   ImageStyle,
+  ImageURISource,
   LayoutChangeEvent,
   StyleSheet,
   View,
@@ -23,9 +23,8 @@ const ImageModal = ({ baseUrl, full = false, errorSize, style }: Props) => {
     width: 0,
   });
 
-  const imageSource: ImageSourcePropType = {
-    // =d gets download quality which we want since we can pinch to zoom
-    uri: `${baseUrl}=d`,
+  const imageSource: ImageURISource = {
+    uri: baseUrl,
   };
 
   const handleSetDimensions = (e: LayoutChangeEvent) => {
@@ -51,7 +50,8 @@ const ImageModal = ({ baseUrl, full = false, errorSize, style }: Props) => {
           source={imageSource}
           renderImageComponent={(props) => (
             <ImageWithError
-              imageProps={props}
+              imageProps={{ ...props, source: props.source as ImageURISource }}
+              highDef
               errorProps={{
                 size:
                   errorSize > 0
