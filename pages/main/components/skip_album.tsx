@@ -11,10 +11,9 @@ import { SkipOptions } from "@/server/types";
 const SkipAlbum = () => {
   const images = useGetImages();
   const skipAlbum = useSkipAlbum();
-  const firstImageId = images.data?.[0].id;
 
   const handlePress = (skipReason: SkipOptions) => {
-    skipAlbum.mutate({ skipReason, firstImageId });
+    skipAlbum.mutate({ skipReason, firstImageId: images.data?.[0].id });
   };
 
   return (
